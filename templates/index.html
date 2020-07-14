@@ -17,4 +17,20 @@
       </ul>
     </div>
   </div>
+    <div class="row">
+    <div class="col-md-12">
+      <h2>Add A To-Do Item</h2>
+      <form action="/create" method="POST">
+        <div class="form-group">
+          <div class="form-row">
+            <label class="col-sm-2 col-form-label" for="add_todo">Title</label>
+            <div class="form-group col-md-6">
+          <input class="form-control" type="text" id="add_todo" name="add_todo" maxlength="32" placeholder="New to-do">
+          </div>
+          </div>
+          <button class="btn btn-light" type="submit">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

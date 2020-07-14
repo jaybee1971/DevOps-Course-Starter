@@ -11,5 +11,11 @@ def get_todo_list():
     return render_template('index.html', items=todo_list)
 
 
+@app.route('/create', methods=['POST'])
+def create():
+    session.add_item(request.form['add_todo'])
+    return get_todo_list()
+
+
 if __name__ == '__main__':
     app.run()
