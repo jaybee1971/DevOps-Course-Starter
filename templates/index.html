@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
-{% block title %}To-Do App{% endblock %}
+{% block title %}Jason B To-Do App{% endblock %}
 
 {% block content %}
-  <div class="jumbotron" >
-    <h1 class="display-4">To-Do App</h1>
+  <div class="jumbotron" style="background-color:DodgerBlue;color:White;">
+    <h1 class="display-4">My To-Do App</h1>
       <hr class="my-4">
-      <p class="lead">Just another to-do app, nothing to see here...</p>
+      <p class="lead">This is my To-Do app, enjoy...</p>
   </div>
 
-    <div class="row" >
-        <div class="col-md-12" >
-            <hr class="my-4">
+    <div class="row" style="border:2px solid DodgerBlue;">
+        <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px;">
             <h2>Add a New To-Do Item</h2>
             <form action="/create" method="POST">
                 <div class="form-inline">
@@ -23,12 +22,11 @@
                     </div>
                 </div>
             </form>
-            <hr class="my-4">
         </div>
     </div>
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" style="margin-top: 40px;">
       <h2 id="todo_table">Your To-Do List</h2>
         <p>This is a list of your to-do items, check them off once completed or delete as required</p>
         <form action="/update" method="POST">
