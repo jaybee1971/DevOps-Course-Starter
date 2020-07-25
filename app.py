@@ -20,14 +20,18 @@ def create():
 @app.route('/update', methods=['POST'])
 def update():
     for id in request.form:
-        item = session.get_item(id)
         new_status = request.form.get(id)
-        item['status'] = new_status
-        session.save_item(item)
+        if new_status == 'Delete':
+            session.delete_item(id)
+        else:
+            item = session.get_item(id)
+            old_status = item['status']
+            if old_status == new_status:
+                continue
+            else:
+                item['status'] = new_status
+                session.save_item(item)
     return redirect('/')
-    # I would add an if statement in this route to check status value
-    # and if status was 'delete' would trigger new delete function
-    # else it would update as above
 
 
 if __name__ == '__main__':

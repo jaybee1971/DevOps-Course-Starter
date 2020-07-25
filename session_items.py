@@ -68,3 +68,12 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
+
+def delete_item(id):
+    items = get_items()
+    item = get_item(id)
+    items.remove(item)
+    session.modified = True
+    return get_items()
+    
