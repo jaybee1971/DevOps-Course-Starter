@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import session_items as session
+from operator import itemgetter
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
@@ -8,7 +9,8 @@ app.config.from_object('flask_config.Config')
 @app.route('/', methods=['GET'])
 def get_todo_list():
     todo_list = session.get_items()
-    return render_template('index.html', items=todo_list)
+    newlist = sorted(todo_list, key=itemgetter('status'), reverse=True)
+    return render_template('index.html', items=newlist)
 
 
 @app.route('/create', methods=['POST'])
