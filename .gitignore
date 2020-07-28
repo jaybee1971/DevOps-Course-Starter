@@ -109,6 +109,9 @@ dmypy.json
 ### macOS ###
 .DS_Store
 
+### MS vsCode ###
+.vscode/
+
 ### Virtual environment ###
 env/
 

@@ -76,4 +76,3 @@ def delete_item(id):
     items.remove(item)
     session.modified = True
     return get_items()
-    
