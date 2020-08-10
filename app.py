@@ -1,9 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for
 import session_items as session
+import os, requests, json
 from operator import itemgetter
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
+
+API_PREFIX = 'https://api.trello.com/1/'
+
+API_KEY = os.getenv('API_KEY')
+API_TOKEN = os.getenv('API_TOKEN')
+board = os.getenv('BOARD_ID')
+not_started = os.getenv('COL_1')
+
+
+@app.route('/trello', methods=['GET'])
+def index():
+    results = requests.get(API_PREFIX + 'lists/' + not_started + '/cards', params={'key': API_KEY, 'token': API_TOKEN})
+    result = results.json()
+    return f'{result}'
 
 
 @app.route('/', methods=['GET'])

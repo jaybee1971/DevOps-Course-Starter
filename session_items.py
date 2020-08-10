@@ -1,10 +1,11 @@
 from flask import session
 
 _DEFAULT_ITEMS = [
-    {'id': 1, 'status': 'Not Started', 'title': 'List saved todo items'},
-    {'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added'},
-    {'id': 3, 'status': 'Not Started', 'title': 'Get help'}
+    {'id': 1, 'status': 'Not Started', 'title': 'An item not yet started'},
+    {'id': 2, 'status': 'In Progress', 'title': 'An item in progress'},
+    {'id': 3, 'status': 'Completed', 'title': 'An item that is completed'}
 ]
+_TRELLO_ITEMS = []
 
 
 def get_items():
