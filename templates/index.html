@@ -15,7 +15,7 @@
                 <div class="form-inline">
                     <div class="form-group" style="flex: 1">
                         <label class="col-sm-1" for="add_todo">Title:</label>
-                        <input style="flex: 1" class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New to-do">
+                        <input required style="flex: 1" class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New to-do">
                     </div>
                     <div>
                         <button class="btn btn-dark" type="submit">Add</button>
@@ -25,51 +25,51 @@
         </div>
     </div>
 
-  <div class="row">
-    <div class="col-md-12" style="margin-top: 40px;">
-      <h2 id="todo_table">Your To-Do List</h2>
-        <p>This is a list of your to-do items, check them off once completed or delete as required</p>
-        <form action="/update" method="POST">
-            <div class="form-group">
-                <table class="table table-striped" style="width: 100%">
-                    <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    {% for item in items %}
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 40px;">
+            <h2 id="todo_table">Your To-Do List</h2>
+            <p>This is a list of your to-do items, check them off once completed or delete as required</p>
+            <form action="/update" method="POST">
+                <div class="form-group">
+                    <table class="table table-striped" style="width: 100%">
+                        <thead>
                         <tr>
-                            <td>{{item.title}}</td>
-                            <td>{{item.status}}</td>
-                            <td>
-                                <select class="custom-select" name="{{ item.id }}">
-                                    {% if item.status == 'Completed' %}
-                                    <option value="Not Started" name="{{ item.id }}">Not Started</option>
-                                    <option value="In Progress" name="{{ item.id }}">In Progress</option>
-                                    <option selected="selected" value="Completed" name="{{ item.id }}">Completed</option>
-                                    {% elif item.status == 'In Progress' %}
-                                    <option value="Not Started" name="{{ item.id }}">Not Started</option>
-                                    <option selected="selected" value="In Progress" name="{{ item.id }}">In Progress</option>
-                                    <option value="Completed" name="{{ item.id }}">Completed</option>
-                                    {% else %}
-                                    <option selected="selected" value="Not Started" name="{{ item.id }}">Not Started</option>
-                                    <option value="In Progress" name="{{ item.id }}">In Progress</option>
-                                    <option value="Completed" name="{{ item.id }}">Completed</option>
-                                    {% endif %}
-                                    <option value="Delete" name="{{ item.id }}">Delete</option>
-                                </select>
-                            </td>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                    {% endfor %}
-                </table>
-                <div>
-                    <button class="btn btn-dark" type="submit">Update List</button>
+                        </thead>
+                        {% for item in items %}
+                            <tr>
+                                <td>{{item.title}}</td>
+                                <td>{{item.status}}</td>
+                                <td>
+                                    <select class="custom-select" name="{{ item.id }}">
+                                        {% if item.status == 'Completed' %}
+                                        <option value="Not Started" name="{{ item.id }}">Not Started</option>
+                                        <option value="In Progress" name="{{ item.id }}">In Progress</option>
+                                        <option selected="selected" value="Completed" name="{{ item.id }}">Completed</option>
+                                        {% elif item.status == 'In Progress' %}
+                                        <option value="Not Started" name="{{ item.id }}">Not Started</option>
+                                        <option selected="selected" value="In Progress" name="{{ item.id }}">In Progress</option>
+                                        <option value="Completed" name="{{ item.id }}">Completed</option>
+                                        {% else %}
+                                        <option selected="selected" value="Not Started" name="{{ item.id }}">Not Started</option>
+                                        <option value="In Progress" name="{{ item.id }}">In Progress</option>
+                                        <option value="Completed" name="{{ item.id }}">Completed</option>
+                                        {% endif %}
+                                        <option value="Delete" name="{{ item.id }}">Delete</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <div>
+                        <button class="btn btn-dark" type="submit">Update List</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-  </div>
 
 {% endblock %}
