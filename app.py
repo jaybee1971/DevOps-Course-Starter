@@ -11,14 +11,26 @@ API_PREFIX = 'https://api.trello.com/1/'
 API_KEY = os.getenv('API_KEY')
 API_TOKEN = os.getenv('API_TOKEN')
 board = os.getenv('BOARD_ID')
-not_started = os.getenv('COL_1')
 
+trelloLists = []
+trelloToDos = []
 
 @app.route('/trello', methods=['GET'])
 def index():
-    results = requests.get(API_PREFIX + 'lists/' + not_started + '/cards', params={'key': API_KEY, 'token': API_TOKEN})
+    results = requests.get(API_PREFIX + 'boards/' + board + '/lists', params={'key': API_KEY, 'token': API_TOKEN})
     result = results.json()
-    return f'{result}'
+    id = 1
+    for item in result:
+        list_data = {'id': item['id'], 'status': item['name']}
+        trelloLists.append(list_data)
+    for todoList in trelloLists:
+        results = requests.get(API_PREFIX + 'lists/' + todoList['id'] + '/cards', params={'key': API_KEY, 'token': API_TOKEN})
+        trelloList = results.json()
+        for item in trelloList:
+            todo = {'trelloId': item['id'], 'id': id, 'title': item['name'], 'status': todoList['status']}
+            trelloToDos.append(todo)
+            id = id + 1
+    return f'{trelloToDos}'
 
 
 @app.route('/', methods=['GET'])
