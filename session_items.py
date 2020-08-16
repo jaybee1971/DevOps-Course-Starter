@@ -5,9 +5,7 @@ _DEFAULT_ITEMS = [
     {'id': 2, 'status': 'In Progress', 'title': 'An item in progress'},
     {'id': 3, 'status': 'Completed', 'title': 'An item that is completed'}
 ]
-_TRELLO_ITEMS = []
-
-
+   
 def get_items():
     """
     Fetches all saved items from the session.

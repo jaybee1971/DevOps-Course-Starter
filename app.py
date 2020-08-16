@@ -1,36 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
-import session_items as session
-import os, requests, json
+import session_items, trello_api as session
 from operator import itemgetter
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
 
-API_PREFIX = 'https://api.trello.com/1/'
-
-API_KEY = os.getenv('API_KEY')
-API_TOKEN = os.getenv('API_TOKEN')
-board = os.getenv('BOARD_ID')
-
-trelloLists = []
-trelloToDos = []
 
 @app.route('/trello', methods=['GET'])
-def index():
-    results = requests.get(API_PREFIX + 'boards/' + board + '/lists', params={'key': API_KEY, 'token': API_TOKEN})
-    result = results.json()
-    id = 1
-    for item in result:
-        list_data = {'id': item['id'], 'status': item['name']}
-        trelloLists.append(list_data)
-    for todoList in trelloLists:
-        results = requests.get(API_PREFIX + 'lists/' + todoList['id'] + '/cards', params={'key': API_KEY, 'token': API_TOKEN})
-        trelloList = results.json()
-        for item in trelloList:
-            todo = {'trelloId': item['id'], 'id': id, 'title': item['name'], 'status': todoList['status']}
-            trelloToDos.append(todo)
-            id = id + 1
-    return f'{trelloToDos}'
+def get_trello_todo_list():
+    trello_todo_list = session.get_trello_cards()
+    newlist = sorted(trello_todo_list, key=itemgetter('status'), reverse=True)
+    return render_template('index.html', items=newlist)
 
 
 @app.route('/', methods=['GET'])
