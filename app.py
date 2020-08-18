@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
-import session_items, trello_api as session
+import session_items as session
+from trello_api import trelloGet, get_trello_lists, get_trello_cards, trelloPost
 from operator import itemgetter
 
 app = Flask(__name__)
@@ -8,9 +9,8 @@ app.config.from_object('flask_config.Config')
 
 @app.route('/trello', methods=['GET'])
 def get_trello_todo_list():
-    trello_todo_list = session.get_trello_cards()
-    newlist = sorted(trello_todo_list, key=itemgetter('status'), reverse=True)
-    return render_template('index.html', items=newlist)
+    trello_todo_list = get_trello_cards()
+    return render_template('index.html', items=trello_todo_list)
 
 
 @app.route('/', methods=['GET'])
@@ -20,10 +20,16 @@ def get_todo_list():
     return render_template('index.html', items=newlist)
 
 
+# @app.route('/create', methods=['POST'])
+# def create():
+#     session.add_item(request.form['add_todo'])
+#     return redirect('/')
+
+
 @app.route('/create', methods=['POST'])
-def create():
-    session.add_item(request.form['add_todo'])
-    return redirect('/')
+def new_todo():
+    trelloPost(request.form['add_todo'])
+    return redirect('/trello')
 
 
 @app.route('/update', methods=['POST'])

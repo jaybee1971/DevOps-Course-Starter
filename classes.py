@@ -1,11 +1,14 @@
-class trello_list:
+class todoStatus:
 
-    def __init__(self, trelloId, name):
+    def __init__(self, trelloId, status):
         self.trelloId = trelloId
-        self.name = name
+        self.status = status
+        
+    def __str__(self):
+        return "({0}, {1})".format(self.trelloId, self.status)
 
 
-class trello_card:
+class todoItem:
 
     def __init__(self, trelloId, id, title, status):
         self.trelloId = trelloId
