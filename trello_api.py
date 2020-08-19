@@ -8,6 +8,7 @@ API_KEY = os.getenv('API_KEY')
 API_TOKEN = os.getenv('API_TOKEN')
 API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
 board = os.getenv('BOARD_ID')
+headers = {"Accept": "application/json"}
 
 
 def trelloGet(trelloPath):
@@ -58,3 +59,25 @@ def trelloPost(title):
         url,
         params=newParams
     )
+
+
+def trelloPut(cardId, listID):
+    url = API_PREFIX + '/cards/' + cardId
+    newParams = API_PARAMS
+    newParams['idList'] = listID
+    return requests.request(
+        "PUT", 
+        url,
+        headers=headers,
+        params=newParams
+    )
+ 
+  
+def trelloDelete(cardId):
+    url = API_PREFIX + '/cards/' + cardId
+    return requests.request(
+        "DELETE", 
+        url,
+        params=API_PARAMS
+    )
+      
