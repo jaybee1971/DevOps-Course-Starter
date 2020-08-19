@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import session_items as session
+from classes import todoStatus, todoItem
 from trello_api import trelloGet, get_trello_lists, get_trello_cards, trelloPost, trelloPut, trelloDelete
 from operator import itemgetter
 
@@ -22,17 +23,11 @@ def new_todo():
 @app.route('/update', methods=['POST'])
 def update():
     for trelloId in request.form:
-        new_status = request.form.get(trelloId)
-        if new_status == 'Delete':
+        card_status = request.form.get(trelloId)
+        if card_status == 'Delete':
             trelloDelete(trelloId)
-        # else:
-        #     item = session.get_item(id)
-        #     old_status = item['status']
-        #     if old_status == new_status:
-        #         continue
-        #     else:
-        #         item['status'] = new_status
-        #         session.save_item(item)
+        else:
+            trelloPut(trelloId, card_status)
     return redirect('/')
 
 

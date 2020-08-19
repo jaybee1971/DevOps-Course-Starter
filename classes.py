@@ -10,9 +10,8 @@ class todoStatus:
 
 class todoItem:
 
-    def __init__(self, trelloId, id, title, status):
+    def __init__(self, trelloId, title, status):
         self.trelloId = trelloId
-        self.id = id
         self.title = title
         self.status = status
         

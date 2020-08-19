@@ -34,18 +34,15 @@ def get_trello_lists():
 
 def get_trello_cards():
     trelloCards = []
-    id = 1
     trelloLists = get_trello_lists()
     for todoList in trelloLists:
         for item in trelloGet(f'lists/{todoList.trelloId}/cards'):
             todo = todoItem(
                 item['id'],
-                id,
                 item['name'],
                 todoList.status
             )
             trelloCards.append(todo)
-            id = id + 1
     return trelloCards
 
 
@@ -61,10 +58,15 @@ def trelloPost(title):
     )
 
 
-def trelloPut(cardId, listID):
+def trelloPut(cardId, status):
     url = API_PREFIX + '/cards/' + cardId
     newParams = API_PARAMS
-    newParams['idList'] = listID
+    if status == 'Not Started':
+        newParams['idList'] = str(session['newItemId'])
+    if status == 'In Progress':
+        newParams['idList'] = str(session['progressId'])
+    if status == 'Completed':
+        newParams['idList'] = str(session['completedId'])
     return requests.request(
         "PUT", 
         url,
