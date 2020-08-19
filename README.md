@@ -29,3 +29,11 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Trello API
+
+The project uses the APIs from Trello.
+To get this app to work for you, you will need to have a Trello account and store the following variables in your .env file:
+  API_KEY  -  Your unique key for using the Trello API
+  API_TOKEN  -  Generate your own API token and store value here
+  BOARD_ID  -  The ID of the board you want to use for the project
