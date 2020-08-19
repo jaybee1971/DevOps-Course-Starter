@@ -8,7 +8,6 @@ API_KEY = os.getenv('API_KEY')
 API_TOKEN = os.getenv('API_TOKEN')
 API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
 board = os.getenv('BOARD_ID')
-newItemId = '5f2fb85702fda60cf038d800'
 
 
 def trelloGet(trelloPath):
@@ -24,9 +23,11 @@ def get_trello_lists():
         )
         trelloLists.append(list_data)
         if list_data.status == "Not Started":
-            def setId(not_started_id):
-                session['not_started_id'] = list_data.trelloId
-                return session['not_started_id']
+            session['newItemId'] = list_data.trelloId
+        if list_data.status == "In Progress":
+            session['progressId'] = list_data.trelloId
+        if list_data.status == "Completed":
+            session['completedId'] = list_data.trelloId
     return trelloLists
     
 
@@ -50,7 +51,7 @@ def get_trello_cards():
 def trelloPost(title):
     url = API_PREFIX + '/cards'
     newParams = API_PARAMS
-    newParams['idList'] = newItemId
+    newParams['idList'] = str(session['newItemId'])
     newParams['name'] = title
     return requests.request(
         "POST", 
