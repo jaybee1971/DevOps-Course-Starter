@@ -49,12 +49,13 @@ def get_trello_cards():
     return trelloCards
 
 
-def trelloPost(title):
+def trelloPost(title, description):
     url = API_PREFIX + 'cards'
     API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
     postParams = API_PARAMS
     postParams['idList'] = str(session['newItemId'])
     postParams['name'] = title
+    postParams['desc'] = description
     return requests.request(
         "POST", 
         url,

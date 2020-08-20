@@ -14,13 +14,13 @@ app.config.from_object('flask_config.Config')
 @app.route('/', methods=['GET'])
 def get_trello_todo_list():
     trello_todo_list = get_trello_cards()
-    app.logger.info('Processing default get request')
+    app.logger.info('Processing get cards request')
     return render_template('index.html', items=trello_todo_list)
 
 
 @app.route('/create', methods=['POST'])
 def new_todo():
-    trelloPost(request.form['add_todo'])
+    trelloPost(request.form['add_todo'], request.form['add_desc'])
     app.logger.info('Processing create new card request')
     return redirect('/')
 
@@ -31,7 +31,7 @@ def update():
         card_status = request.form.get(trelloId)
         if card_status == 'Delete':
             trelloDelete(trelloId)
-            app.logger.info('Processing delete request')
+            app.logger.info('Processing delete card request')
         else:
             trelloPut(trelloId, card_status)
             app.logger.info('Processing update cards request')
