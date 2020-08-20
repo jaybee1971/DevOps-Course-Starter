@@ -1,22 +1,26 @@
 from flask import Flask, render_template, request, redirect, url_for
 import session_items as session
+import logging
 from classes import todoStatus, todoItem
 from trello_api import trelloGet, get_trello_lists, get_trello_cards, trelloPost, trelloPut, trelloDelete
 from operator import itemgetter
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
 app.config.from_object('flask_config.Config')
 
 
 @app.route('/', methods=['GET'])
 def get_trello_todo_list():
     trello_todo_list = get_trello_cards()
+    app.logger.info('Processing default get request')
     return render_template('index.html', items=trello_todo_list)
 
 
 @app.route('/create', methods=['POST'])
 def new_todo():
     trelloPost(request.form['add_todo'])
+    app.logger.info('Processing create new card request')
     return redirect('/')
 
 
@@ -26,8 +30,10 @@ def update():
         card_status = request.form.get(trelloId)
         if card_status == 'Delete':
             trelloDelete(trelloId)
+            app.logger.info('Processing delete request')
         else:
             trelloPut(trelloId, card_status)
+            app.logger.info('Processing update cards request')
     return redirect('/')
 
 

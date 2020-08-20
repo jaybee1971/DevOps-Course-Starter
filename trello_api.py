@@ -1,6 +1,6 @@
 from flask import session
 from classes import todoStatus, todoItem
-import os, requests, json
+import os, requests, json, logging
 
 API_PREFIX = 'https://api.trello.com/1/'
 
@@ -47,36 +47,38 @@ def get_trello_cards():
 
 
 def trelloPost(title):
-    url = API_PREFIX + '/cards'
-    newParams = API_PARAMS
-    newParams['idList'] = str(session['newItemId'])
-    newParams['name'] = title
+    url = API_PREFIX + 'cards'
+    postParams = {}
+    postParams = API_PARAMS
+    postParams['idList'] = str(session['newItemId'])
+    postParams['name'] = title
     return requests.request(
         "POST", 
         url,
-        params=newParams
+        params=postParams
     )
 
 
 def trelloPut(cardId, status):
-    url = API_PREFIX + '/cards/' + cardId
-    newParams = API_PARAMS
+    url = API_PREFIX + 'cards/' + cardId
+    putParams = {}
+    putParams = API_PARAMS
     if status == 'Not Started':
-        newParams['idList'] = str(session['newItemId'])
+        putParams['idList'] = str(session['newItemId'])
     if status == 'In Progress':
-        newParams['idList'] = str(session['progressId'])
+        putParams['idList'] = str(session['progressId'])
     if status == 'Completed':
-        newParams['idList'] = str(session['completedId'])
+        putParams['idList'] = str(session['completedId'])
     return requests.request(
         "PUT", 
         url,
         headers=headers,
-        params=newParams
+        params=putParams
     )
  
   
 def trelloDelete(cardId):
-    url = API_PREFIX + '/cards/' + cardId
+    url = API_PREFIX + 'cards/' + cardId
     return requests.request(
         "DELETE", 
         url,
