@@ -6,12 +6,14 @@ API_PREFIX = 'https://api.trello.com/1/'
 
 API_KEY = os.getenv('API_KEY')
 API_TOKEN = os.getenv('API_TOKEN')
+# API_PARAMS was getting appended with additional parameters, so had to set variable in each API function
 API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
 board = os.getenv('BOARD_ID')
 headers = {"Accept": "application/json"}
 
 
 def trelloGet(trelloPath):
+    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
     return requests.get(API_PREFIX + trelloPath, params=API_PARAMS).json()
 
 
@@ -40,6 +42,7 @@ def get_trello_cards():
             todo = todoItem(
                 item['id'],
                 item['name'],
+                item['desc'],
                 todoList.status
             )
             trelloCards.append(todo)
@@ -48,7 +51,7 @@ def get_trello_cards():
 
 def trelloPost(title):
     url = API_PREFIX + 'cards'
-    postParams = {}
+    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
     postParams = API_PARAMS
     postParams['idList'] = str(session['newItemId'])
     postParams['name'] = title
@@ -61,7 +64,7 @@ def trelloPost(title):
 
 def trelloPut(cardId, status):
     url = API_PREFIX + 'cards/' + cardId
-    putParams = {}
+    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
     putParams = API_PARAMS
     if status == 'Not Started':
         putParams['idList'] = str(session['newItemId'])
@@ -79,6 +82,7 @@ def trelloPut(cardId, status):
   
 def trelloDelete(cardId):
     url = API_PREFIX + 'cards/' + cardId
+    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
     return requests.request(
         "DELETE", 
         url,

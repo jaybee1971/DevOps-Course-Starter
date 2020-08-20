@@ -6,7 +6,8 @@ from trello_api import trelloGet, get_trello_lists, get_trello_cards, trelloPost
 from operator import itemgetter
 
 app = Flask(__name__)
-logging.basicConfig(level=logging.DEBUG)
+# uncomment to debug API calls
+# logging.basicConfig(level=logging.DEBUG)
 app.config.from_object('flask_config.Config')
 
 
@@ -36,6 +37,8 @@ def update():
             app.logger.info('Processing update cards request')
     return redirect('/')
 
+
+# old code for using session_items instead of Trello API
 
 # @app.route('/', methods=['GET'])
 # def get_todo_list():

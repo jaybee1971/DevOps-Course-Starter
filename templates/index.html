@@ -35,14 +35,14 @@
                         <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Status</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         {% for item in items %}
                             <tr>
                                 <td>{{item.title}}</td>
-                                <td>{{item.status}}</td>
+                                <td>{{item.description}}</td>
                                 <td>
                                     <select class="custom-select" name="{{ item.trelloId }}">
                                         {% if item.status == 'Completed' %}
