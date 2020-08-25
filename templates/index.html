@@ -50,21 +50,21 @@
                                 <td>{{item.title}}</td>
                                 <td>{{item.description}}</td>
                                 <td>
-                                    <select class="custom-select" name="{{ item.trelloId }}">
+                                    <select class="custom-select" name="{{ item.trello_id }}">
                                         {% if item.status == 'Completed' %}
-                                        <option value="Not Started" name="{{ item.trelloId }}">Not Started</option>
-                                        <option value="In Progress" name="{{ item.trelloId }}">In Progress</option>
-                                        <option selected="selected" value="Completed" name="{{ item.trelloId }}">Completed</option>
+                                        <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
+                                        <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
+                                        <option selected="selected" value="Completed" name="{{ item.trello_id }}">Completed</option>
                                         {% elif item.status == 'In Progress' %}
-                                        <option value="Not Started" name="{{ item.trelloId }}">Not Started</option>
-                                        <option selected="selected" value="In Progress" name="{{ item.trelloId }}">In Progress</option>
-                                        <option value="Completed" name="{{ item.trelloId }}">Completed</option>
+                                        <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
+                                        <option selected="selected" value="In Progress" name="{{ item.trello_id }}">In Progress</option>
+                                        <option value="Completed" name="{{ item.trello_id }}">Completed</option>
                                         {% else %}
-                                        <option selected="selected" value="Not Started" name="{{ item.trelloId }}">Not Started</option>
-                                        <option value="In Progress" name="{{ item.trelloId }}">In Progress</option>
-                                        <option value="Completed" name="{{ item.trelloId }}">Completed</option>
+                                        <option selected="selected" value="Not Started" name="{{ item.trello_id }}">Not Started</option>
+                                        <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
+                                        <option value="Completed" name="{{ item.trello_id }}">Completed</option>
                                         {% endif %}
-                                        <option value="Delete" name="{{ item.trelloId }}">Delete</option>
+                                        <option value="Delete" name="{{ item.trello_id }}">Delete</option>
                                     </select>
                                 </td>
                             </tr>

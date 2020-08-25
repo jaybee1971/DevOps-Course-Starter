@@ -1,92 +1,87 @@
 from flask import session
-from classes import todoStatus, todoItem
+from classes import todo_status, todo_item
 import os, requests, json, logging
 
 API_PREFIX = 'https://api.trello.com/1/'
 
 API_KEY = os.getenv('API_KEY')
 API_TOKEN = os.getenv('API_TOKEN')
-# API_PARAMS was getting appended with additional parameters, so had to set variable in each API function
 API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
 board = os.getenv('BOARD_ID')
 headers = {"Accept": "application/json"}
 
 
-def trelloGet(trelloPath):
-    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
-    return requests.get(API_PREFIX + trelloPath, params=API_PARAMS).json()
+def trello_get(trelloPath):
+    return requests.get(API_PREFIX + trelloPath, params=API_PARAMS.copy()).json()
 
 
 def get_trello_lists():
-    trelloLists = []
-    for item in trelloGet(f'boards/{board}/lists'):
-        list_data = todoStatus(
+    trello_lists = []
+    for item in trello_get(f'boards/{board}/lists'):
+        list_data = todo_status(
             item['id'],
             item['name']
         )
-        trelloLists.append(list_data)
+        trello_lists.append(list_data)
         if list_data.status == "Not Started":
-            session['newItemId'] = list_data.trelloId
+            session['newItemId'] = list_data.trello_id
         if list_data.status == "In Progress":
-            session['progressId'] = list_data.trelloId
+            session['progressId'] = list_data.trello_id
         if list_data.status == "Completed":
-            session['completedId'] = list_data.trelloId
-    return trelloLists
+            session['completedId'] = list_data.trello_id
+    return trello_lists
     
 
 def get_trello_cards():
-    trelloCards = []
-    trelloLists = get_trello_lists()
-    for todoList in trelloLists:
-        for item in trelloGet(f'lists/{todoList.trelloId}/cards'):
-            todo = todoItem(
+    trello_cards = []
+    trello_lists = get_trello_lists()
+    for todoList in trello_lists:
+        for item in trello_get(f'lists/{todoList.trello_id}/cards'):
+            todo = todo_item(
                 item['id'],
                 item['name'],
                 item['desc'],
                 todoList.status
             )
-            trelloCards.append(todo)
-    return trelloCards
+            trello_cards.append(todo)
+    return trello_cards
 
 
-def trelloPost(title, description):
+def trello_post(title, description):
     url = API_PREFIX + 'cards'
-    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
-    postParams = API_PARAMS
-    postParams['idList'] = str(session['newItemId'])
-    postParams['name'] = title
-    postParams['desc'] = description
+    post_params = API_PARAMS.copy()
+    post_params['idList'] = str(session['newItemId'])
+    post_params['name'] = title
+    post_params['desc'] = description
     return requests.request(
         "POST", 
         url,
-        params=postParams
+        params=post_params
     )
 
 
-def trelloPut(cardId, status):
+def trello_put(cardId, status):
     url = API_PREFIX + 'cards/' + cardId
-    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
-    putParams = API_PARAMS
+    put_params = API_PARAMS.copy()
     if status == 'Not Started':
-        putParams['idList'] = str(session['newItemId'])
+        put_params['idList'] = str(session['newItemId'])
     if status == 'In Progress':
-        putParams['idList'] = str(session['progressId'])
+        put_params['idList'] = str(session['progressId'])
     if status == 'Completed':
-        putParams['idList'] = str(session['completedId'])
+        put_params['idList'] = str(session['completedId'])
     return requests.request(
         "PUT", 
         url,
         headers=headers,
-        params=putParams
+        params=put_params
     )
  
   
-def trelloDelete(cardId):
+def trello_delete(cardId):
     url = API_PREFIX + 'cards/' + cardId
-    API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
     return requests.request(
         "DELETE", 
         url,
-        params=API_PARAMS
+        params=API_PARAMS.copy()
     )
       
