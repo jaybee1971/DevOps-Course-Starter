@@ -5,7 +5,7 @@
   <div class="jumbotron" style="background-color:DodgerBlue;color:White;">
     <h1 class="display-4">My To-Do App</h1>
       <hr class="my-4">
-      <p class="lead">This is my To-Do app, enjoy...</p>
+      <p class="lead">Now with new and improved Trello API calls</p>
   </div>
 
     <div class="row" style="border:2px solid DodgerBlue;">
@@ -15,7 +15,13 @@
                 <div class="form-inline">
                     <div class="form-group" style="flex: 1">
                         <label class="col-sm-1" for="add_todo">Title:</label>
-                        <input required style="flex: 1" class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New to-do">
+                        <input required style="flex: 1" class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New To-Do Title">
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group" style="flex: 1">    
+                        <label class="col-sm-1" for="add_desc">Description:</label>
+                        <input required style="flex: 1" class="form-control" type="text" id="add_desc" name="add_desc" maxlength="64" placeholder="To-Do Description">
                     </div>
                     <div>
                         <button class="btn btn-dark" type="submit">Add</button>
@@ -35,24 +41,30 @@
                         <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Status</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         {% for item in items %}
                             <tr>
                                 <td>{{item.title}}</td>
-                                <td>{{item.status}}</td>
+                                <td>{{item.description}}</td>
                                 <td>
-                                    <select class="custom-select" name="{{ item.id }}">
+                                    <select class="custom-select" name="{{ item.trello_id }}">
                                         {% if item.status == 'Completed' %}
-                                            <option value="Not Started" name="{{ item.id }}">Not Started</option>
-                                            <option selected="selected" value="Completed" name="{{ item.id }}">Completed</option>
+                                        <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
+                                        <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
+                                        <option selected="selected" value="Completed" name="{{ item.trello_id }}">Completed</option>
+                                        {% elif item.status == 'In Progress' %}
+                                        <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
+                                        <option selected="selected" value="In Progress" name="{{ item.trello_id }}">In Progress</option>
+                                        <option value="Completed" name="{{ item.trello_id }}">Completed</option>
                                         {% else %}
-                                            <option selected="selected" value="Not Started" name="{{ item.id }}">Not Started</option>
-                                            <option value="Completed" name="{{ item.id }}">Completed</option>
+                                        <option selected="selected" value="Not Started" name="{{ item.trello_id }}">Not Started</option>
+                                        <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
+                                        <option value="Completed" name="{{ item.trello_id }}">Completed</option>
                                         {% endif %}
-                                        <option value="Delete" name="{{ item.id }}">Delete</option>
+                                        <option value="Delete" name="{{ item.trello_id }}">Delete</option>
                                     </select>
                                 </td>
                             </tr>
