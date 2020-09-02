@@ -41,18 +41,20 @@ def get_trello_cards():
                 item['id'],
                 item['name'],
                 item['desc'],
+                item['due'],
                 todoList.status
             )
             trello_cards.append(todo)
     return trello_cards
 
 
-def trello_post(title, description):
+def trello_post(title, description, due_date):
     url = API_PREFIX + 'cards'
     post_params = API_PARAMS.copy()
     post_params['idList'] = str(session['newItemId'])
     post_params['name'] = title
     post_params['desc'] = description
+    post_params['due'] = due_date
     return requests.request(
         "POST", 
         url,

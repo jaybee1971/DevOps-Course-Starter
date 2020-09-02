@@ -19,7 +19,7 @@ def get_trello_todo_list():
 
 @app.route('/create', methods=['POST'])
 def new_todo():
-    trello_post(request.form['add_todo'], request.form['add_desc'])
+    trello_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'])
     app.logger.info('Processing create new card request')
     return redirect('/')
 

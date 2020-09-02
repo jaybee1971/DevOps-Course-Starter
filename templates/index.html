@@ -11,22 +11,21 @@
     <div class="row" style="border:2px solid DodgerBlue;">
         <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px;">
             <h2>Add a New To-Do Item</h2>
+            <hr class="my-4">
             <form action="/create" method="POST">
-                <div class="form-inline">
-                    <div class="form-group" style="flex: 1">
-                        <label class="col-sm-1" for="add_todo">Title:</label>
-                        <input required style="flex: 1" class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New To-Do Title">
-                    </div>
+                <div class="form-group">
+                    <label for="add_todo">Title:</label>
+                    <input class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New To-Do Title">
                 </div>
-                <div class="form-inline">
-                    <div class="form-group" style="flex: 1">    
-                        <label class="col-sm-1" for="add_desc">Description:</label>
-                        <input required style="flex: 1" class="form-control" type="text" id="add_desc" name="add_desc" maxlength="64" placeholder="To-Do Description">
-                    </div>
-                    <div>
-                        <button class="btn btn-dark" type="submit">Add</button>
-                    </div>
+                <div class="form-group">   
+                    <label for="add_desc">Description:</label>
+                    <input class="form-control" type="text" id="add_desc" name="add_desc" maxlength="64" placeholder="To-Do Description">
                 </div>
+                <div class="form-group">   
+                    <label for="add_desc">Due Date:</label>
+                    <input class="form-control" id="due_date" name="due_date" placeholder="DD/MM/YYY" type="text">
+                </div>
+                <button class="btn btn-dark" type="submit">Add</button>
             </form>
         </div>
     </div>
@@ -34,7 +33,7 @@
     <div class="row">
         <div class="col-md-12" style="margin-top: 40px;">
             <h2 id="todo_table">Your To-Do List</h2>
-            <p>This is a list of your to-do items, check them off once completed or delete as required</p>
+            <p>This is a list of your to-do items, move them through the board or delete if required</p>
             <form action="/update" method="POST">
                 <div class="form-group">
                     <table class="table table-striped" style="width: 100%">
@@ -42,6 +41,8 @@
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -49,6 +50,7 @@
                             <tr>
                                 <td>{{item.title}}</td>
                                 <td>{{item.description}}</td>
+                                <td>{{item.due_date}}</td>
                                 <td>
                                     <select class="custom-select" name="{{ item.trello_id }}">
                                         {% if item.status == 'Completed' %}
@@ -67,15 +69,29 @@
                                         <option value="Delete" name="{{ item.trello_id }}">Delete</option>
                                     </select>
                                 </td>
+                                <td>
+                                    <button class="btn btn-dark" type="update">Update</button>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
-                    <div>
-                        <button class="btn btn-dark" type="submit">Update List</button>
-                    </div>
                 </div>
             </form>
         </div>
     </div>
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="due_date"]');
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'dd/mm/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
 
 {% endblock %}
