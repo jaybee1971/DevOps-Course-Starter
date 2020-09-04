@@ -6,7 +6,7 @@ from operator import itemgetter
 
 app = Flask(__name__)
 # uncomment to debug API calls
-# logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 app.config.from_object('flask_config.Config')
 
 

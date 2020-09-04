@@ -2,13 +2,15 @@
 {% block title %}Jason B To-Do App{% endblock %}
 
 {% block content %}
-  <div class="jumbotron" style="background-color:DodgerBlue;color:White;">
-    <h1 class="display-4">My To-Do App</h1>
-      <hr class="my-4">
-      <p class="lead">Now with new and improved Trello API calls</p>
-  </div>
+    <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="jumbotron" style="background-color:DodgerBlue;color:White;">
+            <h1 class="display-4">My To-Do App</h1>
+            <hr class="my-4">
+            <p class="lead">Now with new and improved Trello API calls</p>
+        </div>
+    </div>
 
-    <div class="row" style="border:2px solid DodgerBlue;">
+    <div class="tab-pane fade active show" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
         <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px;">
             <h2>Add a New To-Do Item</h2>
             <hr class="my-4">
@@ -30,14 +32,13 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="tab-pane fade active show" id="pills-list" role="tabpanel" aria-labelledby="pills-list-tab">
         <div class="col-md-12" style="margin-top: 40px;">
             <h2 id="todo_table">Your To-Do List</h2>
             <p>This is a list of your to-do items, move them through the board or delete if required</p>
-            <form action="/update" method="POST">
-                <div class="form-group">
-                    <table class="table table-striped" style="width: 100%">
-                        <thead>
+            <div>
+                <table class="table table-striped" style="width: 100%">
+                    <thead>
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
@@ -45,53 +46,53 @@
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                        </thead>
-                        {% for item in items %}
-                            <tr>
-                                <td>{{item.title}}</td>
-                                <td>{{item.description}}</td>
-                                <td>{{item.due_date}}</td>
-                                <td>
-                                    <select class="custom-select" name="{{ item.trello_id }}">
-                                        {% if item.status == 'Completed' %}
+                    </thead>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{item.title}}</td>
+                            <td>{{item.description}}</td>
+                            <td>{{item.due_date}}</td>
+                            <td>
+                                <select class="custom-select" name="{{ item.trello_id }}" form="{{ item.trello_id }}">
+                                    {% if item.status == 'Completed' %}
                                         <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
                                         <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
                                         <option selected="selected" value="Completed" name="{{ item.trello_id }}">Completed</option>
-                                        {% elif item.status == 'In Progress' %}
+                                    {% elif item.status == 'In Progress' %}
                                         <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
                                         <option selected="selected" value="In Progress" name="{{ item.trello_id }}">In Progress</option>
                                         <option value="Completed" name="{{ item.trello_id }}">Completed</option>
-                                        {% else %}
+                                    {% else %}
                                         <option selected="selected" value="Not Started" name="{{ item.trello_id }}">Not Started</option>
                                         <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
                                         <option value="Completed" name="{{ item.trello_id }}">Completed</option>
-                                        {% endif %}
-                                        <option value="Delete" name="{{ item.trello_id }}">Delete</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button class="btn btn-dark" type="update">Update</button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </form>
+                                    {% endif %}
+                                    <option value="Delete" name="{{ item.trello_id }}">Delete</option>
+                                </select>
+                            </td>
+                            <td>
+                                <form id="{{ item.trello_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" type="update" name="{{ item.trello_id }}">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 
-<script>
-    $(document).ready(function(){
-      var date_input=$('input[name="due_date"]');
-      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-      var options={
-        format: 'dd/mm/yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-      };
-      date_input.datepicker(options);
-    })
-</script>
-
+    <script>
+        $(document).ready(function(){
+        var date_input=$('input[name="due_date"]');
+        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        var options={
+            format: 'dd/mm/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        };
+        date_input.datepicker(options);
+        })
+    </script>
 {% endblock %}
