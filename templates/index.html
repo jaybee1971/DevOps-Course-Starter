@@ -2,40 +2,18 @@
 {% block title %}Jason B To-Do App{% endblock %}
 
 {% block content %}
-    <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-        <div class="jumbotron" style="background-color:DodgerBlue;color:White;">
+    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="jumbotron" style="background-color:DodgerBlue;color:White;margin-top:40px;">
             <h1 class="display-4">My To-Do App</h1>
             <hr class="my-4">
             <p class="lead">Now with new and improved Trello API calls</p>
         </div>
     </div>
 
-    <div class="tab-pane fade active show" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
-        <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px;">
-            <h2>Add a New To-Do Item</h2>
-            <hr class="my-4">
-            <form action="/create" method="POST">
-                <div class="form-group">
-                    <label for="add_todo">Title:</label>
-                    <input class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New To-Do Title">
-                </div>
-                <div class="form-group">   
-                    <label for="add_desc">Description:</label>
-                    <input class="form-control" type="text" id="add_desc" name="add_desc" maxlength="64" placeholder="To-Do Description">
-                </div>
-                <div class="form-group">   
-                    <label for="add_desc">Due Date:</label>
-                    <input class="form-control" id="due_date" name="due_date" placeholder="DD/MM/YYY" type="text">
-                </div>
-                <button class="btn btn-dark" type="submit">Add</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="tab-pane fade active show" id="pills-list" role="tabpanel" aria-labelledby="pills-list-tab">
-        <div class="col-md-12" style="margin-top: 40px;">
-            <h2 id="todo_table">Your To-Do List</h2>
-            <p>This is a list of your to-do items, move them through the board or delete if required</p>
+    <div class="tab-pane fade show active" id="todo_list" role="tabpanel" aria-labelledby="pills-list-tab">
+        <div class="col-md-12" style="margin-top:40px;">
+            <h2 id="todo_table" style="color:DodgerBlue;">Your To-Do List</h2>
+            <p>This is a list of your to-do items, update the status or delete if required</p>
             <div>
                 <table class="table table-striped" style="width: 100%">
                     <thead>
@@ -72,7 +50,7 @@
                             </td>
                             <td>
                                 <form id="{{ item.trello_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" type="update" name="{{ item.trello_id }}">Update</button>
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ item.trello_id }}">Update</button>
                                 </form>
                             </td>
                         </tr>
@@ -82,17 +60,43 @@
         </div>
     </div>
 
+    <div class="tab-pane fade" id="new_todo" role="tabpanel" aria-labelledby="pills-new-tab">
+        <div class="bootstrap-iso">
+            <div class="container-fluid">
+                <div class="col-md-12" style="margin-top:40px;">
+                    <h2 style="color:DodgerBlue;">Add a New To-Do Item</h2>
+                    <hr class="my-4">
+                    <form action="/create" method="POST">
+                        <div class="form-group">
+                            <label for="add_todo">Title:</label>
+                            <input class="form-control" type="text" id="add_todo" name="add_todo" maxlength="64" placeholder="New To-Do Title">
+                        </div>
+                        <div class="form-group">   
+                            <label for="add_desc">Description:</label>
+                            <input class="form-control" type="text" id="add_desc" name="add_desc" maxlength="64" placeholder="To-Do Description">
+                        </div>
+                        <div class="form-group"> 
+                            <label class="control-label" for="due_date">Due Date:</label>
+                            <input class="form-control" id="due_date" name="due_date" placeholder="DD/MM/YYY" type="text"/>
+                        </div>
+                        <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="submit">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+
     <script>
         $(document).ready(function(){
-        var date_input=$('input[name="due_date"]');
-        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-        var options={
-            format: 'dd/mm/yyyy',
-            container: container,
-            todayHighlight: true,
-            autoclose: true,
-        };
-        date_input.datepicker(options);
+            var date_input=$('input[name="due_date"]');
+            var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+            var options={
+                format: 'dd/mm/yyyy',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            };
+            date_input.datepicker(options);
         })
     </script>
 {% endblock %}
