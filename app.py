@@ -5,14 +5,23 @@ from trello_api import trello_get, get_trello_list_id, get_trello_lists, get_tre
 from operator import itemgetter
 
 app = Flask(__name__)
-# uncomment to debug API calls
-# logging.basicConfig(level=logging.DEBUG)
+# # uncomment to debug API calls
+# # logging.basicConfig(level=logging.DEBUG)
 app.config.from_object('flask_config.Config')
+
+
+def create_app():
+    app = Flask(__name__)
+    # uncomment to debug API calls
+    # logging.basicConfig(level=logging.DEBUG)
+    app.config.from_object('flask_config.Config')
+    # All the routes and setup code etc
+    return app
 
 
 @app.route('/', methods=['GET'])
 def get_trello_todo_list():
-    trello_todo_list = view_model(get_trello_cards())
+    trello_todo_list = view_model(get_trello_cards(),get_trello_lists())
     app.logger.info('Processing get cards request')
     return render_template('index.html', view_model_items=trello_todo_list)
 

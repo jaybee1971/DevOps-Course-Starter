@@ -1,5 +1,5 @@
 from flask import session
-from classes import todo_status, todo_item
+from classes import todo_status, todo_item, view_model
 import os, requests, json, logging
 
 API_PREFIX = 'https://api.trello.com/1/'
@@ -19,30 +19,30 @@ def get_trello_list_id(card_status):
 
 
 def get_trello_lists():
-    trello_lists = []
+    todo_statuses = []
     for item in trello_get(f'boards/{board}/lists'):
         list_data = todo_status(
             item['id'],
             item['name']
         )
-        trello_lists.append(list_data)
-    return trello_lists
+        todo_statuses.append(list_data)
+    return todo_statuses
     
 
 def get_trello_cards():
-    trello_cards = []
-    trello_lists = get_trello_lists()
-    for todo_list in trello_lists:
-        for item in trello_get(f'lists/{todo_list.trello_id}/cards'):
+    todo_items = []
+    todo_statuses = get_trello_lists()
+    for todo_status in todo_statuses:
+        for item in trello_get(f'lists/{todo_status.trello_id}/cards'):
             todo = todo_item(
                 item['id'],
                 item['name'],
                 item['desc'],
                 item['due'],
-                todo_list.status
+                todo_status.status
             )
-            trello_cards.append(todo)
-    return trello_cards
+            todo_items.append(todo)
+    return todo_items
 
 
 def trello_post(title, description, due_date):

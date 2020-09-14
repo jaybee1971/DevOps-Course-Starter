@@ -1,6 +1,7 @@
 import pytest
 from classes import todo_status, todo_item, view_model
 
+
 test_items = [todo_item('00001', 'test item 1', 'item for testing', '', 'Not Started'),
               todo_item('00002', 'test item 2', 'item for testing', '', 'In Progress'),
               todo_item('00003', 'test item 3', 'item for testing', '', 'Completed'),
@@ -13,6 +14,7 @@ test_statuses = [todo_status('10000', 'Not Started'),
                  todo_status('20000', 'In Progress'),
                  todo_status('30000', 'Completed')
                  ]
+
 
 @pytest.fixture 
 def test_view_model():
