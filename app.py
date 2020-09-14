@@ -1,20 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for
 import logging
-from classes import todo_status, todo_item
+from classes import todo_status, todo_item, view_model
 from trello_api import trello_get, get_trello_list_id, get_trello_lists, get_trello_cards, trello_post, trello_put, trello_delete
 from operator import itemgetter
 
 app = Flask(__name__)
 # uncomment to debug API calls
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
 app.config.from_object('flask_config.Config')
 
 
 @app.route('/', methods=['GET'])
 def get_trello_todo_list():
-    trello_todo_list = get_trello_cards()
+    trello_todo_list = view_model(get_trello_cards())
     app.logger.info('Processing get cards request')
-    return render_template('index.html', items=trello_todo_list)
+    return render_template('index.html', view_model_items=trello_todo_list)
 
 
 @app.route('/create', methods=['POST'])
@@ -33,7 +33,7 @@ def update():
             app.logger.info('Processing delete card request')
         else:
             trello_put(trello_id, card_status)
-            app.logger.info('Processing update cards request')
+            app.logger.info('Processing update card request')
     return redirect('/')
 
 

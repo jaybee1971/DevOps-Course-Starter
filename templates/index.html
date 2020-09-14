@@ -25,10 +25,10 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {% for item in items %}
+                    {% for item in view_model_items.todo_items %}
                         <tr>
-                            <td>{{item.title}}</td>
-                            <td>{{item.description}}</td>
+                            <td contenteditable="true">{{item.title}}</td>
+                            <td contenteditable="true">{{item.description}}</td>
                             <td>{{item.due_date}}</td>
                             <td>
                                 <select class="custom-select" name="{{ item.trello_id }}" form="{{ item.trello_id }}">
@@ -94,6 +94,7 @@
                 format: 'dd/mm/yyyy',
                 container: container,
                 todayHighlight: true,
+                todayBtn: 'linked',
                 autoclose: true,
             };
             date_input.datepicker(options);
