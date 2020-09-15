@@ -1,17 +1,11 @@
 from flask import session
+from flask_config import Config
 from classes import todo_status, todo_item, view_model
-import os, requests, json, logging
-
-API_PREFIX = 'https://api.trello.com/1/'
-
-API_KEY = os.getenv('API_KEY')
-API_TOKEN = os.getenv('API_TOKEN')
-API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
-board = os.getenv('BOARD_ID')
+import os, requests, json, logging, sys
 
 
 def trello_get(trello_path):
-    return requests.get(API_PREFIX + trello_path, params=API_PARAMS.copy()).json()
+    return requests.get(Config.API_PREFIX + trello_path, params=Config.API_PARAMS.copy()).json()
 
 
 def get_trello_list_id(card_status):
@@ -20,7 +14,7 @@ def get_trello_list_id(card_status):
 
 def get_trello_lists():
     todo_statuses = []
-    for item in trello_get(f'boards/{board}/lists'):
+    for item in trello_get(f'boards/{Config.board}/lists'):
         list_data = todo_status(
             item['id'],
             item['name']
@@ -46,12 +40,12 @@ def get_trello_cards():
 
 
 def trello_post(title, description, due_date):
-    url = API_PREFIX + 'cards'
-    post_params = API_PARAMS.copy()
-    post_params['idList'] = get_trello_list_id('Not Started')
+    url = Config.API_PREFIX + 'cards'
+    post_params = Config.API_PARAMS.copy()
     post_params['name'] = title
     post_params['desc'] = description
     post_params['due'] = due_date
+    post_params['idList'] = get_trello_list_id('Not Started')
     return requests.request(
         "POST", 
         url,
@@ -60,8 +54,8 @@ def trello_post(title, description, due_date):
 
 
 def trello_put(card_id, status):
-    url = API_PREFIX + 'cards/' + card_id
-    put_params = API_PARAMS.copy()
+    url = Config.API_PREFIX + 'cards/' + card_id
+    put_params = Config.API_PARAMS.copy()
     put_params['idList'] = get_trello_list_id(status)
     return requests.request(
         "PUT", 
@@ -71,10 +65,10 @@ def trello_put(card_id, status):
  
   
 def trello_delete(card_id):
-    url = API_PREFIX + 'cards/' + card_id
+    url = Config.API_PREFIX + 'cards/' + card_id
     return requests.request(
         "DELETE", 
         url,
-        params=API_PARAMS.copy()
+        params=Config.API_PARAMS.copy()
     )
       
