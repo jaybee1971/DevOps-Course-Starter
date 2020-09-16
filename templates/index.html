@@ -15,8 +15,8 @@
             <h2 id="todo_table" style="color:DodgerBlue;">Your To-Do List</h2>
             <p>This is a list of your to-do items, update the status or delete if required</p>
             <div>
-                <table class="table table-striped" style="width: 100%">
-                    <thead>
+                <table class="table" style="width: 100%">
+                    <thead style="background-color:DodgerBlue;color:White">
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
@@ -25,32 +25,74 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {% for item in view_model_items.todo_items %}
+                    <tr class="table-dark">
+                        <th colspan="5">Not Started Items</th>
+                    </tr>
+                    {% for todo_item in view_model_items.filter_by_todo_status(view_model_items.todo_statuses[0]) %}
                         <tr>
-                            <td contenteditable="true">{{item.title}}</td>
-                            <td contenteditable="true">{{item.description}}</td>
-                            <td>{{item.due_date}}</td>
+                        
+                            <td contenteditable="true">{{todo_item.title}}</td>
+                            <td contenteditable="true">{{todo_item.description}}</td>
+                            <td>{{todo_item.due_date}}</td>
                             <td>
-                                <select class="custom-select" name="{{ item.trello_id }}" form="{{ item.trello_id }}">
-                                    {% if item.status == 'Completed' %}
-                                        <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
-                                        <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
-                                        <option selected="selected" value="Completed" name="{{ item.trello_id }}">Completed</option>
-                                    {% elif item.status == 'In Progress' %}
-                                        <option value="Not Started" name="{{ item.trello_id }}">Not Started</option>
-                                        <option selected="selected" value="In Progress" name="{{ item.trello_id }}">In Progress</option>
-                                        <option value="Completed" name="{{ item.trello_id }}">Completed</option>
-                                    {% else %}
-                                        <option selected="selected" value="Not Started" name="{{ item.trello_id }}">Not Started</option>
-                                        <option value="In Progress" name="{{ item.trello_id }}">In Progress</option>
-                                        <option value="Completed" name="{{ item.trello_id }}">Completed</option>
-                                    {% endif %}
-                                    <option value="Delete" name="{{ item.trello_id }}">Delete</option>
+                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
+                                    <option selected="selected" value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
+                                    <option value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
+                                    <option value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
                                 </select>
                             </td>
                             <td>
-                                <form id="{{ item.trello_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ item.trello_id }}">Update</button>
+                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-dark"> 
+                        <th colspan="5">In Progress Items</th>
+                    </tr>
+                    {% for todo_item in view_model_items.filter_by_todo_status(view_model_items.todo_statuses[1]) %}
+                        <tr>
+                        
+                            <td contenteditable="true">{{todo_item.title}}</td>
+                            <td contenteditable="true">{{todo_item.description}}</td>
+                            <td>{{todo_item.due_date}}</td>
+                            <td>
+                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
+                                    <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
+                                    <option selected="selected" value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
+                                    <option value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
+                                </select>
+                            </td>
+                            <td>
+                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-dark">
+                        <th colspan="5">Completed Items</th>
+                    </tr>
+                    {% for todo_item in view_model_items.filter_by_todo_status(view_model_items.todo_statuses[2]) %}
+                        <tr>
+                        
+                            <td contenteditable="true">{{todo_item.title}}</td>
+                            <td contenteditable="true">{{todo_item.description}}</td>
+                            <td>{{todo_item.due_date}}</td>
+                            <td>
+                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
+                                    <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
+                                    <option value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
+                                    <option selected="selected" value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
+                                </select>
+                            </td>
+                            <td>
+                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
                                 </form>
                             </td>
                         </tr>
