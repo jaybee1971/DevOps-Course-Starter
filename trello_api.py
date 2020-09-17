@@ -1,6 +1,8 @@
 from flask import session
 from flask_config import Config
-from classes import todo_status, todo_item, view_model
+from todo_item import todo_item
+from todo_status import todo_status
+from view_model import view_model
 import os, requests, json, logging, sys
 
 

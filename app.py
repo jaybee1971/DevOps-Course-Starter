@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 import logging, sys, os
-from classes import todo_status, todo_item, view_model
+from todo_item import todo_item
+from todo_status import todo_status
+from view_model import view_model
 from trello_api import trello_get, get_trello_list_id, get_trello_lists, get_trello_cards, trello_post, trello_put, trello_delete
 from operator import itemgetter
+from datetime import datetime
 
 
 def create_app():
@@ -21,7 +24,8 @@ def create_app():
 
     @app.route('/create', methods=['POST'])
     def new_todo():
-        trello_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'])
+        trello_date = datetime.strptime(request.form['due_date'], '%d/%m/%Y')
+        trello_post(request.form['add_todo'], request.form['add_desc'], trello_date)
         app.logger.info('Processing create new card request')
         return redirect('/')
 

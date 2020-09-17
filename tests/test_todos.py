@@ -1,5 +1,7 @@
 import pytest
-from classes import todo_status, todo_item, view_model
+from todo_item import todo_item
+from todo_status import todo_status
+from view_model import view_model
 
 
 test_items = [todo_item('00001', 'test item 1', 'item for testing', '', 'Not Started'),
