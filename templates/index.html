@@ -2,7 +2,7 @@
 {% block title %}Jason B To-Do App{% endblock %}
 
 {% block content %}
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="pills-home-tab">
+    <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="pills-about-tab">
         <div class="jumbotron" style="background-color:DodgerBlue;color:White;margin-top:40px;">
             <h1 class="display-4">My To-Do App</h1>
             <hr class="my-4">
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="tab-pane fade" id="todo_list" role="tabpanel" aria-labelledby="pills-list-tab">
+    <div class="tab-pane fade show active" id="todo_list" role="tabpanel" aria-labelledby="pills-list-tab">
         <div class="col-md-12" style="margin-top:40px;">
             <h2 id="todo_table" style="color:DodgerBlue;">Your To-Do List</h2>
             <p>This is a list of your to-do items, update the status or delete if required</p>
@@ -22,7 +22,7 @@
                             <th>Description</th>
                             <th>Due Date</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th style="text-align: center;">Action</th>
                         </tr>
                     </thead>
                     <tr class="table-dark">
@@ -42,9 +42,9 @@
                                     <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
                                 </select>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White;" type="update" name="{{ todo_item.trello_id }}">Update</button>
                                 </form>
                             </td>
                         </tr>
@@ -66,7 +66,7 @@
                                     <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
                                 </select>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
                                 </form>
@@ -90,7 +90,7 @@
                                     <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
                                 </select>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
                                 </form>
