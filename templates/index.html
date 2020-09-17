@@ -20,7 +20,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Due Date</th>
+                            <th style="text-align: center;">Due Date</th>
                             <th>Status</th>
                             <th style="text-align: center;">Action</th>
                         </tr>
@@ -33,7 +33,7 @@
                         
                             <td contenteditable="true">{{todo_item.title}}</td>
                             <td contenteditable="true">{{todo_item.description}}</td>
-                            <td>{{todo_item.due_date}}</td>
+                            <td style="text-align: center;">{{todo_item.due_date}}</td>
                             <td>
                                 <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
                                     <option selected="selected" value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
@@ -57,7 +57,7 @@
                         
                             <td contenteditable="true">{{todo_item.title}}</td>
                             <td contenteditable="true">{{todo_item.description}}</td>
-                            <td>{{todo_item.due_date}}</td>
+                            <td style="text-align: center;">{{todo_item.due_date}}</td>
                             <td>
                                 <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
                                     <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
