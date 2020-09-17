@@ -24,7 +24,10 @@ def create_app():
 
     @app.route('/create', methods=['POST'])
     def new_todo():
-        trello_date = datetime.strptime(request.form['due_date'], '%d/%m/%Y')
+        if request.form['due_date'] == '':
+            trello_date = ''
+        else:
+            trello_date = datetime.strptime(request.form['due_date'], '%d/%m/%Y')
         trello_post(request.form['add_todo'], request.form['add_desc'], trello_date)
         app.logger.info('Processing create new card request')
         return redirect('/')
