@@ -52,7 +52,7 @@
                     <tr class="table-dark"> 
                         <th colspan="5">In Progress Items</th>
                     </tr>
-                    {% for todo_item in view_model_items.filter_by_todo_status(view_model_items.todo_statuses[1]) %}
+                    {% for todo_item in view_model_items.filter_in_progress_items() %}
                         <tr>
                         
                             <td contenteditable="true">{{todo_item.title}}</td>
@@ -81,7 +81,7 @@
                         
                             <td contenteditable="true">{{todo_item.title}}</td>
                             <td contenteditable="true">{{todo_item.description}}</td>
-                            <td>{{todo_item.due_date}}</td>
+                            <td style="text-align: center;">{{todo_item.due_date}}</td>
                             <td>
                                 <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
                                     <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>

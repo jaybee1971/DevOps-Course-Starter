@@ -2,14 +2,24 @@ import pytest
 from todo_item import todo_item
 from todo_status import todo_status
 from view_model import view_model
+from datetime import *
 
 
-test_items = [todo_item('00001', 'test item 1', 'item for testing', '', 'Not Started'),
-              todo_item('00002', 'test item 2', 'item for testing', '', 'In Progress'),
-              todo_item('00003', 'test item 3', 'item for testing', '', 'Completed'),
-              todo_item('00004', 'test item 4', 'item for testing', '', 'Not Started'),
-              todo_item('00005', 'test item 5', 'item for testing', '', 'In Progress'),
-              todo_item('00006', 'test item 6', 'item for testing', '', 'Completed')
+today = datetime.today()
+older1 = today - timedelta(1)
+older2 = today - timedelta(2)
+test_today = today.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+test_older1 = older1.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+test_older2 = older2.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+
+test_items = [todo_item('00001', 'test item 1', 'item for testing', None, 'Not Started', ''),
+              todo_item('00002', 'test item 2', 'item for testing', None, 'In Progress', ''),
+              todo_item('00003', 'test item 3', 'item for testing', None, 'Completed', test_today),
+              todo_item('00004', 'test item 4', 'item for testing', None, 'Not Started', ''),
+              todo_item('00005', 'test item 5', 'item for testing', None, 'In Progress', ''),
+              todo_item('00006', 'test item 6', 'item for testing', None, 'Completed', test_older1),
+              todo_item('00007', 'test item 7', 'item for testing', None, 'Completed', test_older1),
+              todo_item('00008', 'test item 8', 'item for testing', None, 'Completed', test_older2)
               ]
 
 test_statuses = [todo_status('10000', 'Not Started'),
@@ -21,6 +31,11 @@ test_statuses = [todo_status('10000', 'Not Started'),
 @pytest.fixture 
 def test_view_model():
     return view_model(test_items, test_statuses)
+
+
+@pytest.fixture 
+def test_completed_items():
+    return print(test_items)
 
 
 def test_get_todo_statuses(test_view_model):

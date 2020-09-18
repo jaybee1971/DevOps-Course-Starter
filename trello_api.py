@@ -1,5 +1,4 @@
-from flask import session
-from flask_config import Config
+from flask import session, current_app as app
 from todo_item import todo_item
 from todo_status import todo_status
 from view_model import view_model
@@ -7,7 +6,7 @@ import os, requests, json, logging, sys
 
 
 def trello_get(trello_path):
-    return requests.get(Config.API_PREFIX + trello_path, params=Config.API_PARAMS.copy()).json()
+    return requests.get(app.config['API_PREFIX'] + trello_path, params=app.config['API_PARAMS'].copy()).json()
 
 
 def get_trello_list_id(card_status):
@@ -16,7 +15,8 @@ def get_trello_list_id(card_status):
 
 def get_trello_lists():
     todo_statuses = []
-    for item in trello_get(f'boards/{Config.board}/lists'):
+    board = app.config['BOARD_ID']
+    for item in trello_get(f'boards/{board}/lists'):
         list_data = todo_status(
             item['id'],
             item['name']
@@ -35,15 +35,16 @@ def get_trello_cards():
                 item['name'],
                 item['desc'],
                 item['due'],
-                todo_status.status
+                todo_status.status,
+                item['dateLastActivity']
             )
             todo_items.append(todo)
     return todo_items
 
 
 def trello_post(title, description, due_date):
-    url = Config.API_PREFIX + 'cards'
-    post_params = Config.API_PARAMS.copy()
+    url = app.config['API_PREFIX'] + 'cards'
+    post_params = app.config['API_PARAMS'].copy()
     post_params['name'] = title
     post_params['desc'] = description
     post_params['due'] = due_date
@@ -56,8 +57,8 @@ def trello_post(title, description, due_date):
 
 
 def trello_put(card_id, status):
-    url = Config.API_PREFIX + 'cards/' + card_id
-    put_params = Config.API_PARAMS.copy()
+    url = app.config['API_PREFIX'] + 'cards/' + card_id
+    put_params = app.config['API_PARAMS'].copy()
     put_params['idList'] = get_trello_list_id(status)
     return requests.request(
         "PUT", 
@@ -67,10 +68,10 @@ def trello_put(card_id, status):
  
   
 def trello_delete(card_id):
-    url = Config.API_PREFIX + 'cards/' + card_id
+    url = app.config['API_PREFIX'] + 'cards/' + card_id
     return requests.request(
         "DELETE", 
         url,
-        params=Config.API_PARAMS.copy()
+        params=app.config['API_PARAMS'].copy()
     )
       

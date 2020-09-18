@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import logging, sys, os
+from flask_config import Config
 from todo_item import todo_item
 from todo_status import todo_status
 from view_model import view_model
@@ -12,7 +13,7 @@ def create_app():
     app = Flask(__name__)
     # uncomment to debug API calls
     # logging.basicConfig(level=logging.DEBUG)
-    app.config.from_object('flask_config.Config')
+    app.config.from_object(Config())
     
     # All the routes and setup code etc
     @app.route('/', methods=['GET'])
