@@ -33,11 +33,6 @@ def test_view_model():
     return view_model(test_items, test_statuses)
 
 
-@pytest.fixture 
-def test_completed_items():
-    return print(test_items)
-
-
 def test_get_todo_statuses(test_view_model):
     test_todo_statuses = test_view_model.get_todo_statuses()
 
@@ -72,3 +67,15 @@ def test_filter_completed_items(test_view_model):
     assert test_completed_items[0].title == test_items[2].title
     assert test_completed_items[1].trello_id == test_items[5].trello_id
     assert test_completed_items[1].title == test_items[5].title
+
+
+def test_completed_by_date(test_view_model):
+    test_completed_today = test_view_model.filter_completed_by_date(test_today)
+    test_completed_yesterday = test_view_model.filter_completed_by_date(test_older1)
+    test_completed_older = test_view_model.filter_completed_by_date(test_older2)
+    
+    assert test_completed_today[0].last_updated ==  test_items[2].last_updated
+    assert test_completed_yesterday[0].last_updated ==  test_items[5].last_updated
+    assert test_completed_yesterday[0].last_updated ==  test_items[6].last_updated
+    assert test_completed_older[0].last_updated ==  test_items[7].last_updated
+    

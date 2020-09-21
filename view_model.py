@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import *
 
 class view_model:
     
@@ -34,8 +34,7 @@ class view_model:
     def filter_completed_items(self):
         return self.filter_by_todo_status(self.get_todo_status(view_model.my_statuses[2]))  
     
-    def recent_completed_items(self):
-        done_list = filter_completed_items()
-        today = datetime.date.today()
-        recent_items = [todo_item for todo_item in done_list if todo_item.last_updated.date() == today]
-        return recent_items
+    def filter_completed_by_date(self, filter_date):
+        done_list = self.filter_completed_items()
+        completed_items_by_date = [todo_item for todo_item in done_list if todo_item.last_updated == filter_date]
+        return completed_items_by_date
