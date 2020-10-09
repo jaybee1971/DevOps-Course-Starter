@@ -2,7 +2,10 @@
 import os
 
 class Config:
-    """Base configuration variables."""
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    if not SECRET_KEY:
-        raise ValueError("No SECRET_KEY set for Flask application. Did you forget to run setup.sh?")
+    def __init__(self):
+        """Base configuration variables."""
+        self.API_PREFIX = 'https://api.trello.com/1/'
+        self.API_KEY = os.getenv('API_KEY')
+        self.API_TOKEN = os.getenv('API_TOKEN')
+        self.API_PARAMS = {'key': self.API_KEY, 'token': self.API_TOKEN}
+        self.BOARD_ID = os.getenv('BOARD_ID')

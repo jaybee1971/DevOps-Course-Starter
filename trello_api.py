@@ -1,17 +1,12 @@
-from flask import session
-from classes import todo_status, todo_item
-import os, requests, json, logging
-
-API_PREFIX = 'https://api.trello.com/1/'
-
-API_KEY = os.getenv('API_KEY')
-API_TOKEN = os.getenv('API_TOKEN')
-API_PARAMS = {'key': API_KEY, 'token': API_TOKEN}
-board = os.getenv('BOARD_ID')
+from flask import session, current_app as app
+from todo_item import todo_item
+from todo_status import todo_status
+from view_model import view_model
+import os, requests, json, logging, sys
 
 
 def trello_get(trello_path):
-    return requests.get(API_PREFIX + trello_path, params=API_PARAMS.copy()).json()
+    return requests.get(app.config['API_PREFIX'] + trello_path, params=app.config['API_PARAMS'].copy()).json()
 
 
 def get_trello_list_id(card_status):
@@ -19,39 +14,41 @@ def get_trello_list_id(card_status):
 
 
 def get_trello_lists():
-    trello_lists = []
+    todo_statuses = []
+    board = app.config['BOARD_ID']
     for item in trello_get(f'boards/{board}/lists'):
         list_data = todo_status(
             item['id'],
             item['name']
         )
-        trello_lists.append(list_data)
-    return trello_lists
+        todo_statuses.append(list_data)
+    return todo_statuses
     
 
 def get_trello_cards():
-    trello_cards = []
-    trello_lists = get_trello_lists()
-    for todo_list in trello_lists:
-        for item in trello_get(f'lists/{todo_list.trello_id}/cards'):
+    todo_items = []
+    todo_statuses = get_trello_lists()
+    for todo_status in todo_statuses:
+        for item in trello_get(f'lists/{todo_status.trello_id}/cards'):
             todo = todo_item(
                 item['id'],
                 item['name'],
                 item['desc'],
                 item['due'],
-                todo_list.status
+                todo_status.status,
+                item['dateLastActivity']
             )
-            trello_cards.append(todo)
-    return trello_cards
+            todo_items.append(todo)
+    return todo_items
 
 
 def trello_post(title, description, due_date):
-    url = API_PREFIX + 'cards'
-    post_params = API_PARAMS.copy()
-    post_params['idList'] = get_trello_list_id('Not Started')
+    url = app.config['API_PREFIX'] + 'cards'
+    post_params = app.config['API_PARAMS'].copy()
     post_params['name'] = title
     post_params['desc'] = description
     post_params['due'] = due_date
+    post_params['idList'] = get_trello_list_id('Not Started')
     return requests.request(
         "POST", 
         url,
@@ -60,8 +57,8 @@ def trello_post(title, description, due_date):
 
 
 def trello_put(card_id, status):
-    url = API_PREFIX + 'cards/' + card_id
-    put_params = API_PARAMS.copy()
+    url = app.config['API_PREFIX'] + 'cards/' + card_id
+    put_params = app.config['API_PARAMS'].copy()
     put_params['idList'] = get_trello_list_id(status)
     return requests.request(
         "PUT", 
@@ -71,10 +68,10 @@ def trello_put(card_id, status):
  
   
 def trello_delete(card_id):
-    url = API_PREFIX + 'cards/' + card_id
+    url = app.config['API_PREFIX'] + 'cards/' + card_id
     return requests.request(
         "DELETE", 
         url,
-        params=API_PARAMS.copy()
+        params=app.config['API_PARAMS'].copy()
     )
       
