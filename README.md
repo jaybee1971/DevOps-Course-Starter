@@ -60,3 +60,33 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+
+## Using a Virtual Machine
+
+This application can also be run within a virtual machine by using Vagrant.
+
+Vagrant requires a hypervisor installed. We recommend VirtualBox.
+https://www.virtualbox.org/
+
+Download and install vagrant from the official website. You can check it's installed correctly by running the vagrant command in your terminal.
+https://www.vagrantup.com/
+
+The Vagranfile within this repo will:
+```bash
+ * Pull down a Ubuntu Linux image to run the app
+ * Prep your VM for Python installation
+ * Install Python 3.8.5
+ * Install poetry and load any dependencies
+ * Launch the ToDo app
+```
+
+The VM can be managed using vagrant's CLI commands. Some useful ones are:
+```bash
+ * vagrant up - Starts your VM, creating and provisioning it automatically if required.
+ * vagrant provision - Runs any VM provisioning steps specified in the Vagrantfile. Provisioning steps are one-off operations that adjust the system provided by the box.
+ * vagrant suspend - Suspends any running VM. The VM will be restarted on the next vagrant up command.
+ * vagrant destroy - Destroys the VM. It will be fully recreated the next time you run vagrant up.
+```
+
+Browse to the application from:  http://0.0.0.0:5000/
