@@ -1,0 +1,29 @@
+[
+    {
+        "id": "1234567890",
+        "name": "Not Started",
+        "closed": false,
+        "pos": 16384,
+        "softLimit": null,
+        "idBoard": "test-trello-board-id",
+        "subscribed": false
+    },
+    {
+        "id": "0987654321",
+        "name": "In Progress",
+        "closed": false,
+        "pos": 32768,
+        "softLimit": null,
+        "idBoard": "test-trello-board-id",
+        "subscribed": false
+    },
+    {
+        "id": "1029384756",
+        "name": "Completed",
+        "closed": false,
+        "pos": 49152,
+        "softLimit": null,
+        "idBoard": "test-trello-board-id",
+        "subscribed": false
+    }
+]
