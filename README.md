@@ -77,6 +77,23 @@ You should see output similar to the following:
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
+## Running Tests
+
+Ensure the dependencies are correct as per previous section.
+
+To run Selenium you will need an appropriate driver for your browser of choice:
+```bash
+ * Firefox - Gecko Driver
+ * Chrome - ChromeDriver from the Chromium project
+```
+Documentation and links can be found here:  https://www.selenium.dev/downloads/
+
+Tests:
+```bash
+ * test_todos  -  unit tests for each class method
+ * test_app  -  e2e system test with mocked Trello responses
+ * test_browser  -  Selenium tests for launching app in different browsers (chrome test included)
+```
 
 ## Using a Virtual Machine
 
