@@ -123,3 +123,14 @@ The VM can be managed using vagrant's CLI commands. Some useful ones are:
 ```
 
 Browse to the application from:  http://0.0.0.0:5000/
+
+## Using Docker
+
+This application can also be run within a Docker container.
+
+From the main application folder:
+```bash
+$ docker-compose up --build
+```
+
+Browse to the application from:  http://0.0.0.0:5000/
