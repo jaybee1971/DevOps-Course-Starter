@@ -45,7 +45,7 @@ Packages required:
 
 To update any missing dependencies:
 ```bash
-$ poetry add --dev <package_name>
+$ poetry add <package_name>
 ```
 
 ## Trello API
