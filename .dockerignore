@@ -1,0 +1,27 @@
+
+# ignore .git and .cache folders
+.git
+.cache
+
+# Python and Flask stuff
+__pycache__/
+.pytest_cache/
+
+# ignore all markdown files (md) beside all README*.md other than README-secret.md
+*.md
+!README*.md
+README-secret.md
+
+### macOS ###
+.DS_Store
+
+### MS vsCode ###
+.vscode/
+
+### Virtual environment ###
+env/
+.venv
+.vagrant
+
+### Configuration files ###
+.env
