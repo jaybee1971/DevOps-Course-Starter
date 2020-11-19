@@ -13,8 +13,11 @@ RUN poetry install
 
 FROM base-image as todo-prod
 # copy app code and run gunicorn
-COPY entrypoint-prod.sh ./*.py ./
-COPY ./templates/ ./templates/
+# COPY entrypoint-prod.sh ./*.py ./
+# COPY ./templates/ ./templates/
+COPY entrypoint-prod.sh gunicorn_config.py ./
+COPY ./todo_app/*.py ./todo_app/
+COPY ./todo_app/templates/ ./todo_app/templates/
 EXPOSE 5000
 RUN chmod +x ./entrypoint-prod.sh 
 ENTRYPOINT ["sh", "entrypoint-prod.sh"]

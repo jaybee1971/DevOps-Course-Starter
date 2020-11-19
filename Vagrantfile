@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
     trigger.run_remote = {privileged: false, inline: "
       cd /vagrant
       poetry install
+      cd todo_app
       poetry run flask run --host=0.0.0.0
     "}
   end
