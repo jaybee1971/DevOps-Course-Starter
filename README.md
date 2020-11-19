@@ -127,11 +127,11 @@ Browse to the application from:  http://0.0.0.0:5000/
 
 ## Using Docker
 
-This application can also be run within a Docker container, both as a production ready image and a devlelopment image.
+This application can also be run within a Docker container, both as a production ready image and a development image.
 
 Run the docker commands from the main application folder.
-*** IMPORTANT ***
-You will need different .env files for production versus development.
+
+IMPORTANT:  You will need different .env files for production versus development.
 
 For production place the .env in your root and set the flask server config as:
 ```bash
@@ -154,7 +154,7 @@ $ docker-compose up --build
 Image tag:  'todo-app:prod'
 Container will run using gunicorn
 
-For a devlopment ready container run:
+For a development ready container run:
 ```bash
 $ docker-compose --file docker-compose-dev.yml up --build
 ```
