@@ -41,9 +41,10 @@ Packages required:
   * Pytest
   * Dotenv
   * Selenium
+  * Gunicorn
 ```
 
-To update any missing dependencies:
+To update any missing or new dependencies:
 ```bash
 $ poetry add <package_name>
 ```
@@ -126,11 +127,22 @@ Browse to the application from:  http://0.0.0.0:5000/
 
 ## Using Docker
 
-This application can also be run within a Docker container.
+This application can also be run within a Docker container, both as a production ready image and a devlelopment image.
 
-From the main application folder:
+Run the docker commands from the main application folder.
+
+For a production ready container run:
 ```bash
 $ docker-compose up --build
 ```
+Image tag:  'todo-app:prod'
+Container will run from gunicorn
+
+For a devlopment ready container run:
+```bash
+$ docker-compose --file docker-compose-dev.yml up --build
+```
+Image tag:  'todo-app:dev'
+Container will run from flask and code can be updated and changes will reflect in the container
 
 Browse to the application from:  http://0.0.0.0:5000/

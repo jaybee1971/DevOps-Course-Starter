@@ -5,9 +5,11 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-      target: todo-prod
-    image: todo-app:prod
+      target: todo-dev
+    image: todo-app:dev
     ports: 
       - "5000:5000"
     env_file:
       - ./.env
+    volumes:
+      - ./:/code/:cached
