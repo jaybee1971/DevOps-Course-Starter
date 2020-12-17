@@ -1,7 +1,7 @@
 from flask import session, current_app as app
-from todo_item import todo_item
-from todo_status import todo_status
-from view_model import view_model
+from todo_app.todo_item import todo_item
+from todo_app.todo_status import todo_status
+from todo_app.view_model import view_model
 import os, requests, json, logging, sys
 
 

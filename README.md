@@ -41,11 +41,12 @@ Packages required:
   * Pytest
   * Dotenv
   * Selenium
+  * Gunicorn
 ```
 
-To update any missing dependencies:
+To update any missing or new dependencies:
 ```bash
-$ poetry add --dev <package_name>
+$ poetry add <package_name>
 ```
 
 ## Trello API
@@ -121,5 +122,43 @@ The VM can be managed using vagrant's CLI commands. Some useful ones are:
  * vagrant suspend - Suspends any running VM. The VM will be restarted on the next vagrant up command.
  * vagrant destroy - Destroys the VM. It will be fully recreated the next time you run vagrant up.
 ```
+
+Browse to the application from:  http://0.0.0.0:5000/
+
+## Using Docker
+
+This application can also be run within a Docker container, both as a production ready image and a development image.
+
+Run the docker commands from the main application folder.
+
+IMPORTANT:  You will need different .env files for production versus development.
+
+For production place the .env in your root and set the flask server config as:
+```bash
+# Flask server configuration.
+FLASK_APP=todo_app.app
+FLASK_ENV=production
+```
+
+For development place the .env in the todo_app directory and set the flask server config as:
+```bash
+# Flask server configuration.
+FLASK_APP=app
+FLASK_ENV=development
+```
+
+For a production ready container run:
+```bash
+$ docker-compose up --build
+```
+Image tag:  'todo-app:prod'
+Container will run using gunicorn
+
+For a development ready container run:
+```bash
+$ docker-compose --file docker-compose-dev.yml up --build
+```
+Image tag:  'todo-app:dev'
+Container will run using the flask server and code can be updated and changes will reflect in the container
 
 Browse to the application from:  http://0.0.0.0:5000/

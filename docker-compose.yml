@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  todoapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: todo-prod
+    image: todo-app:prod
+    ports: 
+      - "5000:5000"
+    env_file:
+      - ./.env

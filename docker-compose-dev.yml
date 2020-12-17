@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  todoapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: todo-dev
+    image: todo-app:dev
+    ports: 
+      - "5000:5000"
+    env_file:
+      - ./todo_app/.env
+    volumes:
+      - ./todo_app:/code/todo_app:cached

@@ -1,12 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for
-import logging, sys, os
-from flask_config import Config
-from todo_item import todo_item
-from todo_status import todo_status
-from view_model import view_model
-from trello_api import trello_get, get_trello_list_id, get_trello_lists, get_trello_cards, trello_post, trello_put, trello_delete
-from operator import itemgetter
+import logging
+import os
+import sys
 from datetime import datetime
+from operator import itemgetter
+
+from flask import Flask, redirect, render_template, request, url_for
+
+from todo_app.flask_config import Config
+from todo_app.todo_item import todo_item
+from todo_app.todo_status import todo_status
+from todo_app.trello_api import (get_trello_cards, get_trello_list_id,
+                                 get_trello_lists, trello_delete, trello_get,
+                                 trello_post, trello_put)
+from todo_app.view_model import view_model
 
 
 def create_app():
