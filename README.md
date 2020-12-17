@@ -58,6 +58,8 @@ To get this app to work for you, you will need to have a Trello account and stor
   * API_TOKEN  -  Generate your own API token and store value here
   * BOARD_ID  -  The ID of the board you want to use for the project
 ```
+For this application:  my_statuses = ["Not Started", "In Progress", "Completed"]
+(this may differ from the Trello default statuses)
 
 ## Running the App
 
