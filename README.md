@@ -1,5 +1,18 @@
 # DevOps Apprenticeship: Running Jason B's ToDo App
 
+## Documentation
+
+Can be found in the 'Documentation' folder and uses the C4 methodology (https://c4model.com/)
+```bash
+ * Context Diagram
+ * Container Diagram
+ * Component Diagram
+ * Code level diagrams
+```
+Use the plantUML plugin for VSCode (or other IDEs) to generate code level diagrams from simple markdown.
+An example class_diagram.md for this application is included (and png of the diagram)
+
+
 ## System Requirements
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):
@@ -58,7 +71,10 @@ To get this app to work for you, you will need to have a Trello account and stor
   * API_TOKEN  -  Generate your own API token and store value here
   * BOARD_ID  -  The ID of the board you want to use for the project
 ```
-For this application:  my_statuses = ["Not Started", "In Progress", "Completed"]
+For this application:
+```bash
+my_statuses = ["Not Started", "In Progress", "Completed"]
+```
 (this may differ from the Trello default statuses)
 
 ## Running the App
