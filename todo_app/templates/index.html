@@ -76,7 +76,31 @@
                     <tr class="table-dark">
                         <th colspan="5">Completed Items</th>
                     </tr>
-                    {% for todo_item in view_model_items.filter_completed_items() %}
+                    {% for todo_item in view_model_items.filter_newer_completed_items() %}
+                        <tr>
+                        
+                            <td contenteditable="true">{{todo_item.title}}</td>
+                            <td contenteditable="true">{{todo_item.description}}</td>
+                            <td style="text-align: center;">{{todo_item.due_date}}</td>
+                            <td>
+                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
+                                    <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
+                                    <option value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
+                                    <option selected="selected" value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
+                                </select>
+                            </td>
+                            <td style="text-align: center;">
+                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-dark">
+                        <th colspan="5">Archived Items</th>
+                    </tr>
+                    {% for todo_item in view_model_items.filter_older_completed_items() %}
                         <tr>
                         
                             <td contenteditable="true">{{todo_item.title}}</td>

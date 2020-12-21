@@ -1,8 +1,14 @@
 from datetime import *
+import dateutil.parser
+import pytz
 
 class view_model:
     
     my_statuses = ["Not Started", "In Progress", "Completed"]
+    
+    today = datetime.today()
+    todo_today = today.strftime('%d/%m/%Y')
+    # todo_today = today.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
     
     def __init__(self, todo_items, todo_statuses):
         self._todo_items = todo_items
@@ -38,3 +44,20 @@ class view_model:
         done_list = self.filter_completed_items()
         completed_items_by_date = [todo_item for todo_item in done_list if todo_item.last_updated == filter_date]
         return completed_items_by_date
+    
+    def filter_older_completed_items(self):
+        done_list = self.filter_completed_items()
+        if len(done_list) < 5:
+            older_completed_items = []
+            return older_completed_items
+        else:
+            older_completed_items = [todo_item for todo_item in done_list if todo_item.last_updated < self.todo_today]
+            return older_completed_items
+    
+    def filter_newer_completed_items(self):
+        done_list = self.filter_completed_items()
+        if len(done_list) < 5:
+            return done_list
+        else:
+            newer_completed_items = [todo_item for todo_item in done_list if todo_item.last_updated >= self.todo_today]
+            return newer_completed_items
