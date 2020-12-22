@@ -8,7 +8,6 @@ class view_model:
     
     today = datetime.today()
     todo_today = today.strftime('%d/%m/%Y')
-    # todo_today = today.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
     
     def __init__(self, todo_items, todo_statuses):
         self._todo_items = todo_items
@@ -39,11 +38,6 @@ class view_model:
     
     def filter_completed_items(self):
         return self.filter_by_todo_status(self.get_todo_status(view_model.my_statuses[2]))  
-    
-    def filter_completed_by_date(self, filter_date):
-        done_list = self.filter_completed_items()
-        completed_items_by_date = [todo_item for todo_item in done_list if todo_item.last_updated == filter_date]
-        return completed_items_by_date
     
     def filter_older_completed_items(self):
         done_list = self.filter_completed_items()
