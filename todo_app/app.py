@@ -18,7 +18,7 @@ from todo_app.view_model import view_model
 def create_app():
     app = Flask(__name__)
     # uncomment to debug API calls
-    # logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG)
     app.config.from_object(Config())
     
     # All the routes and setup code etc
