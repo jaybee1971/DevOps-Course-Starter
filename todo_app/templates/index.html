@@ -30,7 +30,6 @@
                     </tr>
                     {% for todo_item in view_model_items.filter_not_started_items() %}
                         <tr>
-                        
                             <td contenteditable="true">{{todo_item.title}}</td>
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
@@ -54,7 +53,6 @@
                     </tr>
                     {% for todo_item in view_model_items.filter_in_progress_items() %}
                         <tr>
-                        
                             <td contenteditable="true">{{todo_item.title}}</td>
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
@@ -78,7 +76,6 @@
                     </tr>
                     {% for todo_item in view_model_items.filter_newer_completed_items() %}
                         <tr>
-                        
                             <td contenteditable="true">{{todo_item.title}}</td>
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
@@ -97,12 +94,15 @@
                             </td>
                         </tr>
                     {% endfor %}
-                    <tr class="table-dark">
-                        <th colspan="5">Archived Items</th>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-dark pull-left" style="background-color:DodgerBlue;color:White" data-toggle="collapse" data-target="#olditems" href="#olditemsbtn" id="#olditemsbtn">
+                                Show Older Items
+                            </button>
+                        </td>
                     </tr>
                     {% for todo_item in view_model_items.filter_older_completed_items() %}
-                        <tr>
-                        
+                        <tr class="collapse out" id="olditems">
                             <td contenteditable="true">{{todo_item.title}}</td>
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
@@ -164,6 +164,21 @@
                 autoclose: true,
             };
             date_input.datepicker(options);
+
+            $(function() {
+                var btn = $("[href='#olditemsbtn']");
+                var toggled = false;
+                btn.on("click", function() {
+                    if(!toggled)
+                    {
+                        toggled = true;
+                        btn.text("Hide Older Items");
+                    } else {
+                        toggled = false;
+                        btn.text("Show Older Items");
+                    }
+                });
+            });
         })
     </script>
 {% endblock %}
