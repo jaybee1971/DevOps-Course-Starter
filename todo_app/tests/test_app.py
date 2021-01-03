@@ -18,32 +18,30 @@ def client():
         yield client
 
 
-@pytest.fixture
-def mock_get_request(monkeypatch):
-    
-    class mock_response(object):
-        def __init__(self):
-            self.status_code = 200
-            self.url = 'http://test_api'
-            self.headers = {'test': '12345'}
+class mock_statuses:
         
-        def json(self):
-            with open(file_mock_statuses, 'r') as json_file_statuses:
-                return json.load(json_file_statuses)
-        
-        def json(self):
-            with open(file_mock_items, 'r') as json_file_items:
-                return json.load(json_file_items)
-        
+    @staticmethod   
+    def json():
+        with open(file_mock_statuses, 'r') as json_file_statuses:
+            return json.load(json_file_statuses)
 
-    def mock_get(*args, **kwargs):
-        return mock_response()
-    
-    monkeypatch.setattr(requests, "get", mock_get)
-    
+class mock_items:
+        
+    @staticmethod    
+    def json():
+        with open(file_mock_items, 'r') as json_file_items:
+            return json.load(json_file_items)
+
+
+def mock_get(*args, **kwargs):
+    return mock_statuses()
+    return mock_items()
                            
-def test_index_page(mock_get_request, client):
+                           
+def test_home_page(monkeypatch, client):
+    monkeypatch.setattr(requests, "get", mock_get)
     response = client.get('/')
     
-    assert "an item for testing with" in response.data.decode()
- 
+    assert response.status_code == 200
+    assert "an item for testing with" in str(response.data)
+    
