@@ -33,11 +33,14 @@ class mock_items:
             return json.load(json_file_items)
 
 
-def mock_get(*args, **kwargs):
-    return mock_statuses()
-    return mock_items()
-                           
-                           
+def mock_get(url, params):
+    if url == 'https://api.trello.com/1/boards/test-trello-board-id/lists':
+        return mock_statuses()
+    else:
+        # could qualify whole url for items and add else for failure
+        return mock_items() 
+ 
+           
 def test_home_page(monkeypatch, client):
     monkeypatch.setattr(requests, "get", mock_get)
     response = client.get('/')
