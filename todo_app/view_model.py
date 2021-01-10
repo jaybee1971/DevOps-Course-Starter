@@ -7,7 +7,8 @@ class view_model:
     my_statuses = ["Not Started", "In Progress", "Completed"]
     
     today = datetime.today()
-    todo_today = today.strftime('%d/%m/%Y')
+    format_today = today.strftime('%d/%m/%Y')
+    python_today = datetime.strptime(format_today, "%d/%m/%Y")
     
     def __init__(self, todo_items, todo_statuses):
         self._todo_items = todo_items
@@ -45,7 +46,7 @@ class view_model:
             older_completed_items = []
             return older_completed_items
         else:
-            older_completed_items = [todo_item for todo_item in done_list if todo_item.last_updated < self.todo_today]
+            older_completed_items = [todo_item for todo_item in done_list if todo_item.last_updated < self.python_today]
             return older_completed_items
     
     def filter_newer_completed_items(self):
@@ -53,5 +54,5 @@ class view_model:
         if len(done_list) < 5:
             return done_list
         else:
-            newer_completed_items = [todo_item for todo_item in done_list if todo_item.last_updated >= self.todo_today]
+            newer_completed_items = [todo_item for todo_item in done_list if todo_item.last_updated >= self.python_today]
             return newer_completed_items

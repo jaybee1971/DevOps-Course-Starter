@@ -21,5 +21,7 @@ class todo_item:
 
     def format_updated(self, last_updated):
         iso_date = datetime.strptime(last_updated, '%Y-%m-%dT%H:%M:%S.%fZ')
-        return iso_date.strftime('%d/%m/%Y')
+        simple_date = iso_date.strftime('%d/%m/%Y')
+        python_updated = datetime.strptime(simple_date, "%d/%m/%Y")
+        return python_updated
          
