@@ -4,9 +4,6 @@ import os
 
 class view_model:
     
-    # my_statuses = ["Not Started", "In Progress", "Completed"]
-    # my_statuses = [os.environ['COL_1'], os.environ['COL_2'], os.environ['COL_3']]
-    
     today = datetime.today()
     format_today = today.strftime('%d/%m/%Y')
     python_today = datetime.strptime(format_today, "%d/%m/%Y")
