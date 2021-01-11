@@ -59,6 +59,16 @@ To get this app to work for you, you will need to have a Trello account and stor
   * BOARD_ID  -  The ID of the board you want to use for the project
 ```
 
+For this application, there are status column headings set in the .env as follows:
+
+```bash
+  * COL_1="Not Started"
+  * COL_2="In Progress"
+  * COL_3="Completed"
+```
+
+These differ from the Trello standard names and can be updated as needed.
+
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the poetry environment by running:
