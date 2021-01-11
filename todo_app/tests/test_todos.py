@@ -28,10 +28,12 @@ test_statuses = [todo_status('10000', 'Not Started'),
                  todo_status('30000', 'Completed')
                  ]
 
+my_statuses = ["Not Started", "In Progress", "Completed"]
+
 
 @pytest.fixture 
 def test_view_model():
-    return view_model(test_items, test_statuses)
+    return view_model(test_items, test_statuses, my_statuses)
 
 
 def test_get_todo_statuses(test_view_model):
