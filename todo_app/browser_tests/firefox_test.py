@@ -1,11 +1,10 @@
-import os
+import os, requests, json
 import pytest
 import todo_app.app
 from selenium import webdriver
 from todo_app.trello_api import create_trello_board, delete_trello_board
 from threading import Thread
 import dotenv
-import requests
 
 
 @pytest.fixture(scope='module')

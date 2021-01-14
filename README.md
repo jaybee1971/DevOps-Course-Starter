@@ -106,6 +106,19 @@ Tests:
  * test_browser  -  Selenium tests for launching app in different browsers (chrome test included)
 ```
 
+Running Tests:
+```bash
+Unit and System tests:
+ * $ poetry run pytest todo_app/tests
+      OR individually run as:
+      * $ poetry run pytest todo_app/tests/test_todos.py
+      * $ poetry run pytest todo_app/tests/test_app.py
+Browser tests:
+ * $ poetry run pytest todo_app/browser_tests/chrome_test.py
+ * $ poetry run pytest todo_app/browser_tests/firefox_test.py
+(currently have to be run seperately)
+```
+
 ## Using a Virtual Machine
 
 This application can also be run within a virtual machine by using Vagrant.
