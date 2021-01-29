@@ -1,0 +1,33 @@
+### uml: class diagram
+@startuml
+package "ToDo App - Class Diagram" #DDDDDD {
+    class todo_item {
+        + trello_id
+        + title
+        + description
+        + due_date
+        + status
+        + last_updated
+    }
+
+    class todo_status {
+        + trello_id
+        + status
+    }
+
+    note right of view_model 
+        The view model describes
+        all the todo items and
+        their statuses
+    end note
+
+    class view_model {
+        + todo_items
+        + todo_statuses
+    }
+
+    view_model "1" *-- "many" todo_item : contains
+    view_model "1" *-- "many" todo_status : contains
+    todo_item --> "1" todo_status
+}
+@enduml
