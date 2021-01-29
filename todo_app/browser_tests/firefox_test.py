@@ -5,10 +5,14 @@ from selenium import webdriver
 from todo_app.trello_api import create_trello_board, delete_trello_board
 from threading import Thread
 import dotenv
+from dotenv import load_dotenv, find_dotenv
 
 
 @pytest.fixture(scope='module')
 def test_app():
+    # Load .env
+    filepath = find_dotenv('.env')
+    load_dotenv(filepath, override=True)
     
     # Create the new board & update the board id environment variable
     test_board_id = create_trello_board()

@@ -113,10 +113,14 @@ Unit and System tests:
       OR individually run as:
       * $ poetry run pytest todo_app/tests/test_todos.py
       * $ poetry run pytest todo_app/tests/test_app.py
+
 Browser tests:
  * $ poetry run pytest todo_app/browser_tests/chrome_test.py
  * $ poetry run pytest todo_app/browser_tests/firefox_test.py
 (currently have to be run seperately)
+
+Run all tests:
+* $ sh test_suite.sh
 ```
 
 ## Using a Virtual Machine
