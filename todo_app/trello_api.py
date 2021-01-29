@@ -74,4 +74,26 @@ def trello_delete(card_id):
         url,
         params=app.config['API_PARAMS'].copy()
     )
+ 
+ 
+def create_trello_board():
+    create_params = (
+        ('key', os.environ['API_KEY']),
+        ('token', os.environ['API_TOKEN']),
+        ('name', 'TestJbTodoApp')
+    )    
+
+    response = requests.post("https://api.trello.com/1/boards/", params=create_params)
+
+    return response.json()['id']
+
+
+def delete_trello_board(board_id):
+    delete_params = (
+        ('key', os.environ['API_KEY']),
+        ('token', os.environ['API_TOKEN'])
+    )
       
+    requests.delete("https://api.trello.com/1/boards/" + board_id, params=delete_params)
+
+  

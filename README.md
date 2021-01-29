@@ -59,6 +59,16 @@ To get this app to work for you, you will need to have a Trello account and stor
   * BOARD_ID  -  The ID of the board you want to use for the project
 ```
 
+For this application, there are status column headings set in the .env as follows:
+
+```bash
+  * COL_1="Not Started"
+  * COL_2="In Progress"
+  * COL_3="Completed"
+```
+
+These differ from the Trello standard names and can be updated as needed.
+
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the poetry environment by running:
@@ -94,6 +104,19 @@ Tests:
  * test_todos  -  unit tests for each class method
  * test_app  -  e2e system test with mocked Trello responses
  * test_browser  -  Selenium tests for launching app in different browsers (chrome test included)
+```
+
+Running Tests:
+```bash
+Unit and System tests:
+ * $ poetry run pytest todo_app/tests
+      OR individually run as:
+      * $ poetry run pytest todo_app/tests/test_todos.py
+      * $ poetry run pytest todo_app/tests/test_app.py
+Browser tests:
+ * $ poetry run pytest todo_app/browser_tests/chrome_test.py
+ * $ poetry run pytest todo_app/browser_tests/firefox_test.py
+(currently have to be run seperately)
 ```
 
 ## Using a Virtual Machine

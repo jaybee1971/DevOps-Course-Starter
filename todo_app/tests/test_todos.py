@@ -8,18 +8,19 @@ from datetime import *
 today = datetime.today()
 older1 = today - timedelta(1)
 older2 = today - timedelta(2)
-test_today = today.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
-test_older1 = older1.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
-test_older2 = older2.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+test_today = today.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+test_older1 = older1.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+test_older2 = older2.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
 
-test_items = [todo_item('00001', 'test item 1', 'item for testing', None, 'Not Started', ''),
-              todo_item('00002', 'test item 2', 'item for testing', None, 'In Progress', ''),
+test_items = [todo_item('00001', 'test item 1', 'item for testing', None, 'Not Started', test_today),
+              todo_item('00002', 'test item 2', 'item for testing', None, 'In Progress', test_today),
               todo_item('00003', 'test item 3', 'item for testing', None, 'Completed', test_today),
-              todo_item('00004', 'test item 4', 'item for testing', None, 'Not Started', ''),
-              todo_item('00005', 'test item 5', 'item for testing', None, 'In Progress', ''),
+              todo_item('00004', 'test item 4', 'item for testing', None, 'Not Started', test_today),
+              todo_item('00005', 'test item 5', 'item for testing', None, 'In Progress', test_today),
               todo_item('00006', 'test item 6', 'item for testing', None, 'Completed', test_older1),
               todo_item('00007', 'test item 7', 'item for testing', None, 'Completed', test_older1),
-              todo_item('00008', 'test item 8', 'item for testing', None, 'Completed', test_older2)
+              todo_item('00008', 'test item 8', 'item for testing', None, 'Completed', test_older2),
+              todo_item('00009', 'test item 9', 'item for testing', None, 'Completed', test_older2)
               ]
 
 test_statuses = [todo_status('10000', 'Not Started'),
@@ -27,10 +28,12 @@ test_statuses = [todo_status('10000', 'Not Started'),
                  todo_status('30000', 'Completed')
                  ]
 
+my_statuses = ["Not Started", "In Progress", "Completed"]
+
 
 @pytest.fixture 
 def test_view_model():
-    return view_model(test_items, test_statuses)
+    return view_model(test_items, test_statuses, my_statuses)
 
 
 def test_get_todo_statuses(test_view_model):
@@ -69,13 +72,15 @@ def test_filter_completed_items(test_view_model):
     assert test_completed_items[1].title == test_items[5].title
 
 
-def test_completed_by_date(test_view_model):
-    test_completed_today = test_view_model.filter_completed_by_date(test_today)
-    test_completed_yesterday = test_view_model.filter_completed_by_date(test_older1)
-    test_completed_older = test_view_model.filter_completed_by_date(test_older2)
+def test_older_items(test_view_model):
+    test_older_completed_items = test_view_model.filter_older_completed_items()
     
-    assert test_completed_today[0].last_updated ==  test_items[2].last_updated
-    assert test_completed_yesterday[0].last_updated ==  test_items[5].last_updated
-    assert test_completed_yesterday[0].last_updated ==  test_items[6].last_updated
-    assert test_completed_older[0].last_updated ==  test_items[7].last_updated
+    assert len(test_older_completed_items) ==  4
     
+
+def test_newer_items(test_view_model):
+    test_newer_completed_items = test_view_model.filter_newer_completed_items()
+    
+    assert len(test_newer_completed_items) ==  1    
+
+        
