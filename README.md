@@ -172,11 +172,12 @@ Browse to the application from:  http://0.0.0.0:5000/
 
 ## Using Docker
 
-This application can also be run within a Docker container, both as a production ready image and a development image.
+This application can also be run within a Docker container, both as a production ready image, a development image and an image to just run tests.
 
 Run the docker commands from the main application folder.
 
-IMPORTANT:  You will need different .env files for production versus development.
+IMPORTANT:  
+You will need different .env files for production versus development. Use the production .env for running the tests (as you need to open a link to Trello for the e2e system tests to work)
 
 For production place the .env in your root and set the flask server config as:
 ```bash
@@ -207,3 +208,10 @@ Image tag:  'todo-app:dev'
 Container will run using the flask server and code can be updated and changes will reflect in the container
 
 Browse to the application from:  http://0.0.0.0:5000/
+
+For a container to run all tests only:
+```bash
+$ docker-compose --file docker-compose-test.yml up --build
+```
+Image tag:  'todo-app:test'
+Container will run all the tests specified in 'entrypoint-test.sh' then stop
