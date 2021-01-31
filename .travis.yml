@@ -1,2 +1,15 @@
+sudo: required
+services:
+  - docker
+
+env:
+  COMPOSE_VERSION: 1.27.4
+
+before_install:
+ - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+ - chmod +x docker-compose
+ - sudo mv docker-compose /usr/local/bin
+
 script:
-- echo "hello world"
+  - echo "running tests for JB ToDo app"
+  - docker-compose --file docker-compose-test.yml up --build
