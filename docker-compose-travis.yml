@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  todoapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: todo-test
+    image: todo-app:travis
+    ports: 
+      - "5000:5000"

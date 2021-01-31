@@ -12,4 +12,4 @@ before_install:
 
 script:
   - echo "running tests for JB ToDo app"
-  - docker-compose --file docker-compose-test.yml up --build
+  - docker-compose --file docker-compose-travis.yml up --build
