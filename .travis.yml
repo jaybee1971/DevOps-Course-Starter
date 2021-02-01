@@ -10,8 +10,7 @@ env:
     - COL_1="Not Started"
     - COL_2="In Progress"
     - COL_3="Completed"
-  jobs:
-    - COMPOSE_VERSION: 1.27.4
+  COMPOSE_VERSION: 1.27.4
 
 before_install:
   - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
