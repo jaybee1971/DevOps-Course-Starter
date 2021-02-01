@@ -4,12 +4,17 @@ services:
   - docker
 
 env:
-  COMPOSE_VERSION: 1.27.4
+  - FLASK_APP=todo_app.app
+  - FLASK_ENV=production
+  - COL_1="Not Started"
+  - COL_2="In Progress"
+  - COL_3="Completed"
+  - COMPOSE_VERSION: 1.27.4
 
 before_install:
- - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
- - chmod +x docker-compose
- - sudo mv docker-compose /usr/local/bin
+  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 script:
   - echo "running tests for JB ToDo app"
