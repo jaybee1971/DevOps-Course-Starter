@@ -76,10 +76,10 @@ def trello_delete(card_id):
     )
  
  
-def create_trello_board():
+def create_trello_board(api_key, api_token):
     create_params = (
-        ('key', os.environ['API_KEY']),
-        ('token', os.environ['API_TOKEN']),
+        ('key', api_key),
+        ('token', api_token),
         ('name', 'TestJbTodoApp')
     )    
 
@@ -88,10 +88,10 @@ def create_trello_board():
     return response.json()['id']
 
 
-def delete_trello_board(board_id):
+def delete_trello_board(board_id, api_key, api_token):
     delete_params = (
-        ('key', os.environ['API_KEY']),
-        ('token', os.environ['API_TOKEN'])
+        ('key', api_key),
+        ('token', api_token)
     )
       
     requests.delete("https://api.trello.com/1/boards/" + board_id, params=delete_params)

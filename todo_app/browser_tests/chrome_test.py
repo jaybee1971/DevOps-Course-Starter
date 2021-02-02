@@ -13,15 +13,17 @@ def test_app():
     # Load .env
     filepath = find_dotenv('.env')
     load_dotenv(filepath, override=True)
+    api_key = os.environ.get('API_KEY')
+    api_token = os.environ.get('API_TOKEN')
     
     # Create the new board & update the board id environment variable
-    test_board_id = create_trello_board()
+    test_board_id = create_trello_board(api_key, api_token)
     os.environ['BOARD_ID'] = test_board_id
     
     # Get the new board list ids and update the environment variables for the status column names
     setup_params = (
-        ('key', os.environ['API_KEY']),
-        ('token', os.environ['API_TOKEN'])
+        ('key', api_key),
+        ('token', api_token)
     )
 
     temp_lists = requests.get('https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/lists', params=setup_params)
@@ -41,7 +43,7 @@ def test_app():
     
     # Tear Down
     thread.join(1)
-    delete_trello_board(test_board_id)
+    delete_trello_board(test_board_id, api_key, api_token)
 
 
 @pytest.fixture(scope='module') 
