@@ -1,4 +1,4 @@
-import os, requests, json
+import os, requests, json, errno
 import pytest
 import todo_app.app
 from selenium import webdriver
@@ -10,9 +10,13 @@ from dotenv import load_dotenv, find_dotenv
 
 @pytest.fixture(scope='module')
 def test_app():
-    # Load .env
-    filepath = find_dotenv('.env')
-    load_dotenv(filepath, override=True)
+    # Load .env pass on error for running in docker
+    try:
+        filepath = dotenv.find_dotenv('.env')
+        dotenv.load_dotenv(filepath, override=True)
+    except (OSError, IOError):
+        pass
+
     api_key = os.environ.get('API_KEY')
     api_token = os.environ.get('API_TOKEN')
     
