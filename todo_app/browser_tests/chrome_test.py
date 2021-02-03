@@ -17,8 +17,11 @@ def test_app():
     except (OSError, IOError):
         pass
 
-    api_key = os.environ.get('API_KEY')
-    api_token = os.environ.get('API_TOKEN')
+    # construct the new application
+    application = todo_app.app.create_app()
+    
+    api_key = application.config['API_KEY']
+    api_token = application.config['API_TOKEN']
     
     # Create the new board & update the board id environment variable
     test_board_id = create_trello_board(api_key, api_token)
@@ -35,9 +38,6 @@ def test_app():
     os.environ['COL_1'] = temp_lists.json()[0]['name']
     os.environ['COL_2'] = temp_lists.json()[1]['name']
     os.environ['COL_3'] = temp_lists.json()[2]['name']
-    
-    # construct the new application
-    application = todo_app.app.create_app()
     
     # start the app in its own thread.
     thread = Thread(target=lambda: application.run(use_reloader=False))
