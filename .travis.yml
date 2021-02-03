@@ -22,4 +22,5 @@ before_install:
 
 script:
   - echo "running tests for JB ToDo app"
+  - echo $API_KEY
   - docker-compose --file docker-compose-travis.yml up --build
