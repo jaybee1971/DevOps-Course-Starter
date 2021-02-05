@@ -9,3 +9,12 @@ services:
     image: todo-app:travis
     ports: 
       - "5000:5000"
+    environment:
+      FLASK_APP : "${FLASK_APP}"
+      FLASK_ENV : "${FLASK_ENV}"
+      API_KEY : "${API_KEY}"
+      API_TOKEN : "${API_TOKEN}"
+      BOARD_ID : "${BOARD_ID}"
+      COL_1 : "${COL_1}"
+      COL_2 : "${COL_2}"
+      COL_3 : "${COL_3}"
