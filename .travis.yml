@@ -1,4 +1,4 @@
-if: (type = push AND branch IN (master, module_7)) OR (type = pull_request)
+if: (type = push AND branch IN (master)) OR (type = pull_request)
 sudo: required
 services:
   - docker
@@ -28,5 +28,5 @@ notifications:
   email:
     recipients:
       - jay.bee71@outlook.com
-    on_success: always
+    on_success: never
     on_failure: always

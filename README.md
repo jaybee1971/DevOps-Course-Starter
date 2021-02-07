@@ -215,3 +215,21 @@ $ docker-compose --file docker-compose-test.yml up --build
 ```
 Image tag:  'todo-app:test'
 Container will run all the tests specified in 'entrypoint-test.sh' then stop
+
+## Using Travis CI
+
+This application can be built using Travis CI.
+
+The following files are included for Travis:
+```bash
+ * .travis.yml
+ * docker-compose-travis.yml
+```
+
+Before using for your build, chnage the following:
+```bash
+ * Secure your Trello secure board tokens with your own Travis private key
+ * Update the notifications section in the .travis.yml to your email address(es)
+```
+
+Goto https://travis-ci.com/ for more information on Travis

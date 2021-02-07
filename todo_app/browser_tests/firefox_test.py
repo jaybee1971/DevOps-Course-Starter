@@ -1,4 +1,5 @@
 import os, requests, json
+from pathlib import Path
 import pytest
 import todo_app.app
 from selenium import webdriver
@@ -10,18 +11,25 @@ from dotenv import load_dotenv, find_dotenv
 
 @pytest.fixture(scope='module')
 def test_app():
-    # Load .env
-    filepath = find_dotenv('.env')
-    load_dotenv(filepath, override=True)
+    # Load .env if file exists
+    if Path('.env').exists() is True:
+        filepath = dotenv.find_dotenv('.env')
+        dotenv.load_dotenv(filepath, override=True)
+
+    # construct the new application
+    application = todo_app.app.create_app()
+    
+    api_key = application.config['API_KEY']
+    api_token = application.config['API_TOKEN']
     
     # Create the new board & update the board id environment variable
-    test_board_id = create_trello_board()
+    test_board_id = create_trello_board(api_key, api_token)
     os.environ['BOARD_ID'] = test_board_id
     
     # Get the new board list ids and update the environment variables for the status column names
     setup_params = (
-        ('key', os.environ['API_KEY']),
-        ('token', os.environ['API_TOKEN'])
+        ('key', api_key),
+        ('token', api_token)
     )
 
     temp_lists = requests.get('https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/lists', params=setup_params)
@@ -29,9 +37,6 @@ def test_app():
     os.environ['COL_1'] = temp_lists.json()[0]['name']
     os.environ['COL_2'] = temp_lists.json()[1]['name']
     os.environ['COL_3'] = temp_lists.json()[2]['name']
-    
-    # construct the new application
-    application = todo_app.app.create_app()
     
     # start the app in its own thread.
     thread = Thread(target=lambda: application.run(use_reloader=False))
@@ -41,7 +46,7 @@ def test_app():
     
     # Tear Down
     thread.join(1)
-    delete_trello_board(test_board_id)
+    delete_trello_board(test_board_id, api_key, api_token)
 
 
 @pytest.fixture(scope='module') 
