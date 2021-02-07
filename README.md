@@ -226,10 +226,11 @@ The following files are included for Travis:
  * docker-compose-travis.yml
 ```
 
-Before using for your build, chnage the following:
+Before using Travis for your build, change the following in the .travis.yml file:
 ```bash
- * Secure your Trello secure board tokens with your own Travis private key
- * Update the notifications section in the .travis.yml to your email address(es)
+ * Add any additional barnches you want to auto build here: 'type = push AND branch IN (master))'
+ * Secure your Trello secure board tokens with your own Travis private key 
+ * Update the notifications section to use your email address(es)
 ```
 
 Goto https://travis-ci.com/ for more information on Travis
