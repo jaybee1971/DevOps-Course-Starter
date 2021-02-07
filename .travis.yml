@@ -23,3 +23,10 @@ before_install:
 script:
   - echo "running tests for JB ToDo app"
   - docker-compose --file docker-compose-travis.yml up --build
+
+notifications:
+  email:
+    recipients:
+      - jay.bee71@outlook.com
+    on_success: always
+    on_failure: always

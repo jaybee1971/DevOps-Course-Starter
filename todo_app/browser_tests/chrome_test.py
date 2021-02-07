@@ -1,4 +1,5 @@
-import os, requests, json, errno
+import os, requests, json
+from pathlib import Path
 import pytest
 import todo_app.app
 from selenium import webdriver
@@ -10,12 +11,10 @@ from dotenv import load_dotenv, find_dotenv
 
 @pytest.fixture(scope='module')
 def test_app():
-    # Load .env pass on error for running in docker
-    try:
+    # Load .env if file exists
+    if Path('.env').exists() is True:
         filepath = dotenv.find_dotenv('.env')
         dotenv.load_dotenv(filepath, override=True)
-    except (OSError, IOError):
-        pass
 
     # construct the new application
     application = todo_app.app.create_app()
