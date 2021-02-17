@@ -1,17 +1,17 @@
-import sys, os
+import sys
 import pytest
 import dotenv
 import todo_app.app
 import requests, json
 
-dir = os.path.dirname(__file__)
-file_mock_statuses = os.path.join(dir, 'mock_statuses.json')
-file_mock_items = os.path.join(dir, 'mock_items.json')
+
+file_mock_statuses = './todo_app/tests/mock_statuses.json'
+file_mock_items = './todo_app/tests/mock_items.json'
 
 
 @pytest.fixture
 def client():
-    file_path = dotenv.find_dotenv('.env.test')
+    file_path = './todo_app/tests/.env.test'
     dotenv.load_dotenv(file_path, override=True)
     test_app = todo_app.app.create_app()
     with test_app.test_client() as client:

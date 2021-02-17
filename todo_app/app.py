@@ -24,7 +24,7 @@ def create_app():
     # All the routes and setup code etc
     @app.route('/', methods=['GET'])
     def get_trello_todo_list():
-        my_statuses = [os.environ['COL_1'], os.environ['COL_2'], os.environ['COL_3']]
+        my_statuses = app.config['STATUSES']
         trello_todo_list = view_model(get_trello_cards(),get_trello_lists(), my_statuses)
         app.logger.info('Processing get cards request')
         return render_template('index.html', view_model_items=trello_todo_list)
