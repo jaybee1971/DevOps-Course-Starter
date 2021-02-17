@@ -9,7 +9,8 @@ Can be found in the 'Documentation' folder and uses the C4 methodology (https://
  * Component Diagram
  * Code level diagrams
 ```
-Use the plantUML plugin for VSCode (or other IDEs) to generate code level diagrams from simple markdown.
+Use the [plantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) plugin for VSCode (or other IDEs) to generate code level diagrams from simple markdown.
+
 An example class_diagram.md for this application is included (and png of the diagram)
 
 
@@ -110,18 +111,17 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 
 Ensure the dependencies are correct as per previous section.
 
-To run Selenium you will need an appropriate driver for your browser of choice:
+To run [Selenium](https://www.selenium.dev/downloads/) you will need an appropriate driver for your browser of choice:
 ```bash
  * Firefox - Gecko Driver
  * Chrome - ChromeDriver from the Chromium project
 ```
-Documentation and links can be found here:  https://www.selenium.dev/downloads/
 
 Tests:
 ```bash
- * test_todos  -  unit tests for each class method
- * test_app  -  e2e system test with mocked Trello responses
- * test_browser  -  Selenium tests for launching app in different browsers (chrome test included)
+ * test_todos: Unit tests for each class method
+ * test_app: End2end system test with mocked Trello responses
+ * test_browser: Selenium tests for launching app in different browsers (chrome test included)
 ```
 
 Running Tests:
@@ -145,11 +145,9 @@ Run all tests:
 
 This application can also be run within a virtual machine by using Vagrant.
 
-Vagrant requires a hypervisor installed. We recommend VirtualBox.
-https://www.virtualbox.org/
+Vagrant requires a hypervisor installed. We recommend [VirtualBox](https://www.virtualbox.org/)
 
-Download and install vagrant from the official website. You can check it's installed correctly by running the vagrant command in your terminal.
-https://www.vagrantup.com/
+Download and install [Vagrant](https://www.vagrantup.com/) from the official website. You can check it's installed correctly by running the vagrant command in your terminal.
 
 The Vagranfile within this repo will:
 ```bash
