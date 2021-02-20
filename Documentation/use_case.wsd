@@ -1,0 +1,11 @@
+@startuml "Use Case Diagram"
+actor "User" as fc
+rectangle "ToDo App" {
+  usecase "View ToDos" as UC1
+  usecase "Add ToDo" as UC2
+  usecase "Update ToDos" as UC3
+}
+fc --> UC1
+fc --> UC2
+fc --> UC3
+@enduml

@@ -1,5 +1,4 @@
-### uml: class diagram
-@startuml
+@startuml "Class Diagram"
 package "ToDo App - Class Diagram" #DDDDDD {
     class todo_item {
         + trello_id
