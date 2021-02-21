@@ -1,0 +1,33 @@
+@startuml "Package Diagram"
+    package "ToDo App" {
+        component "Classes"{
+            file "view_model.py"
+            file "todo_item.py"
+            file "todo_status.py"
+        }
+        component "App Code" {
+            file "app.py"
+            file "flask_config.py"
+            file "trello_api.py"
+        }
+        folder "templates" {
+            file "index.html"
+            file "layout.html"
+        }
+        folder "tests" {
+            component "Code Tests" {
+                file "test_app.py"
+                file "test_todos.py"
+            }
+            file ".env.test"
+            file "mock_items.json"
+            file "mock_statuses.json"
+        }
+        folder "browser_tests" {
+            component "System Tests" {
+                file "chrome_test.py"
+                file "firefox_test.py"
+            }
+        }
+    }
+@enduml
