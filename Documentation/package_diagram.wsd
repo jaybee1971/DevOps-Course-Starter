@@ -1,11 +1,12 @@
 @startuml "Package Diagram"
+skinparam packageStyle frame
     package "ToDo App" {
-        component "Classes"{
+        package "Classes" {
             file "view_model.py"
             file "todo_item.py"
             file "todo_status.py"
         }
-        component "App Code" {
+        package "App Code" {
             file "app.py"
             file "flask_config.py"
             file "trello_api.py"
@@ -15,7 +16,7 @@
             file "layout.html"
         }
         folder "tests" {
-            component "Code Tests" {
+            package "Code Tests" {
                 file "test_app.py"
                 file "test_todos.py"
             }
@@ -24,7 +25,7 @@
             file "mock_statuses.json"
         }
         folder "browser_tests" {
-            component "System Tests" {
+            package "System Tests" {
                 file "chrome_test.py"
                 file "firefox_test.py"
             }
