@@ -1,10 +1,11 @@
-if: (type = push AND branch IN (master)) OR (type = pull_request)
+if: (type = push AND branch IN (master, module_8)) OR (type = pull_request)
 sudo: required
 services:
   - docker
 
 env:
   global:
+    # app config
     - FLASK_APP=todo_app.app
     - FLASK_ENV=production
     - secure: TAtZ3ZDXZLhG7PeJBqutF6xXztmu1ZbZXc7ub3G7goSd5xQXcjWkPAyeOMBwIUEj4sRIUn/oWT/XVQejBjkHPO/KCrybd/yopHpVqZDFfGwD064v7EVZJisi4kcmfDzUGsAeZdNa2p1O1WUuhNVONzuqTEinarTS5GH5tS9S3quwdBKgTiyhzbV9eGIz9he6cEw5QbKlgL8hyJzRbTss9wxniTJ71TmT3iXXKg1HPZiQNIbqyn6iFZL7KSpS3ZlhkRed8XTInfuoufl747q3Nt2rKFqRG3JChBrd0FBOX0o0coTFhLTYsQnWGtrNh7zgWfu/Ad6onROeamlFXfIpiMKxybs/InUAUIH9/a/rjj5vkeO2MiCiH6d7Bm5QOKwtKWQbTSDq0D0JEqpmyNbawv9qe9cxRJcTeISSNAXiMCAyPn5MePj6Wyt/3V6tYPLw5/5lmrWhmkwgzdaSRRFvzatOekUNAyDZWbgzl+1eMIewTvskgQ947P7gQQEuRNR3bxrKlgwJKZHCDTZEj70W5J5VLA1l5bU1msddF/89/2hErcosiSNOnF9LhlmyhhEHOgOnn178Wb3wfrW0+cLK3RbqzHajbKCPTO+bfTdmj47T4ATwtbRkYlY0jk7fk0whA1BwHMnprYe259VcqvPnc2s8tiX0Zg/SuxkeW2fegjA=
@@ -13,16 +14,26 @@ env:
     - COL_1="Not Started"
     - COL_2="In Progress"
     - COL_3="Completed"
-  COMPOSE_VERSION: 1.27.4
+    # docker config
+    - DOCKER_USERNAME="jaybee1971"
+    - secure: "blXfVb3rEV2i4bFKR3F4H+KL2bUFsUepcKnyP8BHFbt/mnnXTNFBvrMytQKH6bzsYCuZVIClHva+nsLZtCDy9zrThktGzZDV5XgciojKganEExIjzpgQkjj0MpU+1ogDnxUSI7yI0V8Ul2uJZuR47Z7DXJTvNKtnKJOd+wYPvCynJWFaUYXoXBlLPURANr3OIiwFPDpJTb+Xq8eANOLC7mE8u1sK1JmptiiIC4WffjbYtYfaJwNdZEsX3EWphtq9KSKfEFI2lPh/LDB0Zz5VEslSFo7ljRtnfhYBN2QhmgSw7OFIp7zpfoAmwkbZSMbXKSr+pc1v6K/RACVoMvubTa6CY0uJRAhbgH4KdTsjkYnIqQi+UqSNKkYXFMXyhB5RWoooOfiWvt8ylvUBhzlucT/S4oFx5pDmlU6wl7ndl/kkp4NnQh0I36OQuXrVcXfpWX6zNslqz/CxdVt9Z5EOGC4DcO6+tQsxiHUF3C0puevZ0EYwsYzTA748u/7p+lkx4U86q5sN4TC7DVtDbFCZEpm1cKN/naTFcla9wFjaLJmRyfr3zZX/Z6jzZ4mo7RpsxrUMEbpcFzorC+LRL0BfCzUfyzvFvEqeJEAwUQdtD/cteeUbA4on4z+3iOGkKDQI69E9Bug8thI0JHqY28hWJtOULp8ohfSGKH7d7YcySoE="
+    - DOCKER_COMPOSE_VERSION=1.27.4
 
 before_install:
-  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
 script:
   - echo "running tests for JB ToDo app"
-  - docker-compose --file docker-compose-travis.yml up --build --exit-code-from todoapp
+  - docker-compose --file docker-compose-travis.yml up --build --tag ${TRAVIS_COMMIT} --exit-code-from todoapp
+
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master
 
 notifications:
   email:
