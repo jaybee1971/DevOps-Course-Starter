@@ -42,7 +42,9 @@ RUN LATEST=`curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE
     apt-get install unzip -y &&\
     unzip ./chromedriver_linux64.zip
 COPY entrypoint-test.sh ./
+COPY docker_push ./
 COPY ./todo_app/ ./todo_app/
 EXPOSE 5000
 RUN chmod +x ./entrypoint-test.sh
+RUN chmod +x ./docker_push
 ENTRYPOINT ["sh", "entrypoint-test.sh"]
