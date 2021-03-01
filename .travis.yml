@@ -1,7 +1,11 @@
 if: "(type = push AND branch IN (master, module_8)) OR (type = pull_request)"
+os: linux
+dist: bionic
 sudo: required
+
 services:
   - docker
+
 env:
   global:
     - FLASK_APP=todo_app.app
