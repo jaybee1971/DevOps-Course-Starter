@@ -52,5 +52,6 @@ FROM base-image as todo-heroku
 COPY entrypoint-heroku.sh Procfile ./
 COPY ./todo_app/*.py ./todo_app/
 COPY ./todo_app/templates/ ./todo_app/templates/
+ENV PORT=${PORT}
 RUN chmod +x ./entrypoint-heroku.sh 
 ENTRYPOINT ["sh", "entrypoint-heroku.sh"]
