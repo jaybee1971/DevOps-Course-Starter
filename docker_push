@@ -4,4 +4,3 @@ docker build --target todo-heroku --tag jaybee1971/todo_app:${TRAVIS_COMMIT} .
 docker push jaybee1971/todo_app:${TRAVIS_COMMIT}
 docker tag jaybee1971/todo_app:${TRAVIS_COMMIT} registry.heroku.com/jaybee1971-todoapp/web
 docker push registry.heroku.com/jaybee1971-todoapp/web
-heroku container:release web -a jaybee1971-todoapp
