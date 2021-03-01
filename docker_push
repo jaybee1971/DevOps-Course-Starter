@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-docker build --target todo-heroku --tag jaybee1971/todo_app:${TRAVIS_COMMIT} .
-docker push jaybee1971/todo_app:${TRAVIS_COMMIT}
+docker build --cache-from $CACHE_IMAGE:latest --target todo-heroku --tag $CACHE_IMAGE:${TRAVIS_COMMIT} .
+docker push $CACHE_IMAGE:${TRAVIS_COMMIT}
 # docker tag jaybee1971/todo_app:${TRAVIS_COMMIT} registry.heroku.com/jaybee1971-todoapp/web
 # docker push registry.heroku.com/jaybee1971-todoapp/web

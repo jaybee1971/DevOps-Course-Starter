@@ -15,24 +15,42 @@ env:
     - DOCKER_USERNAME="jaybee1971"
     - secure: M8fRVi+KFg+KJoVhrdYJwrQWwSuiL8EI0H78FUeVHF8HwnZL70j6rf/cb+xZi0lN2NFQtDlMxoSR4W3kQh2EO6VBsuJJ0QT5Ngv6zUh9F+Bk89BVqC1Qg9cutQCiKjL2Yk78lqR0q+/PdxV7VjPRXa9MT42ViYlBcXLFpKn3i+y9Z4soWJ0qrtcqMJmz8E9Xq5crG5ndGOWTTJa6yeEw1XLcMJ5m1UPRajor0Mxvy8M+S725QLYHBj3fQp5eId25UTcWt4A4uQf+xPkMg/1dEdtGG5P5mLaaOhMRpIvWeh27IFjTyPH5XIO444o+zKtjI3X5qF8Ypt7v+lRuLYusWwqaXH2pPo3hUFq9E0uuZkIEI1vJKSvGijT1/kAx0F710U9yb4vnxNgzO0hDtn/4lmbytcuSa06rL8yQI1eKM4EfKqpQTgcR8BD2Kuh08HYf+v79bMk2m9+uNduRkJDPd6Nu82OEWyYB+IyYbyt2KwqboHWteetrmhD7FjRkl1Jms3nX8eQ8FGir+ZHoc4uy8gqt3OGxxcHIM7dzcBkdBykBjVgmpw8lnp1KleIaqleB1G3v+Mg7SHHSDssss5ict5s/RIMllPhnqGUMHarwymx2KGyutmGsaDuWcMmKYJXUQYLANmvor019ozE+Rb+fEqW8jcpJd1TfdGkZytYfXxs=
     - DOCKER_COMPOSE_VERSION=1.27.4
+    - CACHE_IMAGE=jaybee1971/todo_app
+    - DOCKER_BUILDKIT=1
+    - COMPOSE_DOCKER_CLI_BUILD=1
 
 before_install:
+  - set -e
+  # install docker
+  - echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json
+  - export DOCKER_CLI_EXPERIMENTAL=enabled
+  - docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce=5:19.03.8~3-0~ubuntu-bionic
+  - docker info
+  # install docker compose
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+
+before_script:
+  - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+
 script:
-  - docker-compose --file docker-compose-travis.yml up --build --exit-code-from todoapp
+  - docker-compose --file docker-compose-travis.yml up --build --build-arg BUILDKIT_INLINE_CACHE=1 --exit-code-from todoapp
 
 deploy:
   - provider: script
     script: bash docker_push
     on:
       branch: module_8
-  - provider: heroku
-    api_key:
-      secure: gJnbRKysbjCFWuueZZcjiWgSsGP7Vxpu3xi6oEyMU6AEUyJGUBOco0456u75N7Yfxp9opyZfRKwaQ5dgIneetlgTZBYSVJPQoyczmTu+GvtzgapWlmJqT1XabvgPjpqHpHWnQPkkSs+AKPCM4+dRdAEFlR8HfHb8TmMFnQbWUp/uOVyyKikUfwCnpe6UN6woek0uA9SwrZTeO6iiPKn5bwNeagcS9N1MVzOCj3WJq6GlrKOW1tIFfUx5QPpn2ZEliGxCUSR/05njW45JHq8b+eoOHluSN1pFv7NEqMJNHP8qW9PlJ3Ek9Acc9xuaV/eeu1NvxbMvXjOwrPjE87o/1Iti4zGOkO8tCegW++05Hawj/SLnFvGrTJ9dqjNv9mU6hTdb5Fr0rfjTcnY7oCiZTvTxBuzkffZe1ddSxAZal3R0gDhKPj+l8oI0GF+n5WOu5PNJbtdBCyX8KFAY68k2xX5d4dUCuv3L0IlOVXmGV+QO5Bu8bhAI/UJD0I/G0Ggw42Br32/AA2kSu97zurIRvjncciaLTVSvWWRZE4Gb4OZ+DKNslTpq5A34M8R+vV2+r3IDjQVE1Aqj9b+EKpTE09pbKZFyrCIjO4z80jGmLqHcl1jFQC1HpfMo6STinNf1dHOWVcX8Wi2ZVhHaAZsC2+mGLHnpm3XraJtjudz3ggk=
-    app: jaybee1971-todoapp
+  # - provider: heroku
+  #   api_key:
+  #     secure: gJnbRKysbjCFWuueZZcjiWgSsGP7Vxpu3xi6oEyMU6AEUyJGUBOco0456u75N7Yfxp9opyZfRKwaQ5dgIneetlgTZBYSVJPQoyczmTu+GvtzgapWlmJqT1XabvgPjpqHpHWnQPkkSs+AKPCM4+dRdAEFlR8HfHb8TmMFnQbWUp/uOVyyKikUfwCnpe6UN6woek0uA9SwrZTeO6iiPKn5bwNeagcS9N1MVzOCj3WJq6GlrKOW1tIFfUx5QPpn2ZEliGxCUSR/05njW45JHq8b+eoOHluSN1pFv7NEqMJNHP8qW9PlJ3Ek9Acc9xuaV/eeu1NvxbMvXjOwrPjE87o/1Iti4zGOkO8tCegW++05Hawj/SLnFvGrTJ9dqjNv9mU6hTdb5Fr0rfjTcnY7oCiZTvTxBuzkffZe1ddSxAZal3R0gDhKPj+l8oI0GF+n5WOu5PNJbtdBCyX8KFAY68k2xX5d4dUCuv3L0IlOVXmGV+QO5Bu8bhAI/UJD0I/G0Ggw42Br32/AA2kSu97zurIRvjncciaLTVSvWWRZE4Gb4OZ+DKNslTpq5A34M8R+vV2+r3IDjQVE1Aqj9b+EKpTE09pbKZFyrCIjO4z80jGmLqHcl1jFQC1HpfMo6STinNf1dHOWVcX8Wi2ZVhHaAZsC2+mGLHnpm3XraJtjudz3ggk=
+  #   app: jaybee1971-todoapp
 
 notifications:
   email:
