@@ -45,7 +45,7 @@ before_script:
 
 script:
   - docker-compose --file docker-compose-travis.yml build --build-arg BUILDKIT_INLINE_CACHE=1 
-  - docker-compose up --exit-code-from todoapp
+  - docker-compose --file docker-compose-travis.yml up --exit-code-from todoapp
 
 deploy:
   - provider: script
