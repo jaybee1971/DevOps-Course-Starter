@@ -52,10 +52,6 @@ deploy:
     script: bash docker_push
     on:
       branch: module_8
-  # - provider: heroku
-  #   api_key:
-  #     secure: gJnbRKysbjCFWuueZZcjiWgSsGP7Vxpu3xi6oEyMU6AEUyJGUBOco0456u75N7Yfxp9opyZfRKwaQ5dgIneetlgTZBYSVJPQoyczmTu+GvtzgapWlmJqT1XabvgPjpqHpHWnQPkkSs+AKPCM4+dRdAEFlR8HfHb8TmMFnQbWUp/uOVyyKikUfwCnpe6UN6woek0uA9SwrZTeO6iiPKn5bwNeagcS9N1MVzOCj3WJq6GlrKOW1tIFfUx5QPpn2ZEliGxCUSR/05njW45JHq8b+eoOHluSN1pFv7NEqMJNHP8qW9PlJ3Ek9Acc9xuaV/eeu1NvxbMvXjOwrPjE87o/1Iti4zGOkO8tCegW++05Hawj/SLnFvGrTJ9dqjNv9mU6hTdb5Fr0rfjTcnY7oCiZTvTxBuzkffZe1ddSxAZal3R0gDhKPj+l8oI0GF+n5WOu5PNJbtdBCyX8KFAY68k2xX5d4dUCuv3L0IlOVXmGV+QO5Bu8bhAI/UJD0I/G0Ggw42Br32/AA2kSu97zurIRvjncciaLTVSvWWRZE4Gb4OZ+DKNslTpq5A34M8R+vV2+r3IDjQVE1Aqj9b+EKpTE09pbKZFyrCIjO4z80jGmLqHcl1jFQC1HpfMo6STinNf1dHOWVcX8Wi2ZVhHaAZsC2+mGLHnpm3XraJtjudz3ggk=
-  #   app: jaybee1971-todoapp
 
 notifications:
   email:
