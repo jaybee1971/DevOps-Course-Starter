@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-docker build --cache-from $CACHE_IMAGE:latest --target todo-heroku --tag $CACHE_IMAGE:${TRAVIS_COMMIT} .
-docker push $CACHE_IMAGE
+docker build --cache-from $CACHE_IMAGE:latest --target todo-heroku --tag $CACHE_IMAGE:latest --build-arg BUILDKIT_INLINE_CACHE=1 .
+docker push $CACHE_IMAGE:latest
 echo docker login --username=_ --password=${HEROKU_API_KEY} registry.heroku.com
 docker tag $CACHE_IMAGE:latest registry.heroku.com/jaybee1971-todoapp/web
 docker push registry.heroku.com/jaybee1971-todoapp/web
