@@ -224,9 +224,20 @@ The following files are included for Travis:
  * docker-compose-travis.yml
 ```
 
+The included travis.yml will do the following:
+```bash
+ * only run CI new PRs are targetted to master
+ * only run CD when there are merges to master
+ * run tests against the test docker image
+ * if tests pass (and this is a merge to master), build a new production image
+ * push new image to docker hub
+ * push new image to Heroku
+```
+
 Before using Travis for your build, change the following in the .travis.yml file:
 ```bash
- * Add any additional barnches you want to auto build here: 'type = push AND branch IN (master))'
+ * Add any additional branches you want to auto build here: "(type = push AND branch IN (master)) OR (type = pull_request)"
+ * Update any environment variables to meet your app needs (and remove any not needed)
  * Secure your Trello secure board tokens with your own Travis private key 
  * Update the notifications section to use your email address(es)
 ```
