@@ -1,4 +1,4 @@
-if: "(type = push AND branch IN (master)) OR (type = pull_request)"
+if: "(type = push AND branch IN (master, module_8)) OR (type = pull_request)"
 os: linux
 dist: bionic
 sudo: required
@@ -17,6 +17,7 @@ env:
     - COL_2="In Progress"
     - COL_3="Completed"
     - DOCKER_USERNAME="jaybee1971"
+    - HEROKU_USERNAME="jay.bee71@outlook.com"
     - secure: M8fRVi+KFg+KJoVhrdYJwrQWwSuiL8EI0H78FUeVHF8HwnZL70j6rf/cb+xZi0lN2NFQtDlMxoSR4W3kQh2EO6VBsuJJ0QT5Ngv6zUh9F+Bk89BVqC1Qg9cutQCiKjL2Yk78lqR0q+/PdxV7VjPRXa9MT42ViYlBcXLFpKn3i+y9Z4soWJ0qrtcqMJmz8E9Xq5crG5ndGOWTTJa6yeEw1XLcMJ5m1UPRajor0Mxvy8M+S725QLYHBj3fQp5eId25UTcWt4A4uQf+xPkMg/1dEdtGG5P5mLaaOhMRpIvWeh27IFjTyPH5XIO444o+zKtjI3X5qF8Ypt7v+lRuLYusWwqaXH2pPo3hUFq9E0uuZkIEI1vJKSvGijT1/kAx0F710U9yb4vnxNgzO0hDtn/4lmbytcuSa06rL8yQI1eKM4EfKqpQTgcR8BD2Kuh08HYf+v79bMk2m9+uNduRkJDPd6Nu82OEWyYB+IyYbyt2KwqboHWteetrmhD7FjRkl1Jms3nX8eQ8FGir+ZHoc4uy8gqt3OGxxcHIM7dzcBkdBykBjVgmpw8lnp1KleIaqleB1G3v+Mg7SHHSDssss5ict5s/RIMllPhnqGUMHarwymx2KGyutmGsaDuWcMmKYJXUQYLANmvor019ozE+Rb+fEqW8jcpJd1TfdGkZytYfXxs=
     - DOCKER_COMPOSE_VERSION=1.27.4
     - IMAGE_NAME=jaybee1971/todo_app
@@ -52,7 +53,7 @@ deploy:
   - provider: script
     script: bash docker_push
     on:
-      branch: master
+      branch: module_8
 
 notifications:
   email:

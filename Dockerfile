@@ -47,11 +47,11 @@ EXPOSE 5000
 RUN chmod +x ./entrypoint-test.sh
 ENTRYPOINT ["sh", "entrypoint-test.sh"]
 
-FROM base-image as todo-heroku
-# copy app code and run gunicorn with config for heroku
-COPY entrypoint-heroku.sh ./
-COPY ./todo_app/*.py ./todo_app/
-COPY ./todo_app/templates/ ./todo_app/templates/
-ENV PORT=${PORT}
-RUN chmod +x ./entrypoint-heroku.sh 
-ENTRYPOINT ["sh", "entrypoint-heroku.sh"]
+# FROM base-image as todo-heroku
+# # copy app code and run gunicorn with config for heroku
+# COPY entrypoint-heroku.sh ./
+# COPY ./todo_app/*.py ./todo_app/
+# COPY ./todo_app/templates/ ./todo_app/templates/
+# ENV PORT=${PORT}
+# RUN chmod +x ./entrypoint-heroku.sh 
+# ENTRYPOINT ["sh", "entrypoint-heroku.sh"]
