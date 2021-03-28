@@ -9,8 +9,8 @@ from flask import Flask, redirect, render_template, request, url_for
 from todo_app.flask_config import Config
 from todo_app.todo_item import todo_item
 from todo_app.todo_status import todo_status
-from todo_app.trello_api import (get_trello_cards, get_trello_list_id,
-                                 get_trello_lists, trello_delete, trello_get,
+from todo_app.trello_api import (get_mongo_todo_items, get_trello_list_id,
+                                 get_mongo_todo_statuses, trello_delete, mongo_todo_get,
                                  trello_post, trello_put)
 from todo_app.view_model import view_model
 
@@ -25,7 +25,7 @@ def create_app():
     @app.route('/', methods=['GET'])
     def get_trello_todo_list():
         my_statuses = app.config['STATUSES']
-        trello_todo_list = view_model(get_trello_cards(),get_trello_lists(), my_statuses)
+        trello_todo_list = view_model(get_mongo_todo_items(),get_mongo_todo_statuses(), my_statuses)
         app.logger.info('Processing get cards request')
         return render_template('index.html', view_model_items=trello_todo_list)
 

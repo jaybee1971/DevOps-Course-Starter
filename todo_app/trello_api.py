@@ -2,36 +2,48 @@ from flask import session, current_app as app
 from todo_app.todo_item import todo_item
 from todo_app.todo_status import todo_status
 from todo_app.view_model import view_model
-import os, requests, json, logging, sys
+import os, requests, json, logging, sys, pymongo
 
 
-def trello_get(trello_path):
-    return requests.get(app.config['API_PREFIX'] + trello_path, params=app.config['API_PARAMS'].copy()).json()
+def mongo_todo_get(status_id):
+    mongo_url = app.config['MONGO_URL']
+    mongo_db = app.config['MONGO_DB']
+    
+    client = pymongo.MongoClient(mongo_url)
+    db = client[mongo_db]
+    items = db.todo_items
+    items.find({'status_id': status_id})
 
 
 def get_trello_list_id(card_status):
-    return [list_data.trello_id for list_data in get_trello_lists() if list_data.status == card_status][0]
+    return [list_data.trello_id for list_data in get_mongo_todo_statuses() if list_data.status == card_status][0]
 
 
-def get_trello_lists():
+def get_mongo_todo_statuses():
     todo_statuses = []
-    board = app.config['BOARD_ID']
-    for item in trello_get(f'boards/{board}/lists'):
+    mongo_url = app.config['MONGO_URL']
+    mongo_db = app.config['MONGO_DB']
+    
+    client = pymongo.MongoClient(mongo_url)
+    db = client[mongo_db]
+    statuses = db.todo_statuses
+    for status in statuses.find():
         list_data = todo_status(
-            item['id'],
-            item['name']
+            status['_id'],
+            status['name']
         )
         todo_statuses.append(list_data)
-    return todo_statuses
     
+    return todo_statuses
+      
 
-def get_trello_cards():
+def get_mongo_todo_items():
     todo_items = []
-    todo_statuses = get_trello_lists()
+    todo_statuses = get_mongo_todo_statuses()
     for todo_status in todo_statuses:
-        for item in trello_get(f'lists/{todo_status.trello_id}/cards'):
+        for item in mongo_todo_get(todo_status.trello_id):
             todo = todo_item(
-                item['id'],
+                item['_id'],
                 item['name'],
                 item['desc'],
                 item['due'],
