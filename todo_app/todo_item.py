@@ -2,8 +2,8 @@ from datetime import datetime
 
 class todo_item:
 
-    def __init__(self, trello_id, title, description, due_date, status, last_updated):
-        self.trello_id = trello_id
+    def __init__(self, mongo_id, title, description, due_date, status, last_updated):
+        self.mongo_id = mongo_id
         self.title = title
         self.description = description
         self.due_date = self.format_due_date(due_date)
