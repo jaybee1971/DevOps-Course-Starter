@@ -11,7 +11,7 @@ from todo_app.todo_item import todo_item
 from todo_app.todo_status import todo_status
 from todo_app.mongo_db import (get_mongo_todo_items, get_mongo_list_id,
                                  get_mongo_todo_statuses, trello_delete, mongo_todo_get,
-                                 trello_post, trello_put)
+                                 mongo_post, trello_put)
 from todo_app.view_model import view_model
 
 
@@ -32,11 +32,12 @@ def create_app():
 
     @app.route('/create', methods=['POST'])
     def new_todo():
+        last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
         if request.form['due_date'] == '':
             trello_date = ''
         else:
             trello_date = datetime.strptime(request.form['due_date'], '%d/%m/%Y')
-        trello_post(request.form['add_todo'], request.form['add_desc'], trello_date)
+        mongo_post(request.form['add_todo'], request.form['add_desc'], trello_date, last_update)
         app.logger.info('Processing create new card request')
         return redirect('/')
 

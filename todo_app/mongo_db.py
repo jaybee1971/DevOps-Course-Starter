@@ -56,18 +56,23 @@ def get_mongo_todo_items():
     return todo_items
 
 
-def trello_post(title, description, due_date):
-    url = app.config['API_PREFIX'] + 'cards'
-    post_params = app.config['API_PARAMS'].copy()
-    post_params['name'] = title
-    post_params['desc'] = description
-    post_params['due'] = due_date
-    post_params['idList'] = get_mongo_list_id('Not Started')
-    return requests.request(
-        "POST", 
-        url,
-        params=post_params
-    )
+def mongo_post(title, description, due_date, last_update):
+    new_todo = {
+        # '_id': None,
+        'name': title,
+        'desc': description,
+        'due': str(due_date),
+        'status_id': get_mongo_list_id('Not Started'),
+        'dateLastActivity': last_update
+    }
+        
+    mongo_url = app.config['MONGO_URL']
+    mongo_db = app.config['MONGO_DB']
+    
+    client = pymongo.MongoClient(mongo_url)
+    db = client[mongo_db]
+    items = db.todo_items
+    items.insert_one(new_todo).inserted_id
 
 
 def trello_put(card_id, status):
