@@ -33,11 +33,7 @@ def create_app():
     @app.route('/create', methods=['POST'])
     def new_todo():
         last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-        if request.form['due_date'] == '':
-            trello_date = ''
-        else:
-            trello_date = datetime.strptime(request.form['due_date'], '%d/%m/%Y')
-        mongo_post(request.form['add_todo'], request.form['add_desc'], trello_date, last_update)
+        mongo_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
         app.logger.info('Processing create new card request')
         return redirect('/')
 
