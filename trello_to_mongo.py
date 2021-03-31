@@ -1,5 +1,6 @@
 import requests, pymongo, json
 
+
 trello_items = []
 
 url = "https://api.trello.com/1/boards/{your-board-id-here}/cards"
@@ -22,7 +23,7 @@ todos = []
 
 for item in items:
     todo = {
-        '_id': item['id'],
+        '_id': ObjectId(),
         'name': item['name'],
         'desc': item['desc'],
         'due': item['due'],

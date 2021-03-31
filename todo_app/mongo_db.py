@@ -3,6 +3,7 @@ from todo_app.todo_item import todo_item
 from todo_app.todo_status import todo_status
 from todo_app.view_model import view_model
 import os, requests, json, logging, sys, pymongo
+from bson import ObjectId
 
 
 def mongo_todo_get(status_id):
@@ -12,8 +13,8 @@ def mongo_todo_get(status_id):
     
     client = pymongo.MongoClient(mongo_url)
     db = client[mongo_db]
-    items = db.todo_items
-    todo_items = items.find({'status_id': status_id})
+    collection = db.todo_items
+    todo_items = collection.find({'status_id': status_id})
     return todo_items
 
 
@@ -28,8 +29,8 @@ def get_mongo_todo_statuses():
     
     client = pymongo.MongoClient(mongo_url)
     db = client[mongo_db]
-    statuses = db.todo_statuses
-    for status in statuses.find():
+    collection = db.todo_statuses
+    for status in collection.find():
         list_data = todo_status(
             status['_id'],
             status['name']
@@ -58,7 +59,7 @@ def get_mongo_todo_items():
 
 def mongo_post(title, description, due_date, last_update):
     new_todo = {
-        # '_id': None,
+        '_id': ObjectId(),
         'name': title,
         'desc': description,
         'due': str(due_date),
@@ -71,29 +72,42 @@ def mongo_post(title, description, due_date, last_update):
     
     client = pymongo.MongoClient(mongo_url)
     db = client[mongo_db]
-    items = db.todo_items
-    items.insert_one(new_todo).inserted_id
+    collection = db.todo_items
+    collection.insert_one(new_todo)
 
 
-def trello_put(card_id, status):
-    url = app.config['API_PREFIX'] + 'cards/' + card_id
-    put_params = app.config['API_PARAMS'].copy()
-    put_params['idList'] = get_mongo_list_id(status)
-    return requests.request(
-        "PUT", 
-        url,
-        params=put_params
-    )
+def mongo_put(card_id, status, last_update):
+    updated_todo = {"$set": 
+        {
+        'status_id': get_mongo_list_id(status),
+        'dateLastActivity': last_update
+        }
+    }
+        
+    mongo_url = app.config['MONGO_URL']
+    mongo_db = app.config['MONGO_DB']
+    
+    client = pymongo.MongoClient(mongo_url)
+    db = client[mongo_db]
+    collection = db.todo_items
+    
+    dbquery = {"_id": ObjectId(card_id)}
+    
+    collection.update_one(dbquery, updated_todo)
  
   
-def trello_delete(card_id):
-    url = app.config['API_PREFIX'] + 'cards/' + card_id
-    return requests.request(
-        "DELETE", 
-        url,
-        params=app.config['API_PARAMS'].copy()
-    )
- 
+def mongo_delete(card_id):
+    mongo_url = app.config['MONGO_URL']
+    mongo_db = app.config['MONGO_DB']
+
+    client = pymongo.MongoClient(mongo_url)
+    db = client[mongo_db]
+    collection = db.todo_items
+
+    dbquery = {"_id": ObjectId(card_id)}
+
+    collection.delete_one(dbquery) 
+    
  
 def create_trello_board(api_key, api_token):
     create_params = (
