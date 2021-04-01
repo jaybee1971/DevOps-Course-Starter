@@ -19,8 +19,34 @@ def client():
         yield client
 
 
+class mock_statuses:
+        
+    @staticmethod   
+    def json():
+        with open(file_mock_statuses, 'r') as json_file_statuses:
+            return json.load(json_file_statuses)
+
+class mock_items:
+        
+    @staticmethod    
+    def json():
+        with open(file_mock_items, 'r') as json_file_items:
+            return json.load(json_file_items)
+
+
+def mock_get_statuses():
+   return mock_statuses()
+
+
+def mock_get_items():
+    return mock_items() 
+ 
+
 @mongomock.patch(servers=(("mongo", 12345),))    
-def test_index_page(client): 
+def test_home_page(monkeypatch, client):
+    import todo_app.mongo_db
+    monkeypatch.setattr(todo_app.mongo_db, 'get_mongo_todo_statuses', mock_get_statuses)
+    monkeypatch.setattr(todo_app.mongo_db, 'get_mongo_todo_items', mock_get_items)
     test_database()
     response = client.get('/')
 
