@@ -1,4 +1,6 @@
 import requests, pymongo, json
+from bson import ObjectId
+from datetime import *
 
 
 trello_items = []
@@ -22,11 +24,13 @@ todo = {}
 todos = []
 
 for item in items:
+    iso_date = datetime.strptime(item['due'], '%Y-%m-%dT%H:%M:%S.%fZ')
+    mongo_date = iso_date.strftime('%d/%m/%Y')
     todo = {
         '_id': ObjectId(),
         'name': item['name'],
         'desc': item['desc'],
-        'due': item['due'],
+        'due': mongo_date,
         'status_id': item['idList'],
         'dateLastActivity': item['dateLastActivity']
     }
