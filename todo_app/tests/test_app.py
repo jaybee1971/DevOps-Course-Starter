@@ -1,8 +1,9 @@
-import sys
-import pytest
+import sys, os
+import pytest, mongomock
 import dotenv
 import todo_app.app
-import requests, json
+import requests, json, pymongo
+import datetime
 
 
 file_mock_statuses = './todo_app/tests/mock_statuses.json'
@@ -18,33 +19,17 @@ def client():
         yield client
 
 
-class mock_statuses:
-        
-    @staticmethod   
-    def json():
-        with open(file_mock_statuses, 'r') as json_file_statuses:
-            return json.load(json_file_statuses)
-
-class mock_items:
-        
-    @staticmethod    
-    def json():
-        with open(file_mock_items, 'r') as json_file_items:
-            return json.load(json_file_items)
-
-
-def mock_get(url, params):
-    if url == 'https://api.trello.com/1/boards/test-trello-board-id/lists':
-        return mock_statuses()
-    else:
-        # could qualify whole url for items and add else for failure
-        return mock_items() 
- 
-           
-def test_home_page(monkeypatch, client):
-    monkeypatch.setattr(requests, "get", mock_get)
+@mongomock.patch(servers=(("mongo", 12345),))    
+def test_index_page(client): 
+    test_database()
     response = client.get('/')
-    
-    assert response.status_code == 200
-    assert "an item for testing with" in str(response.data)
+
+    assert 'An item to test with' in response.data.decode()
+
+
+def test_database():
+    client = pymongo.MongoClient(os.environ["MONGO_URL"])
+    database = os.environ["MONGO_DB"]
+    db = client.database
+    db.test_todo_items.insert_one({"last_modified": str(datetime.date.today()), "status_id": "abc1234567890", "name": "An item to test with"})
     
