@@ -19,43 +19,34 @@ def client():
         yield client
 
 
-class mock_statuses:
-        
-    @staticmethod   
-    def json():
-        with open(file_mock_statuses, 'r') as json_file_statuses:
-            return json.load(json_file_statuses)
-
-class mock_items:
-        
-    @staticmethod    
-    def json():
-        with open(file_mock_items, 'r') as json_file_items:
-            return json.load(json_file_items)
-
-
 def mock_get_statuses():
-   return mock_statuses()
+    mock_statuses = []
+    with open(file_mock_statuses, 'r') as json_file_statuses:
+        mock_statuses = json.load(json_file_statuses)
+        return mock_statuses
 
 
 def mock_get_items():
-    return mock_items() 
+    mock_items = []
+    with open(file_mock_items, 'r') as json_file_items:
+        mock_items = json.load(json_file_items)
+        return mock_items
  
 
 @mongomock.patch(servers=(("mongo", 12345),))    
 def test_home_page(monkeypatch, client):
-    import todo_app.mongo_db
-    monkeypatch.setattr(todo_app.mongo_db, 'get_mongo_todo_statuses', mock_get_statuses)
-    monkeypatch.setattr(todo_app.mongo_db, 'get_mongo_todo_items', mock_get_items)
+    import todo_app.app
+    monkeypatch.setattr(todo_app.app, 'get_mongo_todo_statuses', mock_get_statuses)
+    monkeypatch.setattr(todo_app.app, 'get_mongo_todo_items', mock_get_items)
     test_database()
     response = client.get('/')
 
-    assert 'An item to test with' in response.data.decode()
+    assert 'an item for testing with' in response.data.decode()
 
 
 def test_database():
     client = pymongo.MongoClient(os.environ["MONGO_URL"])
     database = os.environ["MONGO_DB"]
     db = client.database
-    db.test_todo_items.insert_one({"last_modified": str(datetime.date.today()), "status_id": "abc1234567890", "name": "An item to test with"})
+    db.test_todo_items.insert_one({"dateLastActivity": str(datetime.date.today()), "status_id": "5f2fb85702fda60cf038d800", "name": "an item for testing with"})
     
