@@ -19,18 +19,26 @@ def client():
         yield client
 
 
+class Iterable(object):
+    def __init__(self, list):
+        self.list = list 
+    def __iter__(self):
+        for x in self.list:
+            yield x
+
+        
 def mock_get_statuses():
-    mock_statuses = []
-    with open(file_mock_statuses, 'r') as json_file_statuses:
-        mock_statuses = json.load(json_file_statuses)
-        return mock_statuses
+    statuses = []
+    with open(file_mock_statuses) as json_file_statuses:
+        statuses = json_file_statuses.read().splitlines()
+    return Iterable(statuses)
 
 
 def mock_get_items():
-    mock_items = []
-    with open(file_mock_items, 'r') as json_file_items:
-        mock_items = json.load(json_file_items)
-        return mock_items
+    items = []
+    with open(file_mock_items) as json_file_items:
+        items = json_file_items.read().splitlines()
+    return Iterable(items)
  
 
 @mongomock.patch(servers=(("mongo", 12345),))    

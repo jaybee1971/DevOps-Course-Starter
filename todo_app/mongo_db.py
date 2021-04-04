@@ -15,6 +15,7 @@ def mongo_todo_get(status_id):
     db = client[mongo_db]
     collection = db.todo_items
     todo_items = collection.find({'status_id': status_id})
+    
     return todo_items
 
 
