@@ -15,9 +15,6 @@ def test_app():
         filepath = dotenv.find_dotenv('.env')
         dotenv.load_dotenv(filepath, override=True)
     
-    test_db = "test_todo_app"
-    os.environ['MONGO_DB'] = test_db
-    
     # construct the new application
     application = todo_app.app.create_app()
     

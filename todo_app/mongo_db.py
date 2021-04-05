@@ -108,26 +108,4 @@ def mongo_delete(card_id):
     dbquery = {"_id": ObjectId(card_id)}
 
     collection.delete_one(dbquery) 
-    
- 
-def create_trello_board(api_key, api_token):
-    create_params = (
-        ('key', api_key),
-        ('token', api_token),
-        ('name', 'TestJbTodoApp')
-    )    
-
-    response = requests.post("https://api.trello.com/1/boards/", params=create_params)
-
-    return response.json()['id']
-
-
-def delete_trello_board(board_id, api_key, api_token):
-    delete_params = (
-        ('key', api_key),
-        ('token', api_token)
-    )
       
-    requests.delete("https://api.trello.com/1/boards/" + board_id, params=delete_params)
-
-  
