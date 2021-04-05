@@ -49,22 +49,21 @@ def mock_get_items():
             )
             mock_items.append(todo)
     return mock_items
- 
+
+
+def mock_database():
+    client = pymongo.MongoClient(os.environ["MONGO_URL"])
+    database = os.environ["MONGO_DB"]
+    db = client.database
+    db.test_todo_items.insert_one({"dateLastActivity": str(datetime.date.today()), "status_id": "5f2fb85702fda60cf038d800", "name": "an item for testing with"})
+   
 
 @mongomock.patch(servers=(("mongo", 12345),))    
 def test_home_page(monkeypatch, client):
     import todo_app.app
     monkeypatch.setattr(todo_app.app, 'get_mongo_todo_statuses', mock_get_statuses)
     monkeypatch.setattr(todo_app.app, 'get_mongo_todo_items', mock_get_items)
-    test_database()
+    mock_database()
     response = client.get('/')
 
     assert 'an item for testing with' in response.data.decode()
-
-
-def test_database():
-    client = pymongo.MongoClient(os.environ["MONGO_URL"])
-    database = os.environ["MONGO_DB"]
-    db = client.database
-    db.test_todo_items.insert_one({"dateLastActivity": str(datetime.date.today()), "status_id": "5f2fb85702fda60cf038d800", "name": "an item for testing with"})
-    
