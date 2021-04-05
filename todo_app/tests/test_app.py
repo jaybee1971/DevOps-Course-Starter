@@ -2,6 +2,8 @@ import sys, os
 import pytest, mongomock
 import dotenv
 import todo_app.app
+from todo_app.todo_item import todo_item
+from todo_app.todo_status import todo_status
 import requests, json, pymongo
 import datetime
 
@@ -18,27 +20,35 @@ def client():
     with test_app.test_client() as client:
         yield client
 
-
-class Iterable(object):
-    def __init__(self, list):
-        self.list = list 
-    def __iter__(self):
-        for x in self.list:
-            yield x
-
         
 def mock_get_statuses():
-    statuses = []
+    mock_statuses = []
     with open(file_mock_statuses) as json_file_statuses:
-        statuses = json_file_statuses.read().splitlines()
-    return Iterable(statuses)
+        mock_collection = json.load(json_file_statuses)
+        for status in mock_collection:
+            list_data = todo_status(
+                status['_id'],
+                status['name']
+            )
+            mock_statuses.append(list_data)
+    return mock_statuses
 
 
 def mock_get_items():
-    items = []
+    mock_items = []
     with open(file_mock_items) as json_file_items:
-        items = json_file_items.read().splitlines()
-    return Iterable(items)
+        mock_collection = json.load(json_file_items)
+        for item in mock_collection:
+            todo = todo_item(
+                item['_id'],
+                item['name'],
+                item['desc'],
+                item['due'],
+                item['status_id'],
+                item['dateLastActivity']
+            )
+            mock_items.append(todo)
+    return mock_items
  
 
 @mongomock.patch(servers=(("mongo", 12345),))    

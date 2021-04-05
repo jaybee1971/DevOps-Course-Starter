@@ -1,14 +1,14 @@
 [
     {
-      "mongo_id": "5f2fb85702fda60cf038d800",
-      "status": "Not Started"
+      "_id": "5f2fb85702fda60cf038d800",
+      "name": "Not Started"
     },
     {
-      "mongo_id": "5f2fb85702fda60cf038d801",
-      "status": "In Progress"
+      "_id": "5f2fb85702fda60cf038d801",
+      "name": "In Progress"
     },
     {
-      "mongo_id": "5f2fb85702fda60cf038d802",
-      "status": "Completed"
+      "_id": "5f2fb85702fda60cf038d802",
+      "name": "Completed"
     }
 ]

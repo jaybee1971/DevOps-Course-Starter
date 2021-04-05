@@ -1,82 +1,26 @@
 [
   {
-    "mongo_id": "6065727e957fe8a76f489418",
-    "name": "test item 5555",
+    "_id": "6065727e957fe8a76f489418",
+    "name": "test item 1",
     "desc": "test again and again",
     "due": "25/02/2021",
-    "status": "Not Started",
+    "status_id": "Not Started",
     "dateLastActivity": "2020-12-21T21:56:44.717Z"
   },
   {
-    "mongo_id": "6065727e957fe8a76f489419",
-    "name": "kjhgadjlagjh",
-    "desc": "adjhghjladhgjga",
-    "due": "31/03/2021",
-    "status": "Not Started",
-    "dateLastActivity": "2021-03-28T21:04:58.381Z"
-  },
-  {
-    "mongo_id": "6065727e957fe8a76f48941a",
-    "name": "test item 3333",
-    "desc": "test",
-    "due": "16/01/2021",
-    "status": "In Progress",
-    "dateLastActivity": "2020-12-21T21:29:54.680Z"
-  },
-  {
-    "mongo_id": "6065727e957fe8a76f48941b",
-    "name": "test item 8888",
+    "_id": "6065727e957fe8a76f48941b",
+    "name": "test item 2",
     "desc": "test again and again",
     "due": "26/03/2021",
-    "status": "In Progress",
+    "status_id": "In Progress",
     "dateLastActivity": "2021-02-03T08:35:11.690Z"
   },
   {
-    "mongo_id": "6065727e957fe8a76f48941c",
-    "name": "test item",
-    "desc": "test",
-    "due": "10/10/2020",
-    "status": "Completed",
-    "dateLastActivity": "2020-12-21T15:33:09.542Z"
-  },
-  {
-    "mongo_id": "6065727e957fe8a76f48941d",
-    "name": "new test",
-    "desc": "new test",
-    "due": "11/11/2020",
-    "status": "Completed",
-    "dateLastActivity": "2020-12-21T21:55:58.324Z"
-  },
-  {
-    "mongo_id": "6065727e957fe8a76f48941e",
-    "name": "what's this item for?",
-    "desc": "to test with?",
-    "due": "12/12/2020",
-    "status": "Completed",
-    "dateLastActivity": "2020-12-21T21:56:12.016Z"
-  },
-  {
-    "mongo_id": "6065727e957fe8a76f48941f",
-    "name": "wobble",
-    "desc": "wibble",
-    "due": "29/09/2020",
-    "status": "Completed",
-    "dateLastActivity": "2020-12-21T15:31:50.266Z"
-  },
-  {
-    "mongo_id": "6065727e957fe8a76f489420",
-    "name": "what you testing for?",
-    "desc": "some test stuff",
-    "due": "30/10/2020",
-    "status": "Completed",
-    "dateLastActivity": "2020-12-21T15:25:21.194Z"
-  },
-  {
-    "mongo_id": "6065727e957fe8a76f489421",
+    "_id": "6065727e957fe8a76f489421",
     "name": "test item 3",
     "desc": "an item for testing with",
     "due": "23/10/2020",
-    "status": "Completed",
+    "status_id": "Completed",
     "dateLastActivity": "2020-12-21T15:24:02.579Z"
   }
 ]
