@@ -86,6 +86,9 @@ Configure the following environment variables for your db instance:
  * MONGO_DB="your-database"
 ```
 
+Previously the app used Trello and it's associated APIs.
+If you want to convert previous Trello stored data to use Mongo, run this script to copy over your data:  ./trello_to_mongo.py
+
 
 ## Running the App
 
