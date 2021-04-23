@@ -43,7 +43,6 @@ def create_app():
         for mongo_id in request.form:
             card_status = request.form.get(mongo_id)
             if card_status == 'Delete':
-                print(mongo_id)
                 mongo_delete(mongo_id)
                 app.logger.info('Processing delete card request')
             else:

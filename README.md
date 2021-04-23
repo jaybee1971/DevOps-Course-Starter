@@ -89,6 +89,11 @@ Configure the following environment variables for your db instance:
 Previously the app used Trello and it's associated APIs.
 If you want to convert previous Trello stored data to use Mongo, run this script to copy over your data:  ./trello_to_mongo.py
 
+The application requires a minimum of 2 collections to run, with the following schema:
+```bash
+ * todo_statuses:  {"_id": "STATUS_ID", "name": "STATUS_NAME"}
+ * todo_items: {"_id": "ITEM_ID", "name": "TODO_TITLE", "desc": "TODO_DESC", "due": "DD/MM/YYYY", "status_id": "STATUS_ID", "dateLastActivity": "ISO_DATETIME"}
+```
 
 ## Running the App
 
