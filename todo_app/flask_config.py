@@ -4,6 +4,8 @@ import os
 class Config:
     def __init__(self):
         """Base configuration variables."""
+        self.GH_CLIENT_ID = os.getenv('GH_CLIENT_ID')
+        self.GH_SECRET = os.getenv('GH_SECRET')
         self.MONGO_URL = os.getenv('MONGO_URL')
         self.MONGO_DB = os.getenv('MONGO_DB')
         self.COL_1 = os.getenv('COL_1')
