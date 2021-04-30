@@ -6,7 +6,7 @@
         <div class="jumbotron" style="background-color:DodgerBlue;color:White;margin-top:40px;">
             <h1 class="display-4">My To-Do App</h1>
             <hr class="my-4">
-            <p class="lead">Now with new and improved Trello API calls + ToDo list sorted by status</p>
+            <p class="lead">Now using MongoDB to store all your ToDo Items!</p>
         </div>
     </div>
 
@@ -34,16 +34,16 @@
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
                             <td>
-                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
-                                    <option selected="selected" value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
-                                    <option value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
-                                    <option value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
-                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
+                                <select class="custom-select" name="{{ todo_item.mongo_id }}" form="{{ todo_item.mongo_id }}">
+                                    <option selected="selected" value="Not Started" name="{{ todo_item.mongo_id }}">Not Started</option>
+                                    <option value="In Progress" name="{{ todo_item.mongo_id }}">In Progress</option>
+                                    <option value="Completed" name="{{ todo_item.mongo_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.mongo_id }}">Delete</option>
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White;" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White;" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
                             </td>
                         </tr>
@@ -57,16 +57,16 @@
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
                             <td>
-                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
-                                    <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
-                                    <option selected="selected" value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
-                                    <option value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
-                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
+                                <select class="custom-select" name="{{ todo_item.mongo_id }}" form="{{ todo_item.mongo_id }}">
+                                    <option value="Not Started" name="{{ todo_item.mongo_id }}">Not Started</option>
+                                    <option selected="selected" value="In Progress" name="{{ todo_item.mongo_id }}">In Progress</option>
+                                    <option value="Completed" name="{{ todo_item.mongo_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.mongo_id }}">Delete</option>
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
                             </td>
                         </tr>
@@ -80,16 +80,16 @@
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
                             <td>
-                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
-                                    <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
-                                    <option value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
-                                    <option selected="selected" value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
-                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
+                                <select class="custom-select" name="{{ todo_item.mongo_id }}" form="{{ todo_item.mongo_id }}">
+                                    <option value="Not Started" name="{{ todo_item.mongo_id }}">Not Started</option>
+                                    <option value="In Progress" name="{{ todo_item.mongo_id }}">In Progress</option>
+                                    <option selected="selected" value="Completed" name="{{ todo_item.mongo_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.mongo_id }}">Delete</option>
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
                             </td>
                         </tr>
@@ -107,16 +107,16 @@
                             <td contenteditable="true">{{todo_item.description}}</td>
                             <td style="text-align: center;">{{todo_item.due_date}}</td>
                             <td>
-                                <select class="custom-select" name="{{ todo_item.trello_id }}" form="{{ todo_item.trello_id }}">
-                                    <option value="Not Started" name="{{ todo_item.trello_id }}">Not Started</option>
-                                    <option value="In Progress" name="{{ todo_item.trello_id }}">In Progress</option>
-                                    <option selected="selected" value="Completed" name="{{ todo_item.trello_id }}">Completed</option>
-                                    <option value="Delete" name="{{ todo_item.trello_id }}">Delete</option>
+                                <select class="custom-select" name="{{ todo_item.mongo_id }}" form="{{ todo_item.mongo_id }}">
+                                    <option value="Not Started" name="{{ todo_item.mongo_id }}">Not Started</option>
+                                    <option value="In Progress" name="{{ todo_item.mongo_id }}">In Progress</option>
+                                    <option selected="selected" value="Completed" name="{{ todo_item.mongo_id }}">Completed</option>
+                                    <option value="Delete" name="{{ todo_item.mongo_id }}">Delete</option>
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                <form id="{{ todo_item.trello_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.trello_id }}">Update</button>
+                                <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
                             </td>
                         </tr>

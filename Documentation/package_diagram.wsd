@@ -9,7 +9,7 @@ skinparam packageStyle frame
         package "App Code" {
             file "app.py"
             file "flask_config.py"
-            file "trello_api.py"
+            file "mongo_db.py"
         }
         folder "templates" {
             file "index.html"
