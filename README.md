@@ -1,5 +1,12 @@
 # DevOps Apprenticeship: Running Jason B's ToDo App
 
+## Heroku
+
+The app is live hosted on Heroku:
+
+https://jaybee1971-todoapp.herokuapp.com/
+
+
 ## Documentation
 
 Can be found in the 'Documentation' folder and uses the C4 methodology (https://c4model.com/)
@@ -18,17 +25,20 @@ An example class_diagram.md for this application is included (and png of the dia
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):
 
+
 ### Poetry installation (Bash)
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 ```
 
+
 ### Poetry installation (PowerShell)
 
 ```powershell
 (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python
 ```
+
 
 ## Dependencies
 
@@ -60,33 +70,30 @@ Packages required:
 
 To update any missing or new dependencies:
 ```bash
-$ poetry add <package_name>
+  $ poetry add <package_name>
 ```
 
-## Trello API
 
-The project uses the APIs from Trello.
-To get this app to work for you, you will need to have a Trello account and store the following variables in your .env file (Use the .env.template to create your own entries from earlier step):
+## Mongo DB
+
+The project uses a Mongo database from Atlas:
+https://www.mongodb.com/
+
+
+Configure the following environment variables for your db instance:
 ```bash
-  * API_KEY  -  Your unique key for using the Trello API
-  * API_TOKEN  -  Generate your own API token and store value here
-  * BOARD_ID  -  The ID of the board you want to use for the project
+ * MONGO_URL="your-url"
+ * MONGO_DB="your-database"
 ```
-For this application:
+
+Previously the app used Trello and it's associated APIs.
+If you want to convert previous Trello stored data to use Mongo, run this script to copy over your data:  ./trello_to_mongo.py
+
+The application requires a minimum of 2 collections to run, with the following schema:
 ```bash
-my_statuses = ["Not Started", "In Progress", "Completed"]
+ * todo_statuses:  {"_id": "STATUS_ID", "name": "STATUS_NAME"}
+ * todo_items: {"_id": "ITEM_ID", "name": "TODO_TITLE", "desc": "TODO_DESC", "due": "DD/MM/YYYY", "status_id": "STATUS_ID", "dateLastActivity": "ISO_DATETIME"}
 ```
-(this may differ from the Trello default statuses)
-
-For this application, there are status column headings set in the .env as follows:
-
-```bash
-  * COL_1="Not Started"
-  * COL_2="In Progress"
-  * COL_3="Completed"
-```
-
-These differ from the Trello standard names and can be updated as needed.
 
 ## Running the App
 
@@ -105,7 +112,9 @@ You should see output similar to the following:
  * Debugger is active!
  * Debugger PIN: 226-556-590
 ```
+
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
 
 ## Running Tests
 
@@ -134,12 +143,11 @@ Unit and System tests:
 
 Browser tests:
  * $ poetry run pytest todo_app/browser_tests/chrome_test.py
- * $ poetry run pytest todo_app/browser_tests/firefox_test.py
-(currently have to be run seperately)
 
 Run all tests:
 * $ sh test_suite.sh
 ```
+
 
 ## Using a Virtual Machine
 
@@ -167,6 +175,7 @@ The VM can be managed using vagrant's CLI commands. Some useful ones are:
 ```
 
 Browse to the application from:  http://0.0.0.0:5000/
+
 
 ## Using Docker
 
@@ -213,6 +222,7 @@ $ docker-compose --file docker-compose-test.yml up --build
 ```
 Image tag:  'todo-app:test'
 Container will run all the tests specified in 'entrypoint-test.sh' then stop
+
 
 ## Using Travis CI
 

@@ -48,27 +48,27 @@ def test_get_todo_statuses(test_view_model):
 def test_filter_not_started_items(test_view_model):
     test_not_started_items = test_view_model.filter_by_todo_status(test_statuses[0])
 
-    assert test_not_started_items[0].trello_id == test_items[0].trello_id
+    assert test_not_started_items[0].mongo_id == test_items[0].mongo_id
     assert test_not_started_items[0].title == test_items[0].title
-    assert test_not_started_items[1].trello_id == test_items[3].trello_id
+    assert test_not_started_items[1].mongo_id == test_items[3].mongo_id
     assert test_not_started_items[1].title == test_items[3].title
 
 
 def test_filter_in_progress_items(test_view_model):
     test_in_progress_items = test_view_model.filter_by_todo_status(test_statuses[1])
 
-    assert test_in_progress_items[0].trello_id == test_items[1].trello_id
+    assert test_in_progress_items[0].mongo_id == test_items[1].mongo_id
     assert test_in_progress_items[0].title == test_items[1].title
-    assert test_in_progress_items[1].trello_id == test_items[4].trello_id
+    assert test_in_progress_items[1].mongo_id == test_items[4].mongo_id
     assert test_in_progress_items[1].title == test_items[4].title
 
 
 def test_filter_completed_items(test_view_model):
     test_completed_items = test_view_model.filter_by_todo_status(test_statuses[2])
 
-    assert test_completed_items[0].trello_id == test_items[2].trello_id
+    assert test_completed_items[0].mongo_id == test_items[2].mongo_id
     assert test_completed_items[0].title == test_items[2].title
-    assert test_completed_items[1].trello_id == test_items[5].trello_id
+    assert test_completed_items[1].mongo_id == test_items[5].mongo_id
     assert test_completed_items[1].title == test_items[5].title
 
 

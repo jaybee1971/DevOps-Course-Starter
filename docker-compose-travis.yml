@@ -14,9 +14,8 @@ services:
     environment:
       FLASK_APP : "${FLASK_APP}"
       FLASK_ENV : "${FLASK_ENV}"
-      API_KEY : "${API_KEY}"
-      API_TOKEN : "${API_TOKEN}"
-      BOARD_ID : "${BOARD_ID}"
+      MONGO_URL : "${MONGO_URL}"
+      MONGO_DB : "${MONGO_DB}"
       COL_1 : "${COL_1}"
       COL_2 : "${COL_2}"
       COL_3 : "${COL_3}"

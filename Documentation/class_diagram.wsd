@@ -1,7 +1,7 @@
 @startuml "Class Diagram"
 package "ToDo App - Class Diagram" #DDDDDD {
     class todo_item {
-        + trello_id
+        + mongo_id
         + title
         + description
         + due_date
@@ -10,7 +10,7 @@ package "ToDo App - Class Diagram" #DDDDDD {
     }
 
     class todo_status {
-        + trello_id
+        + mongo_id
         + status
     }
 
