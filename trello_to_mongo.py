@@ -46,7 +46,7 @@ db = client[mongo_db]
 db.todo_items.insert_many( todos )
 
 # Add default statuses (update your own column names and substitute ObjectID for Trello idList value if importing data from Trello)
-db.todo_statuses.insertMany([
+db.todo_statuses.insert_many([
   { '_id': ObjectId(), 'name': 'Not Started' },
   { '_id': ObjectId(), 'name': 'In Progress' },
   { '_id': ObjectId(), 'name': 'Completed' }
