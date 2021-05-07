@@ -1,6 +1,4 @@
-import logging
-import os
-import sys
+import logging, os, sys, requests
 from datetime import datetime
 from operator import itemgetter
 from flask_login import login_required, login_user, current_user
@@ -9,6 +7,7 @@ from oauthlib.oauth2 import WebApplicationClient
 from flask import Flask, redirect, render_template, request, url_for
 
 from todo_app.flask_config import Config
+from todo_app.todo_user import todo_user
 from todo_app.todo_item import todo_item
 from todo_app.todo_status import todo_status
 from todo_app.mongo_db import (get_mongo_todo_items, get_mongo_list_id,
@@ -54,6 +53,21 @@ def create_app():
                 last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
                 mongo_put(mongo_id, card_status, last_update)
                 app.logger.info('Processing update card request')
+        return redirect('/')
+    
+    
+    @app.route('/login/callback')
+    def login_callback():
+        callback_code = request.args.get("code")
+        gh_client =  WebApplicationClient(app.config['GH_CLIENT_ID'])
+        gh_token = gh_client.prepare_token_request("https://github.com/login/oauth/access_token", code=callback_code) 
+        gh_access = requests.post(gh_token[0], headers=gh_token[1], data=gh_token[2], auth=(app.config['GH_CLIENT_ID'], app.config['GH_SECRET']))
+        gh_json = gh_client.parse_request_body_response(gh_access.text)
+        gh_user_request_param = gh_client.add_token("https://api.github.com/user")
+        gh_user = requests.get(gh_user_request_param[0], headers=gh_user_request_param[1]).json()
+        
+        flask_login.login_user(todo_user(gh_user))
+
         return redirect('/')
 
     return app
