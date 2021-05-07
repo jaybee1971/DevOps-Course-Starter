@@ -5,6 +5,7 @@ from datetime import datetime
 from operator import itemgetter
 from flask_login import login_required, login_user, current_user
 import todo_app.login_manager as login_manager
+from oauthlib.oauth2 import WebApplicationClient
 from flask import Flask, redirect, render_template, request, url_for
 
 from todo_app.flask_config import Config
@@ -21,6 +22,7 @@ def create_app():
     # uncomment to debug
     # logging.basicConfig(level=logging.DEBUG)
     app.config.from_object(Config())
+    login_manager.login_manager.init_app(app)
     
     # All the routes and setup code etc
     @app.route('/', methods=['GET'])
@@ -32,6 +34,7 @@ def create_app():
 
 
     @app.route('/create', methods=['POST'])
+    @login_required
     def new_todo():
         last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
         mongo_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
@@ -40,6 +43,7 @@ def create_app():
 
 
     @app.route('/update', methods=['POST'])
+    @login_required
     def update():
         for mongo_id in request.form:
             card_status = request.form.get(mongo_id)
