@@ -66,7 +66,7 @@ def create_app():
         gh_user_request_param = gh_client.add_token("https://api.github.com/user")
         gh_user = requests.get(gh_user_request_param[0], headers=gh_user_request_param[1]).json()
         
-        flask_login.login_user(todo_user(gh_user))
+        login_user(todo_user(gh_user))
 
         return redirect('/')
 
