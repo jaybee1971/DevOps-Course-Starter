@@ -19,7 +19,7 @@ from todo_app.view_model import view_model
 def create_app():
     app = Flask(__name__)
     # uncomment to debug
-    # logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG)
     app.config.from_object(Config())
     login_manager.login_manager.init_app(app)
     
@@ -58,16 +58,37 @@ def create_app():
     
     @app.route('/login/callback')
     def login_callback():
+        app.logger.info('OAuth')
         callback_code = request.args.get("code")
-        gh_client =  WebApplicationClient(app.config['GH_CLIENT_ID'])
-        gh_token = gh_client.prepare_token_request("https://github.com/login/oauth/access_token", code=callback_code) 
-        gh_access = requests.post(gh_token[0], headers=gh_token[1], data=gh_token[2], auth=(app.config['GH_CLIENT_ID'], app.config['GH_SECRET']))
-        gh_json = gh_client.parse_request_body_response(gh_access.text)
-        gh_user_request_param = gh_client.add_token("https://api.github.com/user")
-        gh_user = requests.get(gh_user_request_param[0], headers=gh_user_request_param[1]).json()
         
-        login_user(todo_user(gh_user))
-
+        gh_client =  WebApplicationClient(app.config['GH_CLIENT_ID'])
+        
+        gh_token = gh_client.prepare_token_request(
+            "https://github.com/login/oauth/access_token",
+            code=callback_code
+        ) 
+        
+        gh_access = requests.post(
+            gh_token[0], 
+            headers=gh_token[1], 
+            data=gh_token[2], 
+            auth=(app.config['GH_CLIENT_ID'], 
+            app.config['GH_SECRET'])
+        )
+        
+        gh_json = gh_client.parse_request_body_response(gh_access.text)
+        
+        gh_request_param = gh_client.add_token(uri="https://api.github.com/user")
+        
+        gh_user_info = requests.get(
+            gh_request_param[0],
+            headers=gh_request_param[1]
+        ).json()
+        
+        login_user(todo_user(gh_user_info))
+        
+        user_role = todo_user(gh_user_info).role
+                   
         return redirect('/')
 
     return app
