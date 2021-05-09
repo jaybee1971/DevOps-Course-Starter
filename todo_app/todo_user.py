@@ -1,9 +1,9 @@
 from flask_login import UserMixin
 
 class todo_user(UserMixin):
-    def __init__(self, user_id):
-        self.id = user_id['id']
-        self.login = user_id['login']
+    def __init__(self, gh_user):
+        self.id = gh_user['id']
+        self.login = gh_user['login']
         self.role = self.get_role(self.login)
     
     def get_role(self, login):

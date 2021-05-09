@@ -25,7 +25,7 @@ def create_app():
     
     # All the routes and setup code etc
     @app.route('/', methods=['GET'])
-    def get_mongo_todo_list():
+    def index():
         my_statuses = app.config['STATUSES']
         mongo_todo_list = view_model(get_mongo_todo_items(),get_mongo_todo_statuses(), my_statuses)
         app.logger.info('Processing get cards request')
@@ -56,7 +56,7 @@ def create_app():
         return redirect('/')
     
     
-    @app.route('/login/callback')
+    @app.route('/login/callback', methods=['Get'])
     def login_callback():
         app.logger.info('OAuth')
         callback_code = request.args.get("code")
@@ -86,8 +86,6 @@ def create_app():
         ).json()
         
         login_user(todo_user(gh_user_info))
-        
-        user_role = todo_user(gh_user_info).role
                    
         return redirect('/')
 
@@ -95,3 +93,4 @@ def create_app():
 
 if __name__ == '__main__':
     create_app().run()
+    
