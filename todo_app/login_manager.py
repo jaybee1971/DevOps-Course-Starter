@@ -3,7 +3,7 @@ from flask import session, redirect, current_app as app
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 import os
-from todo_app.todo_user import todo_user
+from todo_app.todo_user import TodoUser
 
 
 login_manager = LoginManager()
@@ -16,4 +16,4 @@ def unauthenticated():
          
 @login_manager.user_loader
 def load_user(user_id):
-    return None
+    return TodoUser(user_id)

@@ -7,7 +7,7 @@ from oauthlib.oauth2 import WebApplicationClient
 from flask import Flask, redirect, render_template, request, url_for
 
 from todo_app.flask_config import Config
-from todo_app.todo_user import todo_user
+from todo_app.todo_user import TodoUser
 from todo_app.todo_item import todo_item
 from todo_app.todo_status import todo_status
 from todo_app.mongo_db import (get_mongo_todo_items, get_mongo_list_id,
@@ -25,6 +25,7 @@ def create_app():
     
     # All the routes and setup code etc
     @app.route('/', methods=['GET'])
+    @login_required
     def index():
         my_statuses = app.config['STATUSES']
         mongo_todo_list = view_model(get_mongo_todo_items(),get_mongo_todo_statuses(), my_statuses)
@@ -85,7 +86,7 @@ def create_app():
             headers=gh_request_param[1]
         ).json()
         
-        login_user(todo_user(gh_user_info))
+        login_user(TodoUser(gh_user_info['id']))
                    
         return redirect('/')
 
