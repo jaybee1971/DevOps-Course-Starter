@@ -19,7 +19,7 @@ from todo_app.view_model import view_model
 def create_app():
     app = Flask(__name__)
     # uncomment to debug
-    logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
     app.config.from_object(Config())
     login_manager.login_manager.init_app(app)
     
@@ -27,7 +27,10 @@ def create_app():
     @app.route('/', methods=['GET'])
     @login_required
     def index():
-        user_role = current_user.role
+        if app.config['LOGIN_DISABLED'] == "True":
+            user_role = "writer"
+        else:
+            user_role = current_user.role
         my_statuses = app.config['STATUSES']
         mongo_todo_list = view_model(get_mongo_todo_items(),get_mongo_todo_statuses(), my_statuses)
         app.logger.info('Processing get cards request')
