@@ -27,19 +27,23 @@ def create_app():
     @app.route('/', methods=['GET'])
     @login_required
     def index():
+        user_role = current_user.role
         my_statuses = app.config['STATUSES']
         mongo_todo_list = view_model(get_mongo_todo_items(),get_mongo_todo_statuses(), my_statuses)
         app.logger.info('Processing get cards request')
-        return render_template('index.html', view_model_items=mongo_todo_list)
+        return render_template('index.html', view_model_items=mongo_todo_list, view_role=user_role)
 
 
     @app.route('/create', methods=['POST'])
     @login_required
     def new_todo():
-        last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-        mongo_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
-        app.logger.info('Processing create new card request')
-        return redirect('/')
+        if current_user.role == "writer":
+            last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            mongo_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
+            app.logger.info('Processing create new card request')
+            return redirect('/')
+        else:
+            return redirect('/')
 
 
     @app.route('/update', methods=['POST'])

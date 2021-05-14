@@ -7,6 +7,7 @@
             <h1 class="display-4">My To-Do App</h1>
             <hr class="my-4">
             <p class="lead">Now using MongoDB to store all your ToDo Items!</p>
+            <p class="lead">Plus GitHub OAuth for application security</p>
         </div>
     </div>
 
@@ -42,9 +43,13 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
+                                {% if not view_role == "reader" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
-                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White;" type="update" name="{{ todo_item.mongo_id }}">Update</button>
+                                    <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
+                                {% else %}
+                                <button class="btn btn-dark" style="background-color:Grey">Disabled</button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -65,9 +70,13 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
+                                {% if not view_role == "reader" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
+                                {% else %}
+                                <button class="btn btn-dark" style="background-color:Grey">Disabled</button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -88,9 +97,13 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
+                                {% if not view_role == "reader" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
+                                {% else %}
+                                <button class="btn btn-dark" style="background-color:Grey">Disabled</button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -115,9 +128,13 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
+                                {% if not view_role == "reader" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
+                                {% else %}
+                                <button class="btn btn-dark" style="background-color:Grey">Disabled</button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
