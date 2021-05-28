@@ -66,12 +66,25 @@ Packages required:
   * Dotenv
   * Selenium
   * Gunicorn
+  * Flask-login
+  * Oauthlib
+  * PyMongo
 ```
 
 To update any missing or new dependencies:
 ```bash
   $ poetry add <package_name>
 ```
+
+
+## GitLab Oauth
+
+You will need a valid GitHub account to run the application.
+This will give read only access and the ability to add or update items will be disabled.
+
+To allow write access you will need to put your GitHub ID in the todo_user.py class before running the app.
+Future updates will add valid users to the MongoDB.
+
 
 
 ## Mongo DB
