@@ -121,3 +121,6 @@ env/
 ### Configuration files ###
 .env
 chromedriver.exe
+
+### Mongo Playground ###
+playground.mongodb

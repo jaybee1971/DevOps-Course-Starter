@@ -15,6 +15,9 @@ def test_app():
         filepath = dotenv.find_dotenv('.env')
         dotenv.load_dotenv(filepath, override=True)
     
+    # disable GitHub OAuth
+    os.environ['LOGIN_DISABLED'] = "True"
+    
     # construct the new application
     application = todo_app.app.create_app()
     
