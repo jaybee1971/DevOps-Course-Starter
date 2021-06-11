@@ -1,4 +1,4 @@
-if: "(type = push AND branch IN (master, module_11)) OR (type = pull_request)"
+if: "(type = push AND branch IN (main, module_11)) OR (type = pull_request)"
 os: linux
 dist: bionic
 sudo: required
@@ -24,6 +24,7 @@ env:
     - HEROKU_NAME=jaybee1971-todoapp
     - DOCKER_BUILDKIT=1
     - COMPOSE_DOCKER_CLI_BUILD=1
+    - secure: "cQVzPbj30nkfcBijBr7AoHYmVh3lbgSSUuBsoWTtkhirXnhR91uRgzn6IarmuAUb8Lo2rKjfV4oL+/4QaO7bRB5EaroFoRWp5Np7Q4z72HGOWgcfKIKmvZAAuyPNJYxP7vqR3SEcLtbeO+8UWWn/M5eiFBp2lPBwfTYTYp52K6V3EU36PECigWgTURcnGqooqZ8eN21brGC1pQ37NUI6wl0dih/sFRoL5Z+hWWsjB+6Mj0nJJOYQdvHMiBLSeXHUc4sYhYM5cEe1EXhQ8pKJBCABhHQyaCgjICYbzAM6kSn1ObjKit02HHkbcz34d4/JXmdS+0ya98z0HyeU7MnJkrzf5W5QHAaLakeZNxhrGO1S0pS+vWRa6OgPXeqoxL4OXcdMIDjNQK6N0QPOp5XA3rUrpZdB/MkrA7T8EEeX/84Qb0WP5JFHVSfBoL/p/sPg548jAWPdmf2XNpwa3lDozPkJyoEh+yybZ94OvgWTwyauvvuOXK0nTlVy78VwJQz7AUdOOlJresG/35nFGGxDhgqhi6bOoZzjm9czdIlb9Ed6+zD4XsKTs6l9gME984XpMM2rRT6x5z8XNxWjzE6uleFQ27cb6kpUKz/DQYmBba2mYA+W56yWuyQ905cGKofh7Q6bWobdw5paFa1/7DZQajo4DrUxhzM8Znh2wenfQ+0="
 
 before_install:
   - set -e
@@ -53,7 +54,7 @@ deploy:
   - provider: script
     script: bash docker_push
     on:
-      branch: master
+      branch: module_11
 
 notifications:
   email:
