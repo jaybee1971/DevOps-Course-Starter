@@ -83,6 +83,7 @@ You will need a valid GitHub account to run the application.
 This will give read only access and the ability to add or update items will be disabled.
 
 To allow write access you will need to put your GitHub ID in the todo_user.py class before running the app.
+Additioanlly you will need to update your .env file to add your GitHub client ID and secret (see .env template file)
 Future updates will add valid users to the MongoDB.
 
 

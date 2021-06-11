@@ -61,8 +61,8 @@ def mock_database():
 @mongomock.patch(servers=(("mongo", 12345),))    
 def test_home_page(monkeypatch, client):
     import todo_app.app
-    monkeypatch.setattr(todo_app.app, 'get_mongo_todo_statuses', mock_get_statuses)
-    monkeypatch.setattr(todo_app.app, 'get_mongo_todo_items', mock_get_items)
+    monkeypatch.setattr(todo_app.app, 'get_todo_statuses', mock_get_statuses)
+    monkeypatch.setattr(todo_app.app, 'get_todo_items', mock_get_items)
     mock_database()
     response = client.get('/')
 

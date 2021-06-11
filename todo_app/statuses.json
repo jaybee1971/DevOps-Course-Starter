@@ -1,0 +1,14 @@
+[
+    {
+      "_id": "5f2fb85702fda60cf038d800",
+      "name": "Not Started"
+    },
+    {
+      "_id": "5f2fb85702fda60cf038d801",
+      "name": "In Progress"
+    },
+    {
+      "_id": "5f2fb85702fda60cf038d802",
+      "name": "Completed"
+    }
+]
