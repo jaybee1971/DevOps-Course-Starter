@@ -10,7 +10,6 @@ env:
   global:
     - FLASK_APP=todo_app.app
     - FLASK_ENV=production
-    - MONGO_URL="mongodb://jbtododb:v6g0iyuJWh4Ft9ojZgJqgiPwj3jvYFIXFqt14oueGOuDBsPbDDS9YpqLquuaPFRMs0M1lq8WnnsbnQPuzGdmKg==@jbtododb.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@jbtododb@"
     - MONGO_DB="todo_app_db"
     - COL_1="Not Started"
     - COL_2="In Progress"
