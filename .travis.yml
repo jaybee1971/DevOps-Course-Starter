@@ -10,7 +10,6 @@ env:
   global:
     - FLASK_APP=todo_app.app
     - FLASK_ENV=production
-    - secure: OC7ZQo3Vu0H+I2ocij4jM7i0zfRzKtdox/mwdRQlxy9gw97bEfTUl1Oq94/tdtHvb1w3F8xUfc0pkB64aOeOi1ugEmiBUBcbd6idbbAYyR09z3orzRRAIpEqQRkRJMuBquETHlmpK64PCNq+4S/XBqRTXUtR1okHEnBkDHmulgjJVMUqkbIudNmalscDOBSdP1k3J6VAKX0wdFuyTo3dZ0k7GdwfpBS3mXtQ3aFsgdnZJw9ywQMfmcca0oxPIchnBz86Bln/oyugQxVf6Og76gsdyfwrw3U+xjeH9I94KPvj4VDBtQzDUgrpjkiGy5pIoUUwdp7wNI7ubCVSELuVF70VXCcuzvvcRgfpcvw1fcLAnp2EYDQf1WIWfc1UjNs7fT4LHS3LYiUtKN58Mjct/rziUDFv1E5XtIyf/HR3F7MUlLYjDQyG445orbgkbHpRSZQMOtVBWXxHcMzHFaVHDf2u0RJuZTZP0XVdORoFOKIuDMsS48ETBKAj9jxdQyFNwhQyx4PXN3Th2F0wXFHmCEXMNwz3ZM4U5ehwvuGwSmvUCeJ0upobOHvv4EPyIhOFdn4lIfbQHJ0eEBGJ1PMHz9Trz6msbnpC67TbngPNk5P6wHfZfw8Gh+dP370qSwSdvEpSmEW7KMLkN2JNYmnIsyWJboPP4CYu5vvTD+XSKZo=
     - MONGO_DB="todo_app_db"
     - COL_1="Not Started"
     - COL_2="In Progress"
@@ -22,8 +21,7 @@ env:
     - IMAGE_NAME=jaybee1971/todo_app
     - DOCKER_BUILDKIT=1
     - COMPOSE_DOCKER_CLI_BUILD=1
-    - secure: HHImKkgOGxw0Tt2oD6j9P/lQzxxzwUOk1Ntk7QFACh3KThUho6B4mp7t1jDpTpm5kNDGrEDV0PFfOm1b/7jH9Ne62FCvRjEzK/XYCfMBRLaUQg7Jaw9UwZp+KiNhp+dpK0w0b9PYPCVL8qAZWy9HWw77GBbznSB+UCjmf5TNq2YZLQEdpwV1WHCFOdyPzacdqPrYObFdcxJELuRGfIXk0e+grzcujrYUUQgpe9Gd62Dx29DkENIfL2UXaZwO7VEaJV2xBhkg8qhVEb+4eze/E/xM1/MXtf/HJzcZQYVsoRHr6+QhStDE0aABCglv/4j8pGB+kEySBgHi1pO6+Dk6SztrTgDwoUz4ygFFkGAqMii8qHZoWNmwrRT/4A9XOM+qvc+skihaAvXLo8ukshEVKkicPWQMX+smmCkUYq94YuDPKH0YbRPLjkTODTUwx+RolV9AdNXB7Mwo20BD2rqgwsCQ83tEu8C5Wrnt23iH1t7XizM8642Cj+zAIz5KCKivV4O5mNEK9ZL9ST33KzQZ9ego5tBPMKPwsJeQnCtd5sw0f86ZzTiXLxb1dUKZcoDk+9zWptXivzIS50CssNgGg6bfqE7lu9/dZiHFZsfPi2rWUGOAl5cMwBKCOPlKb8DesMnxVLfUs+xQ9/wFdDWVE9xUs1RGyQ6rHdu8Cz2VLj8=
-
+    
 before_install:
   - set -e
   # install docker

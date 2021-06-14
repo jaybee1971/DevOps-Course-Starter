@@ -4,4 +4,4 @@ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 docker build --cache-from $IMAGE_NAME:latest --target todo-prod --tag $IMAGE_NAME --build-arg BUILDKIT_INLINE_CACHE=1 .
 docker tag $IMAGE_NAME $IMAGE_NAME:${TRAVIS_COMMIT}
 docker push $IMAGE_NAME:${TRAVIS_COMMIT}
-curl -dH -X POST ${AZURE_HOOK}
+curl -dH -X POST "$AZURE_HOOK"
