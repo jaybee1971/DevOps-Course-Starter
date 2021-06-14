@@ -6,7 +6,7 @@ import os, requests, json, logging, sys, pymongo
 from bson import ObjectId
 
 
-# As per comments from module 10 exercise, the bespoke status approach was not really working
+# As per comments from module 10 exercise, the bespoke statuses approach was not really working
 # Therefore created a fixed file of statuses to replace any database call for now
 # Will refactor statuses entirely at some point
 file_statuses = './todo_app/statuses.json'

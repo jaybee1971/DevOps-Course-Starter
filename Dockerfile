@@ -15,6 +15,7 @@ FROM base-image as todo-prod
 # copy app code and run gunicorn
 COPY entrypoint-prod.sh gunicorn_config.py ./
 COPY ./todo_app/*.py ./todo_app/
+COPY ./todo_app/statuses.json ./todo_app/
 COPY ./todo_app/templates/ ./todo_app/templates/
 EXPOSE 5000
 ENV PORT=5000
