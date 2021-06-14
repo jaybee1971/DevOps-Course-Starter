@@ -44,7 +44,7 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                {% if not view_role == "reader" %}
+                                {% if view_role == "writer" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
@@ -71,7 +71,7 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                {% if not view_role == "reader" %}
+                                {% if view_role == "writer" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
@@ -98,7 +98,7 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                {% if not view_role == "reader" %}
+                                {% if view_role == "writer" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>
@@ -129,7 +129,7 @@
                                 </select>
                             </td>
                             <td style="text-align: center;">
-                                {% if not view_role == "reader" %}
+                                {% if view_role == "writer" %}
                                 <form id="{{ todo_item.mongo_id }}" method="POST" action="/update">
                                     <button class="btn btn-dark" style="background-color:DodgerBlue;color:White" type="update" name="{{ todo_item.mongo_id }}">Update</button>
                                 </form>

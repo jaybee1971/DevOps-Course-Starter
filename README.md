@@ -1,10 +1,10 @@
 # DevOps Apprenticeship: Running Jason B's ToDo App
 
-## Heroku
+## Azure
 
-The app is live hosted on Heroku:
+The app is live hosted on Azure:
 
-https://jaybee1971-todoapp.herokuapp.com/
+https://jb-todo-app.azurewebsites.net/
 
 
 ## Documentation
@@ -90,8 +90,7 @@ Future updates will add valid users to the MongoDB.
 
 ## Mongo DB
 
-The project uses a Mongo database from Atlas:
-https://www.mongodb.com/
+The project uses a Mongo database provisioned via Azure
 
 
 Configure the following environment variables for your db instance:
@@ -100,12 +99,8 @@ Configure the following environment variables for your db instance:
  * MONGO_DB="your-database"
 ```
 
-Previously the app used Trello and it's associated APIs.
-If you want to convert previous Trello stored data to use Mongo, run this script to copy over your data:  ./trello_to_mongo.py
-
-The application requires a minimum of 2 collections to run, with the following schema:
+The application will create the following collection when the first todo item is added, with the following schema:
 ```bash
- * todo_statuses:  {"_id": "STATUS_ID", "name": "STATUS_NAME"}
  * todo_items: {"_id": "ITEM_ID", "name": "TODO_TITLE", "desc": "TODO_DESC", "due": "DD/MM/YYYY", "status_id": "STATUS_ID", "dateLastActivity": "ISO_DATETIME"}
 ```
 
@@ -143,7 +138,7 @@ To run [Selenium](https://www.selenium.dev/downloads/) you will need an appropri
 Tests:
 ```bash
  * test_todos: Unit tests for each class method
- * test_app: End2end system test with mocked Trello responses
+ * test_app: End2end system test with mocked MongoDB responses
  * test_browser: Selenium tests for launching app in different browsers (chrome test included)
 ```
 
@@ -198,7 +193,7 @@ This application can also be run within a Docker container, both as a production
 Run the docker commands from the main application folder.
 
 IMPORTANT:  
-You will need different .env files for production versus development. Use the production .env for running the tests (as you need to open a link to Trello for the e2e system tests to work)
+You will need different .env files for production versus development. Use the production .env for running the tests (as you need to open a link to your database for the e2e system tests to work)
 
 For production place the .env in your root and set the flask server config as:
 ```bash
@@ -250,19 +245,19 @@ The following files are included for Travis:
 
 The included travis.yml will do the following:
 ```bash
- * only run CI new PRs are targetted to master
- * only run CD when there are merges to master
+ * only run CI new PRs are targetted to main
+ * only run CD when there are merges to main
  * run tests against the test docker image
- * if tests pass (and this is a merge to master), build a new production image
+ * if tests pass (and this is a merge to main), build a new production image
  * push new image to docker hub
- * push new image to Heroku
+ * push new image to Azure
 ```
 
 Before using Travis for your build, change the following in the .travis.yml file:
 ```bash
- * Add any additional branches you want to auto build here: "(type = push AND branch IN (master)) OR (type = pull_request)"
+ * Add any additional branches you want to auto build here: "(type = push AND branch IN (main)) OR (type = pull_request)"
  * Update any environment variables to meet your app needs (and remove any not needed)
- * Secure your Trello secure board tokens with your own Travis private key 
+ * Secure your secure tokens with your own Travis private key 
  * Update the notifications section to use your email address(es)
 ```
 
