@@ -24,10 +24,10 @@ def create_app():
     login_manager.login_manager.init_app(app)
     
     # All the routes and setup code etc
-    @app.route('/', methods=['GET'])
+    @app.route('/')
     @login_required
     def index():
-        if app.config['LOGIN_DISABLED'] == "True":
+        if app.config["LOGIN_DISABLED"] == "True":
             user_role = "writer"
         else:
             user_role = current_user.role
@@ -40,7 +40,7 @@ def create_app():
     @app.route('/create', methods=['POST'])
     @login_required
     def new_todo():
-        if current_user.role == "writer":
+        if app.config["LOGIN_DISABLED"] == "True" or current_user.role == "writer":
             last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
             database_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
             app.logger.info('Processing create new card request')
@@ -52,7 +52,7 @@ def create_app():
     @app.route('/update', methods=['POST'])
     @login_required
     def update():
-        if current_user.role == "writer":
+        if app.config["LOGIN_DISABLED"] == "True" or current_user.role == "writer":
             for mongo_id in request.form:
                 card_status = request.form.get(mongo_id)
                 if card_status == 'Delete':
@@ -67,7 +67,7 @@ def create_app():
             return index()
     
     
-    @app.route('/login/callback', methods=['Get'])
+    @app.route('/login/callback')
     def login_callback():
         app.logger.info('OAuth')
         callback_code = request.args.get("code")
