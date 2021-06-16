@@ -6,6 +6,9 @@ The app is live hosted on Azure:
 
 https://jb-todo-app.azurewebsites.net/
 
+In order to run within Azure, ensure that all the correct env variables are configured in the Azure Portal.
+If using GitHub for OAuth, you need to set up a different app in GitHub to accomodate the Azure endpoints and add those tokens in Azure configuration.
+
 
 ## Documentation
 
