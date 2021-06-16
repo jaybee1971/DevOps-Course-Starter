@@ -1,4 +1,4 @@
-if: "(type = push AND branch IN (main, module_11)) OR (type = pull_request)"
+if: "(type = push AND branch IN (main)) OR (type = pull_request)"
 os: linux
 dist: bionic
 sudo: required
@@ -49,7 +49,7 @@ deploy:
   - provider: script
     script: bash docker_push
     on:
-      branch: module_11
+      branch: main
 
 notifications:
   email:
