@@ -44,9 +44,9 @@ def create_app():
             last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
             database_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
             app.logger.info('Processing create new card request')
-            return index()
+            return redirect('/')
         else:
-            return index()
+            return redirect('/')
 
 
     @app.route('/update', methods=['POST'])
@@ -62,9 +62,9 @@ def create_app():
                     last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
                     database_put(mongo_id, card_status, last_update)
                     app.logger.info('Processing update card request')
-            return index()
+            return redirect('/')
         else:
-            return index()
+            return redirect('/')
     
     
     @app.route('/login/callback')
@@ -98,7 +98,7 @@ def create_app():
         
         login_user(TodoUser(gh_user_info['id']))
                    
-        return index()
+        return redirect('/')
 
     return app
 

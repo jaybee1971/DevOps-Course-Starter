@@ -25,3 +25,7 @@ env/
 
 ### Configuration files ###
 .env
+
+### Terraform ###
+.terraform
+.terraform.lock.hcl
