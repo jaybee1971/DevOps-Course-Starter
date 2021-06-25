@@ -10,9 +10,9 @@ from todo_app.flask_config import Config
 from todo_app.todo_user import TodoUser
 from todo_app.todo_item import todo_item
 from todo_app.todo_status import todo_status
-from todo_app.mongo_db import (get_mongo_todo_items, get_mongo_list_id,
-                                 get_mongo_todo_statuses, mongo_delete, mongo_todo_get,
-                                 mongo_post, mongo_put)
+from todo_app.mongo_db import (get_todo_items, get_list_id,
+                                 get_todo_statuses, database_delete, todo_get,
+                                 database_post, database_put)
 from todo_app.view_model import view_model
 
 
@@ -24,47 +24,50 @@ def create_app():
     login_manager.login_manager.init_app(app)
     
     # All the routes and setup code etc
-    @app.route('/', methods=['GET'])
+    @app.route('/')
     @login_required
     def index():
-        if app.config['LOGIN_DISABLED'] == "True":
+        if app.config["LOGIN_DISABLED"] == "True":
             user_role = "writer"
         else:
             user_role = current_user.role
         my_statuses = app.config['STATUSES']
-        mongo_todo_list = view_model(get_mongo_todo_items(),get_mongo_todo_statuses(), my_statuses)
+        todo_list = view_model(get_todo_items(),get_todo_statuses(), my_statuses)
         app.logger.info('Processing get cards request')
-        return render_template('index.html', view_model_items=mongo_todo_list, view_role=user_role)
+        return render_template('index.html', view_model_items=todo_list, view_role=user_role)
 
 
     @app.route('/create', methods=['POST'])
     @login_required
     def new_todo():
-        if current_user.role == "writer":
+        if app.config["LOGIN_DISABLED"] == "True" or current_user.role == "writer":
             last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-            mongo_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
+            database_post(request.form['add_todo'], request.form['add_desc'], request.form['due_date'], last_update)
             app.logger.info('Processing create new card request')
-            return redirect('/')
+            return index()
         else:
-            return redirect('/')
+            return index()
 
 
     @app.route('/update', methods=['POST'])
     @login_required
     def update():
-        for mongo_id in request.form:
-            card_status = request.form.get(mongo_id)
-            if card_status == 'Delete':
-                mongo_delete(mongo_id)
-                app.logger.info('Processing delete card request')
-            else:
-                last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-                mongo_put(mongo_id, card_status, last_update)
-                app.logger.info('Processing update card request')
-        return redirect('/')
+        if app.config["LOGIN_DISABLED"] == "True" or current_user.role == "writer":
+            for mongo_id in request.form:
+                card_status = request.form.get(mongo_id)
+                if card_status == 'Delete':
+                    database_delete(mongo_id)
+                    app.logger.info('Processing delete card request')
+                else:
+                    last_update = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+                    database_put(mongo_id, card_status, last_update)
+                    app.logger.info('Processing update card request')
+            return index()
+        else:
+            return index()
     
     
-    @app.route('/login/callback', methods=['Get'])
+    @app.route('/login/callback')
     def login_callback():
         app.logger.info('OAuth')
         callback_code = request.args.get("code")
@@ -95,7 +98,7 @@ def create_app():
         
         login_user(TodoUser(gh_user_info['id']))
                    
-        return redirect('/')
+        return index()
 
     return app
 

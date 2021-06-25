@@ -10,7 +10,4 @@ class Config:
         self.GH_SECRET = os.getenv('GH_SECRET')
         self.MONGO_URL = os.getenv('MONGO_URL')
         self.MONGO_DB = os.getenv('MONGO_DB')
-        self.COL_1 = os.getenv('COL_1')
-        self.COL_2 = os.getenv('COL_2')
-        self.COL_3 = os.getenv('COL_3')
-        self.STATUSES = [self.COL_1, self.COL_2, self.COL_3]
+        self.STATUSES = ["Not Started", "In Progress", "Completed"]

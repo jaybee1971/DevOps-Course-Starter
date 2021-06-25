@@ -25,7 +25,7 @@
         <li class="nav-item" role="presentation">
           <a class="nav-link active" id="pills-list-tab" data-toggle="pill" href="#todo_list" role="tab" aria-controls="todo_list" aria-selected="true">ToDo List</a>
         </li>
-        {% if not view_role == "reader" %}
+        {% if view_role == "writer" %}
         <li class="nav-item" role="presentation">
           <a class="nav-link" id="pills-new-tab" data-toggle="pill" href="#new_todo" role="tab" aria-controls="new_todo" aria-selected="false">New ToDo</a>
         </li>
