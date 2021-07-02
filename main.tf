@@ -72,7 +72,8 @@ resource "azurerm_app_service" "main" {
         "MONGO_DB" = "${var.prefix}-todoapp-db"
         "FLASK_APP" = "todo_app.app"
         "FLASK_ENV" = "production"
-        "LOGIN_DISABLED" = "True"
         "SECRET_KEY" = "jbtodoapp"
+        "GH_CLIENT_ID" = var.GH_CLIENT_ID
+        "GH_SECRET" = var.GH_SECRET
     }
 }
