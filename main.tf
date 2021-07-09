@@ -1,11 +1,12 @@
-terraform { 
-    required_providers {
-        azurerm = {
-            source = "hashicorp/azurerm" 
-            version = ">= 2.49"
-        }
-    }
-} 
+terraform {
+  backend "azurerm" {
+    resource_group_name = "AmericanExpress1_JasonBuckenham_ProjectExercise"
+    storage_account_name = "jbtodoappstorage"
+    container_name = "jb-todoapp-container"
+    key = "https://jbtodokeyvault.vault.azure.net/secrets/jb-back-end-key/043c37b759244682b42a76f17957df3a"
+  }
+}
+ 
 provider "azurerm" { 
     features {}
 } 
@@ -53,7 +54,7 @@ resource "azurerm_cosmosdb_mongo_database" "main" {
     name = "${var.prefix}-todoapp-db"
     resource_group_name = data.azurerm_resource_group.main.name
     account_name = azurerm_cosmosdb_account.main.name
-    lifecycle { prevent_destroy = true }
+    #lifecycle { prevent_destroy = true }
 }
 
 resource "azurerm_app_service" "main" {
