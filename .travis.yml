@@ -1,4 +1,4 @@
-if: "(type = push AND branch IN (main)) OR (type = pull_request)"
+if: "(type = push AND branch IN (module_12)) OR (type = pull_request)"
 os: linux
 dist: bionic
 sudo: required
@@ -20,6 +20,7 @@ env:
     - IMAGE_NAME=jaybee1971/todo_app
     - DOCKER_BUILDKIT=1
     - COMPOSE_DOCKER_CLI_BUILD=1
+    - TF_VERSION=0.14.7
     
 before_install:
   - set -e
@@ -45,11 +46,18 @@ script:
   - docker-compose --file docker-compose-travis.yml build --build-arg BUILDKIT_INLINE_CACHE=1 
   - docker-compose --file docker-compose-travis.yml up --exit-code-from todoapp
 
+install:
+    - wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip
+    - unzip terraform_"$TF_VERSION"_linux_amd64.zip
+    - sudo mv terraform /usr/local/bin/
+    - rm terraform_"$TF_VERSION"_linux_amd64.zip
+    - terraform init
+
 deploy:
   - provider: script
     script: bash docker_push
     on:
-      branch: main
+      branch: module_12
 
 notifications:
   email:

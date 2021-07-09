@@ -23,7 +23,7 @@ Checklist:
  * Create blob container
  * Create keyvault
  * Ensure unique keys are created for GitHub OAuth app integration
- * Integrate terrform config into Travis
+ * Integrate terrform config into Travis plus any env variables required
 ```
 Follow this [Tutorial](https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage#configure-storage-account)
 
@@ -277,6 +277,7 @@ Before using Travis for your build, change the following in the .travis.yml file
 ```bash
  * Add any additional branches you want to auto build here: "(type = push AND branch IN (main)) OR (type = pull_request)"
  * Update any environment variables to meet your app needs (and remove any not needed)
+ * Add any environment variables needed for Docker, Azure, MongoDb, etc 
  * Secure your secure tokens with your own Travis private key 
  * Update the notifications section to use your email address(es)
 ```
