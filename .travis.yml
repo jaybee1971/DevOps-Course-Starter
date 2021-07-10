@@ -1,6 +1,7 @@
 if: "(type = push AND branch IN (module_12)) OR (type = pull_request)"
 os: linux
 dist: bionic
+language: bash
 sudo: required
 
 services:
@@ -39,23 +40,38 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-before_script:
-  - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+stages:
+- test
+- deploy
 
-script:
-  - docker-compose --file docker-compose-travis.yml build --build-arg BUILDKIT_INLINE_CACHE=1 
-  - docker-compose --file docker-compose-travis.yml up --exit-code-from todoapp
+jobs:
+  include:
+  - stage: test
+    script:
+    - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+    - docker-compose --file docker-compose-travis.yml build --build-arg BUILDKIT_INLINE_CACHE=1 
+    - docker-compose --file docker-compose-travis.yml up --exit-code-from todoapp
 
-install:
+  - stage: deploy
+    install:
     - wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip
     - unzip terraform_"$TF_VERSION"_linux_amd64.zip
     - sudo mv terraform /usr/local/bin/
     - rm terraform_"$TF_VERSION"_linux_amd64.zip
     - terraform init
 
-deploy:
-  - provider: script
-    script: bash docker_push
+    before_deploy:
+    - terraform apply -var prefix=jb -var location=uksouth -var GH_CLIENT_ID=$GH_CLIENT_ID -var GH_SECRET=$GH_SECRET -auto-approve
+    - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+    - docker build --cache-from $IMAGE_NAME:latest --target todo-prod --tag $IMAGE_NAME --build-arg BUILDKIT_INLINE_CACHE=1 .
+    - docker tag $IMAGE_NAME $IMAGE_NAME:${TRAVIS_COMMIT}
+    - docker tag $IMAGE_NAME $IMAGE_NAME:latest
+    - docker push $IMAGE_NAME:${TRAVIS_COMMIT}
+    - docker push $IMAGE_NAME:latest
+
+    deploy:
+      provider: script
+      script: curl -dH -X POST "$(terraform output -raw cd_webhook)"
     on:
       branch: module_12
 
