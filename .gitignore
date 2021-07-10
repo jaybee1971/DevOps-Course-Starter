@@ -124,3 +124,8 @@ chromedriver.exe
 
 ### Mongo Playground ###
 playground.mongodb
+
+### Terraform ###
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate*

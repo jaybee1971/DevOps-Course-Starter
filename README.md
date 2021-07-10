@@ -4,11 +4,28 @@
 
 The app is live hosted on Azure:
 
-https://jb-todo-app.azurewebsites.net/
+https://jbuck-todo-app.azurewebsites.net/
 
 In order to run within Azure, ensure that all the correct env variables are configured in the Azure Portal.
 If using GitHub for OAuth, you need to set up a different app in GitHub to accomodate the Azure endpoints and add those tokens in Azure configuration.
 
+## Terraform
+
+The app can be created in Azure with Terraform.
+You will need to update the values in main.tf to reflect any unique environment settings.
+
+Terraformed app URL:  https://jb-terraform-todo-app.azurewebsites.net/
+
+Checklist:
+```bash
+ * Create azruerm state back-end 
+ * Create storage account
+ * Create blob container
+ * Create keyvault
+ * Ensure unique keys are created for GitHub OAuth app integration
+ * Integrate terrform config into Travis plus any env variables required
+```
+Follow this [Tutorial](https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage#configure-storage-account)
 
 ## Documentation
 
@@ -260,6 +277,7 @@ Before using Travis for your build, change the following in the .travis.yml file
 ```bash
  * Add any additional branches you want to auto build here: "(type = push AND branch IN (main)) OR (type = pull_request)"
  * Update any environment variables to meet your app needs (and remove any not needed)
+ * Add any environment variables needed for Docker, Azure, MongoDb, etc 
  * Secure your secure tokens with your own Travis private key 
  * Update the notifications section to use your email address(es)
 ```
