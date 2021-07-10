@@ -1,4 +1,4 @@
-if: "(type = push AND branch IN (module_12)) OR (type = pull_request)"
+if: "(type = push AND branch IN (main)) OR (type = pull_request)"
 os: linux
 dist: bionic
 language: bash
@@ -53,7 +53,7 @@ jobs:
     - docker-compose --file docker-compose-travis.yml up --exit-code-from todoapp
 
   - stage: deploy
-    if: branch = module_12
+    if: branch = main
     install:
     - wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip
     - unzip terraform_"$TF_VERSION"_linux_amd64.zip
